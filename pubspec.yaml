@@ -1,0 +1,46 @@
+name: tehran_exchange
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  get: ^4.6.5
+  introduction_screen: ^3.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Iransans
+      fonts:
+        - asset: assets/fonts/IRANSansWeb.ttf
+        - asset: assets/fonts/BElham.ttf
+          weight: 700
+        - asset: assets/fonts/BKoodakBold.ttf
+          weight: 300
+    - family: Yekanbakh
+      fonts:
+        - asset: assets/font/Yekan Bakh EN 04 Regular.ttf
+        - asset: assets/font/Yekan Bakh EN 07 Heavy.ttf
+        - asset: assets/font/Yekan Bakh EN 08 Fat.ttf
+          weight: 300
+
