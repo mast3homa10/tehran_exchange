@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 
-import '../components/purple_button.dart';
+import '../ui/intro/introduction_screen.dart';
+import '../ui/intro/model/page_view_model.dart';
 import '../constants.dart';
 import 'home_screen.dart';
 
@@ -73,21 +74,63 @@ class GuideScreen extends StatelessWidget {
           decoration: kPageDecoration,
         ),
       ],
-      // onDone: () => _onIntroEnd(context),
+      done: Container(
+        height: 62,
+        width: 164,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: const Center(
+          child: Text(
+            'بستن راهنما',
+            style: TextStyle(
+                fontFamily: 'Yekanbakh', fontSize: 18, color: Colors.black),
+          ),
+        ),
+      ),
+      onDone: () {
+        Get.off(const HomeScreen());
+      }, //_onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: false,
       showDoneButton: false,
       showBackButton: false,
-      showNextButton: false,
+      showNextButton: true,
       skipOrBackFlex: 0,
       nextFlex: 0,
 
       rtl: true, // Display as right-to-left
-      back: const Icon(Icons.arrow_back),
       // skip:
       //     const Text('رد کردن', style: TextStyle(fontWeight: FontWeight.w600)),
-      // next: const Icon(Icons.arrow_forward),
-      // done: const Text('اتمام', style: TextStyle(fontWeight: FontWeight.w600)),
+      next: Container(
+        height: 62,
+        width: 164,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: kButtonBackgroundColor,
+            style: BorderStyle.solid,
+            width: 2.0,
+          ),
+          color: const Color(0xFFA822E7),
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                FontAwesomeIcons.angleRight,
+                color: kBackgroundColor,
+                size: 20,
+              ),
+              Text(
+                'بعدی',
+                style: kButtonTextStyle_2,
+              ),
+            ],
+          ),
+        ),
+      ),
 
       curve: Curves.fastLinearToSlowEaseIn,
       controlsMargin: const EdgeInsets.all(16),
@@ -107,66 +150,6 @@ class GuideScreen extends StatelessWidget {
         color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-        ),
-      ),
-      globalFooter: SizedBox(
-        width: double.infinity,
-        height: 80,
-        child: Container(
-          decoration: const BoxDecoration(color: Color(0xFFEFF4FF)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                PurpleButton(
-                  titleWidget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        FontAwesomeIcons.angleRight,
-                        color: kBackgroundColor,
-                        size: 20,
-                      ),
-                      Text(
-                        'بعدی',
-                        style: kButtonTextStyle_2,
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    /// TODO: set next btn functionality
-
-                    Get.snackbar('توجه!', "در حال توسعه ...");
-                  },
-                ),
-                GestureDetector(
-                  child: Container(
-                    height: 62,
-                    width: 164,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'بستن راهنما',
-                        style: TextStyle(
-                            fontFamily: 'Yekanbakh',
-                            fontSize: 18,
-                            color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Get.to(const HomeScreen());
-                  },
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

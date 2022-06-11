@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:introduction_screen/introduction_screen.dart';
+import 'ui/intro/model/page_decoration.dart';
 
 const Color kBackgroundColor = Colors.white;
 const Color kButtonBackgroundColor = Color(0xFFA822E7);

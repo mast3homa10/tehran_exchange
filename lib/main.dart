@@ -12,7 +12,7 @@ void main() async {
     getPages: [
       GetPage(
         name: '/',
-        page: () => WelcomeScreen(),
+        page: () => const WelcomeScreen(),
       ),
       GetPage(
         name: '/guide_screen',
@@ -28,5 +28,3 @@ void main() async {
     initialRoute: '/',
   ));
 }
-
-class Controller extends GetxController {}

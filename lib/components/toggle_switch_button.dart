@@ -1,6 +1,9 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+
+import '../ui/toggle_switch/widgets/animated_toggle_switch.dart';
 
 class ToggleSwitchButton extends StatefulWidget {
   const ToggleSwitchButton({Key? key}) : super(key: key);
@@ -34,7 +37,10 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
             offset: Offset(0, 2.5),
           ),
         ],
-        onChanged: (b) => setState(() => positive = b),
+        onChanged: (b) => setState(() {
+          positive = b;
+          Get.changeTheme(!Get.isDarkMode ? _darkTheme : _lightTheme);
+        }),
         colorBuilder: (b) => b ? Colors.white : Colors.black,
         iconBuilder: (value) => value
             ? const Icon(
@@ -49,3 +55,19 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
     );
   }
 }
+
+ThemeData _darkTheme = ThemeData(
+  appBarTheme: const AppBarTheme(
+    color: Colors.red,
+  ),
+  brightness: Brightness.dark,
+  primaryColor: Colors.amber,
+);
+
+ThemeData _lightTheme = ThemeData(
+    backgroundColor: Colors.red,
+    appBarTheme: const AppBarTheme(
+      color: Colors.red,
+    ),
+    brightness: Brightness.light,
+    primaryColor: Colors.blue);

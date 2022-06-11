@@ -14,11 +14,10 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   get: ^4.6.5
-  introduction_screen: ^3.0.2
   shared_preferences: ^2.0.15
   font_awesome_flutter: ^10.1.0
-  bottom_navy_bar: ^6.0.0
-  animated_toggle_switch: ^0.5.2  
+  dots_indicator: ^2.1.0
+
 
 dev_dependencies:
   flutter_test:
