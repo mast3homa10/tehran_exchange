@@ -44,7 +44,7 @@ class GuideScreen extends StatelessWidget {
             style: kDescriptionTextStyle,
           ),
           image: _buildImage(),
-          decoration: kPageDecoration,
+          decoration: kPageDecorationLightMode,
         ),
         PageViewModel(
           title: "خرید و فروش کریپتو برای فیات",
@@ -53,7 +53,7 @@ class GuideScreen extends StatelessWidget {
             style: kDescriptionTextStyle,
           ),
           image: _buildImage(),
-          decoration: kPageDecoration,
+          decoration: kPageDecorationLightMode,
         ),
         PageViewModel(
           title: "نرخ ثابت برای 20 دقیقه",
@@ -62,7 +62,7 @@ class GuideScreen extends StatelessWidget {
             style: kDescriptionTextStyle,
           ),
           image: _buildImage(),
-          decoration: kPageDecoration,
+          decoration: kPageDecorationLightMode,
         ),
         PageViewModel(
           title: "پشتیبانی 24 ساعته",
@@ -71,7 +71,7 @@ class GuideScreen extends StatelessWidget {
             style: kDescriptionTextStyle,
           ),
           image: _buildImage(),
-          decoration: kPageDecoration,
+          decoration: kPageDecorationLightMode,
         ),
       ],
       done: Container(
@@ -107,7 +107,7 @@ class GuideScreen extends StatelessWidget {
         width: 164,
         decoration: BoxDecoration(
           border: Border.all(
-            color: kButtonBackgroundColor,
+            color: kButtonBackgroundColorLightMode,
             style: BorderStyle.solid,
             width: 2.0,
           ),
@@ -120,7 +120,7 @@ class GuideScreen extends StatelessWidget {
             children: const [
               Icon(
                 FontAwesomeIcons.angleRight,
-                color: kBackgroundColor,
+                color: kBackgroundColorLightMode,
                 size: 20,
               ),
               Text(
@@ -141,7 +141,7 @@ class GuideScreen extends StatelessWidget {
         size: Size(10.0, 10.0),
         color: Color(0xFFBDBDBD),
         activeSize: Size(15.0, 15.0),
-        activeColor: kButtonBackgroundColor,
+        activeColor: kButtonBackgroundColorLightMode,
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(500.0)),
         ),

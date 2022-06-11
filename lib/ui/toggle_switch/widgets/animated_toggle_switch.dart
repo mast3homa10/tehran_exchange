@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 import 'package:flutter/material.dart';
 
 import '../properties.dart';
@@ -307,8 +309,9 @@ class AnimatedToggleSwitch<T> extends StatelessWidget {
       Size iconSize,
       Size selectedIconSize) {
     assert(iconBuilder == null || customIconBuilder == null);
-    if (customIconBuilder == null && iconBuilder != null)
+    if (customIconBuilder == null && iconBuilder != null) {
       customIconBuilder = (c, l, g) => iconBuilder(l.value, l.iconSize);
+    }
     return customIconBuilder == null
         ? null
         : (context, local, global) => customIconBuilder!(
@@ -503,11 +506,12 @@ class AnimatedToggleSwitch<T> extends StatelessWidget {
       RollingIconBuilder<T>? customIconBuilder,
       Size iconSize) {
     assert(iconBuilder == null || customIconBuilder == null);
-    if (customIconBuilder == null && iconBuilder != null)
+    if (customIconBuilder == null && iconBuilder != null) {
       customIconBuilder =
           (c, l, g) => iconBuilder(l.value, l.iconSize, l.foreground);
+    }
     return (context, global) {
-      if (customIconBuilder == null) return SizedBox();
+      if (customIconBuilder == null) return const SizedBox();
       double distance = global.dif + global.indicatorSize.width;
       double angleDistance = distance /
           iconSize.longestSide *
@@ -558,9 +562,10 @@ class AnimatedToggleSwitch<T> extends StatelessWidget {
       Size iconSize,
       Size selectedIconSize) {
     assert(iconBuilder == null || customIconBuilder == null);
-    if (customIconBuilder == null && iconBuilder != null)
+    if (customIconBuilder == null && iconBuilder != null) {
       customIconBuilder =
           (c, l, g) => iconBuilder(l.value, l.iconSize, l.foreground);
+    }
     return customIconBuilder == null
         ? null
         : (t, local, global) => customIconBuilder!(
@@ -815,10 +820,11 @@ class AnimatedToggleSwitch<T> extends StatelessWidget {
         double animationValue = 0.0;
         double localPosition =
             global.position - global.position.floorToDouble();
-        if (values[global.position.floor()] == local.value)
+        if (values[global.position.floor()] == local.value) {
           animationValue = 1 - localPosition;
-        else if (values[global.position.ceil()] == local.value)
+        } else if (values[global.position.ceil()] == local.value) {
           animationValue = localPosition;
+        }
         return animatedIconBuilder!(
           context,
           AnimatedToggleProperties.fromLocal(

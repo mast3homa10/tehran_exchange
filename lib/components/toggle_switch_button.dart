@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,7 +41,8 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
         ],
         onChanged: (b) => setState(() {
           positive = b;
-          Get.changeTheme(!Get.isDarkMode ? _darkTheme : _lightTheme);
+          Get.changeTheme(
+              Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
         }),
         colorBuilder: (b) => b ? Colors.white : Colors.black,
         iconBuilder: (value) => value

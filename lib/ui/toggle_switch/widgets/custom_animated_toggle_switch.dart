@@ -216,8 +216,9 @@ class _CustomAnimatedToggleSwitchState<T>
                     properties.indicatorSize.width / 2) -
             properties.indicatorSize.width / 2) /
         (properties.indicatorSize.width + properties.dif);
-    if (properties.textDirection == TextDirection.rtl)
+    if (properties.textDirection == TextDirection.rtl) {
       result = widget.values.length - 1 - result;
+    }
     return result;
   }
 
@@ -270,7 +271,7 @@ class _CustomAnimatedToggleSwitchState<T>
 
                   // Recalculates the indicatorSize if its width or height is
                   // infinite.
-                  Size indicatorSize = Size(30, 30);
+                  Size indicatorSize = const Size(30, 30);
 
                   // Calculates the required width of the widget.
                   double width = indicatorSize.width * widget.values.length +
@@ -362,7 +363,7 @@ class _CustomAnimatedToggleSwitchState<T>
                     height: height,
                     // manual check if cursor is above indicator
                     // to make sure that GestureDetector and MouseRegion match.
-                    // TODO: one widget for DragRegion and GestureDetector to avoid redundancy
+                    // one widget for DragRegion and GestureDetector to avoid redundancy
                     child: DragRegion(
                       dragging: _animationInfo.toggleMode == ToggleMode.dragged,
                       draggingCursor: widget.draggingCursor,
@@ -383,8 +384,9 @@ class _CustomAnimatedToggleSwitchState<T>
                           widget.onChanged?.call(newValue);
                         },
                         onHorizontalDragStart: (details) {
-                          if (!isHoveringIndicator(details.localPosition))
+                          if (!isHoveringIndicator(details.localPosition)) {
                             return;
+                          }
                           _onDragged(
                               _doubleFromPosition(
                                   details.localPosition.dx, properties),

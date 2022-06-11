@@ -24,7 +24,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-              color: kBackgroundColor,
+              color: kBackgroundColorLightMode,
               image: DecorationImage(
                   image: AssetImage('assets/images/welcomebackground.png'),
                   fit: BoxFit.cover)),
@@ -104,7 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 width: 164,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: kButtonBackgroundColor,
+                    color: kButtonBackgroundColorLightMode,
                     style: BorderStyle.solid,
                     width: 2.0,
                   ),
@@ -131,7 +131,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 width: 164,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: kButtonBackgroundColor,
+                    color: kButtonBackgroundColorLightMode,
                     style: BorderStyle.solid,
                     width: 2.0,
                   ),

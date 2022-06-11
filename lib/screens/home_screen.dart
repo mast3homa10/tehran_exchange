@@ -106,10 +106,40 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Column(
-                  children: const [
-                    Text('text'),
-                    Text('text'),
-                    Text('text'),
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(8.0),
+                      height: 80,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xFFEEEEEE),
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
+                        color: const Color(0xFF0F1119),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: const Center(child: Text('text')),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    Container(
+                      height: 80,
+                      width: double.infinity,
+                      margin: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xFFEEEEEE),
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
+                        color: const Color(0xFF0F1119),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: const Center(child: Text('text')),
+                    ),
                   ],
                 ),
               ),
@@ -121,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 403,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: kButtonBackgroundColor,
+                          color: kButtonBackgroundColorLightMode,
                           style: BorderStyle.solid,
                           width: 2.0,
                         ),
@@ -155,28 +185,28 @@ class _HomeScreenState extends State<HomeScreen> {
             items: <BottomNavyBarItem>[
               BottomNavyBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColor,
+                activeColor: kButtonBackgroundColorLightMode,
                 icon: const Icon(FontAwesomeIcons.ellipsisVertical),
                 title: const Text('منو'),
                 textAlign: TextAlign.center,
               ),
               BottomNavyBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColor,
+                activeColor: kButtonBackgroundColorLightMode,
                 icon: const Icon(FontAwesomeIcons.headset),
                 title: const Text('پشتیبانی'),
                 textAlign: TextAlign.center,
               ),
               BottomNavyBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColor,
+                activeColor: kButtonBackgroundColorLightMode,
                 icon: const Icon(FontAwesomeIcons.upDown),
                 title: const Text('مبادله '),
                 textAlign: TextAlign.center,
               ),
               BottomNavyBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColor,
+                activeColor: kButtonBackgroundColorLightMode,
                 icon: const Icon(FontAwesomeIcons.clockRotateLeft),
                 title: const Text('تاریخچه سفارشات'),
                 textAlign: TextAlign.center,

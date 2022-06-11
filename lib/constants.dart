@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'ui/intro/model/page_decoration.dart';
 
-const Color kBackgroundColor = Colors.white;
-const Color kButtonBackgroundColor = Color(0xFFA822E7);
+const Color kBackgroundColorLightMode = Colors.white;
+const Color kButtonBackgroundColorLightMode = Color(0xFFA822E7);
 
 const TextStyle kButtonTextStyle_1 = TextStyle(
-    fontFamily: 'Yekanbakh', fontSize: 18, color: kButtonBackgroundColor);
+    fontFamily: 'Yekanbakh', fontSize: 18, color: kButtonBackgroundColorLightMode);
 
 const TextStyle kButtonTextStyle_2 =
-    TextStyle(fontFamily: 'Yekanbakh', fontSize: 18, color: kBackgroundColor);
+    TextStyle(fontFamily: 'Yekanbakh', fontSize: 18, color: kBackgroundColorLightMode);
 
 const TextStyle kDescriptionTextStyle =
     TextStyle(fontSize: 16, fontFamily: 'Yekanbakh');
@@ -20,7 +20,7 @@ const TextStyle kTitleTextStyle = TextStyle(
   fontFamily: 'Yekanbakh',
 );
 
-const kPageDecoration = PageDecoration(
+const kPageDecorationLightMode = PageDecoration(
   titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
   bodyTextStyle: kTitleTextStyle,
   // bodyTextStyle: bodyStyle

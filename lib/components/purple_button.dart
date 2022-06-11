@@ -17,7 +17,7 @@ class PurpleButton extends StatelessWidget {
         width: 164,
         decoration: BoxDecoration(
           border: Border.all(
-            color: kButtonBackgroundColor,
+            color: kButtonBackgroundColorLightMode,
             style: BorderStyle.solid,
             width: 2.0,
           ),
