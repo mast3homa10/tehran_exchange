@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/models/currency_model.dart';
 
 import '../constants.dart';
 
@@ -73,9 +74,7 @@ class ExchangeScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 200,
-          ),
+          SizedBox(height: Get.height / 5),
           // the padding widget below contains '''add address button'''.
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -175,7 +174,6 @@ class ExchangeContainer extends StatelessWidget {
                       showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
                         builder: (context) => CurrencyListScreen(),
                       );
                     },
@@ -228,6 +226,15 @@ class CurrencyListScreen extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
+            IconButton(
+              icon: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, border: Border.all(width: 2)),
+                  child: Icon(FontAwesomeIcons.multiply)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             Container(
               margin: const EdgeInsets.all(8.0),
               height: 90,
@@ -258,6 +265,7 @@ class CurrencyListScreen extends StatelessWidget {
                               fontFamily: 'Yekanbakh',
                               fontSize: 20),
                           cursorColor: Colors.white,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             hintText: 'جست و جو',
                             hintStyle: TextStyle(
@@ -283,12 +291,22 @@ class CurrencyListScreen extends StatelessWidget {
                 ),
               )),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: null),
-            Text("Modal content goes here"),
+            SizedBox(
+              height: 400,
+              child: ListView.builder(
+                itemCount: dataList.length,
+                itemBuilder: (context, i) => SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Container(
+                      child: Row(
+                    children: [
+                      Text(dataList[i].name!),
+                    ],
+                  )),
+                ),
+              ),
+            )
           ],
         ),
       ),
