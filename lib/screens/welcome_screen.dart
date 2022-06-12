@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../screens/home_screen.dart';
 import '../controllers/controller_1.dart';
 import '../constants.dart';
 import 'guide_screen.dart';
+import 'screen_body.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -50,6 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     'خوش آمدید به',
                     style: TextStyle(
                       fontSize: 30,
+                      color: Colors.black,
                       fontFamily: 'Yekanbakh',
                     ),
                     textAlign: TextAlign.center,
@@ -124,7 +125,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             GestureDetector(
               onTap: () {
                 // Get.snackbar('توجه!', "در حال توسعه ...");
-                Get.off(const HomeScreen());
+                Get.off(const ScreenBody());
               },
               child: Container(
                 height: 62,

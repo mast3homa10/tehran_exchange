@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/screens/screen_body.dart';
 
 import '../ui/intro/introduction_screen.dart';
 import '../ui/intro/model/page_view_model.dart';
 import '../constants.dart';
-import 'home_screen.dart';
 
 class GuideScreen extends StatelessWidget {
   GuideScreen({Key? key}) : super(key: key);
@@ -89,7 +89,7 @@ class GuideScreen extends StatelessWidget {
         ),
       ),
       onDone: () {
-        Get.off(const HomeScreen());
+        Get.off(const ScreenBody());
       }, //_onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: false,
