@@ -98,7 +98,6 @@ class _ScreenBodyState extends State<ScreenBody> {
           decoration:
               BoxDecoration(border: Border.all(width: 1.0, color: Colors.grey)),
           child: BottomNavyBar(
-            backgroundColor: const Color(0xFFEFF4FF),
             selectedIndex: _currentIndex,
             showElevation: true,
             itemCornerRadius: 24,
@@ -139,6 +138,31 @@ class _ScreenBodyState extends State<ScreenBody> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class sddfsafadsfadf extends StatefulWidget {
+  const sddfsafadsfadf({Key? key}) : super(key: key);
+
+  @override
+  State<sddfsafadsfadf> createState() => _sddfsafadsfadfState();
+}
+
+class _sddfsafadsfadfState extends State<sddfsafadsfadf> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavyBar(
+        onItemSelected: (value) {
+          print(value);
+        },
+        items: [
+          BottomNavyBarItem(icon: Icon(Icons.add), title: Text('title')),
+          BottomNavyBarItem(icon: Icon(Icons.add), title: Text('title')),
+          BottomNavyBarItem(icon: Icon(Icons.add), title: Text('title')),
+        ],
       ),
     );
   }

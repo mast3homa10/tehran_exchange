@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tehran_exchange/components/custom_small_button.dart';
 
 import '../controllers/controller_1.dart';
 import '../constants.dart';
@@ -99,18 +100,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             const SizedBox(
               width: 10,
             ),
-            GestureDetector(
-              child: Container(
-                height: 62,
-                width: 164,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: kButtonBackgroundColorLightMode,
-                    style: BorderStyle.solid,
-                    width: 2.0,
+            ConstrainedBox(
+              constraints: BoxConstraints.tightFor(width: 166, height: 62),
+              child: TextButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(30.0),
                 ),
+                onPressed: () {
+                  // Get.snackbar('توجه!', "در حال توسعه ...");
+                  Get.off(GuideScreen());
+                },
                 child: const Center(
                   child: Text(
                     'مطالعه راهنما',
@@ -118,33 +121,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               ),
-              onTap: () {
-                Get.off(GuideScreen());
-              },
             ),
-            GestureDetector(
-              onTap: () {
-                // Get.snackbar('توجه!', "در حال توسعه ...");
-                Get.off(const ScreenBody());
-              },
-              child: Container(
-                height: 62,
-                width: 164,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: kButtonBackgroundColorLightMode,
-                    style: BorderStyle.solid,
-                    width: 2.0,
-                  ),
-                  color: const Color(0xFFA822E7),
-                  borderRadius: BorderRadius.circular(30.0),
+            ConstrainedBox(
+              constraints:
+                  const BoxConstraints.tightFor(width: 166, height: 62),
+              child: CustomSmallButton(
+                child: const Text(
+                  'شروع تبادل',
+                  style: kButtonTextStyle_2,
                 ),
-                child: const Center(
-                  child: Text(
-                    'شروع تبادل',
-                    style: kButtonTextStyle_2,
-                  ),
-                ),
+                press: () {
+                  // Get.snackbar('توجه!', "در حال توسعه ...");
+                  Get.off(const ScreenBody());
+                },
               ),
             ),
           ],

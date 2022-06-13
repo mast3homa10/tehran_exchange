@@ -35,7 +35,6 @@ const kPageDecorationLightMode = PageDecoration(
 );
 
 AppBar kAppbar = AppBar(
-  backgroundColor: const Color(0xFFEFF4FF),
   title: const SizedBox(
     height: 40,
     width: 40,

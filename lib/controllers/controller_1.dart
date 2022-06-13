@@ -20,3 +20,8 @@ class MyThemes {
     primaryColor: Colors.white,
   );
 }
+
+class UserProvider extends GetConnect {
+  // Get request
+
+}

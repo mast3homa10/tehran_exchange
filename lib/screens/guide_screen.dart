@@ -66,7 +66,7 @@ class GuideScreen extends StatelessWidget {
         ),
         PageViewModel(
           title: "پشتیبانی 24 ساعته",
-          bodyWidget: const Text(
+          bodyWidget: Text(
             "ارتباط با ما از طریق چت",
             style: kDescriptionTextStyle,
           ),
@@ -102,6 +102,26 @@ class GuideScreen extends StatelessWidget {
       rtl: true, // Display as right-to-left
       // skip:
       //     const Text('رد کردن', style: TextStyle(fontWeight: FontWeight.w600)),
+      nextStyle: ButtonStyle(
+        side: MaterialStateProperty.all(
+          BorderSide.lerp(
+              BorderSide(
+                width: 10.0,
+              ),
+              BorderSide(),
+              10.0),
+        ),
+      ),
+      doneStyle: ButtonStyle(
+        side: MaterialStateProperty.all(
+          BorderSide.lerp(
+              BorderSide(
+                width: 10.0,
+              ),
+              BorderSide(),
+              10.0),
+        ),
+      ),
       next: Container(
         height: 62,
         width: 164,
@@ -155,3 +175,53 @@ class GuideScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+////////////////////////////////////////////
+///
+//next: ConstrainedBox(
+      //   constraints: const BoxConstraints.tightFor(width: 186, height: 62),
+      //   child: CustomSmallButton(
+      //     press: () {},
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: const [
+      //         Icon(
+      //           FontAwesomeIcons.angleRight,
+      //           color: kBackgroundColorLightMode,
+      //           size: 20,
+      //         ),
+      //         Text(
+      //           'بعدی',
+      //           style: kButtonTextStyle_2,
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      // doneStyle: ButtonStyle(
+      //   side: MaterialStateProperty.all(
+      //     BorderSide.lerp(
+      //         BorderSide(
+      //           width: 10.0,
+      //         ),
+      //         BorderSide(),
+      //         10.0),
+      //   ),
+      // ),
+      // done: Container(
+      //   height: 62,
+      //   width: 164,
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(30.0),
+      //   ),
+      //   child: const Center(
+      //     child: Text(
+      //       'بستن راهنما',
+      //       style: TextStyle(
+      //           fontFamily: 'Yekanbakh', fontSize: 18, color: Colors.black),
+      //     ),
+      //   ),
+      // ),
+      
