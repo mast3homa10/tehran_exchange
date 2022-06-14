@@ -27,9 +27,7 @@ class MenuScreen extends StatelessWidget {
                   fontStyle: FontStyle.italic,
                 ),
               ),
-              onChanged: (value) {
-                print(value);
-              },
+              onChanged: (value) {},
             ),
           )
         ],

@@ -2,124 +2,160 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/components/custom_big_button.dart';
-import 'package:tehran_exchange/components/exchange_box.dart';
 
-import '../components/my_search_delegate.dart';
+import '../components/custom_big_button.dart';
+import '../controllers/controller_1.dart';
 import '../constants.dart';
+import 'sub_screen/address_screen.dart';
 
 class ExchangeScreen extends StatelessWidget {
   ExchangeScreen({Key? key}) : super(key: key);
   final TextEditingController firstTextController = TextEditingController();
   final TextEditingController secondTextController = TextEditingController();
+  final Controller controller = Get.put(Controller());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // the padding widget below contains ''' cryptocurrency calculator '''.
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                /// first box
-                const ExchangeBox(
-                  title: 'Tether',
-                  cryptoTitle: 'USDT',
-                  iconColour: Colors.green,
-                ),
-                // calculate button
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+      body: Obx(
+        () => controller.isChangeScreen.toInt() == 1
+            ? Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CoustomIconButton(
+                          label: 'اسکن کیف پول',
+                          icon: const Icon(FontAwesomeIcons.qrcode),
+                          press: () {},
+                        ),
+                        CoustomIconButton(
+                          label: 'اضافه کردن کیف پول',
+                          icon: const Icon(FontAwesomeIcons.wallet),
+                          press: () {},
+                        ),
+                        CoustomIconButton(
+                          label: 'دفترچه آدرس',
+                          icon: const Icon(FontAwesomeIcons.book),
+                          press: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    height: 90,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xFFEEEEEE),
+                        style: BorderStyle.solid,
+                        width: 2.0,
+                      ),
+                      color: kChangerContainerColor,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
                         children: [
-                          Text('BTC ~ '),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '2313645661',
-                                  ),
-                                  Icon(FontAwesomeIcons.circleArrowDown,
-                                      color: Colors.white),
-                                ],
+                          Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: TextButton(
+                                child: const Text("چسباندن"),
+                                onPressed: () {
+                                  Get.snackbar('توجه!', "در حال توسعه ...");
+                                },
+                              )),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          const VerticalDivider(
+                            color: Color(0xFFFFFFFF),
+                            indent: 9,
+                            endIndent: 9,
+                          ),
+                          SizedBox(
+                            width: 150,
+                            // todo: fix this textfield
+                            child: TextField(
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Yekanbakh',
+                                  fontSize: 20),
+                              decoration: const InputDecoration(
+                                hintText: 'وارد کردن آدرس',
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Yekanbakh',
+                                    fontSize: 20),
                               ),
+                              onChanged: (value) {},
                             ),
                           )
                         ],
                       ),
-                      GestureDetector(
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: kChangerContainerColor,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              color: const Color(0xFFEEEEEE),
-                              style: BorderStyle.solid,
-                              width: 0.8,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                FontAwesomeIcons.arrowUp,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                FontAwesomeIcons.arrowDown,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                        onTap: () {
-                          Get.snackbar("توجه !", "در حال توسعه ...");
-                        },
+                    )),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.only(right: 18.0, left: 18.0),
+                        child: Text('کیف پول ندارید؟'),
                       ),
                     ],
                   ),
-                ),
-                // second box
-                const ExchangeBox(
-                  title: "Bitcoin",
-                  cryptoTitle: "BTC",
-                  isHaveIcon: true,
-                  iconColour: Colors.orange,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: Get.height / 5),
-          // the padding widget below contains '''add address button'''.
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: CustomBigButton(
-              label: 'وارد کردن آدرس',
-              onPressed: () {
-                Get.snackbar('توجه!', "در حال توسعه ...");
-              },
-            ),
-          ),
-        ],
+                  SizedBox(height: Get.height / 3.53),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: CustomBigButton(
+                      label: 'شروع تبادل',
+                      onPressed: () {
+                        // Get.snackbar('توجه!', "در حال توسعه ...");
+                        controller.changeScreen();
+                        Network().postUser();
+                      },
+                    ),
+                  ),
+                ],
+              )
+            : AddressScreen(controller: controller),
       ),
+    );
+  }
+}
+
+class CoustomIconButton extends StatelessWidget {
+  const CoustomIconButton(
+      {Key? key, this.label = '', required this.icon, required this.press})
+      : super(key: key);
+  final VoidCallback press;
+  final Icon icon;
+  final String label;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 60,
+          width: 60,
+          decoration:
+              const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+          child: IconButton(
+            iconSize: 30,
+            disabledColor: Colors.red,
+            onPressed: () {},
+            icon: icon,
+          ),
+        ),
+        Text(label)
+      ],
     );
   }
 }

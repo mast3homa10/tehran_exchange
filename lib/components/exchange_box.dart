@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants.dart';
-import 'my_search_delegate.dart';
+import 'custom_search_delegate.dart';
 
 class ExchangeBox extends StatelessWidget {
   const ExchangeBox(
@@ -71,7 +71,7 @@ class ExchangeBox extends StatelessWidget {
                     onTap: () {
                       // launch searchbox by tap here
                       showSearch(
-                          context: context, delegate: MySearchDelegate());
+                          context: context, delegate: CustomSearchDelegate());
                     },
                   ),
                 ],
@@ -106,9 +106,7 @@ class ExchangeBox extends StatelessWidget {
                       fontFamily: 'Yekanbakh',
                       fontSize: 20),
                 ),
-                onChanged: (value) {
-                  print(value);
-                },
+                onChanged: (value) {},
               ),
             )
           ],

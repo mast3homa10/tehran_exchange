@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-
 class CustomSmallButton extends StatelessWidget {
   const CustomSmallButton({Key? key, required this.press, required this.child})
       : super(key: key);

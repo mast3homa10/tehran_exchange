@@ -101,7 +101,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               width: 10,
             ),
             ConstrainedBox(
-              constraints: BoxConstraints.tightFor(width: 166, height: 62),
+              constraints:
+                  const BoxConstraints.tightFor(width: 166, height: 62),
               child: TextButton(
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<OutlinedBorder>(

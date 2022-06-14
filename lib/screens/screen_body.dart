@@ -142,28 +142,3 @@ class _ScreenBodyState extends State<ScreenBody> {
     );
   }
 }
-
-class sddfsafadsfadf extends StatefulWidget {
-  const sddfsafadsfadf({Key? key}) : super(key: key);
-
-  @override
-  State<sddfsafadsfadf> createState() => _sddfsafadsfadfState();
-}
-
-class _sddfsafadsfadfState extends State<sddfsafadsfadf> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavyBar(
-        onItemSelected: (value) {
-          print(value);
-        },
-        items: [
-          BottomNavyBarItem(icon: Icon(Icons.add), title: Text('title')),
-          BottomNavyBarItem(icon: Icon(Icons.add), title: Text('title')),
-          BottomNavyBarItem(icon: Icon(Icons.add), title: Text('title')),
-        ],
-      ),
-    );
-  }
-}

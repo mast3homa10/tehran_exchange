@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CurrencyModel {
@@ -7,7 +7,51 @@ class CurrencyModel {
   double? price;
   String? label;
   Widget? icon;
-  CurrencyModel({this.name, this.price, this.label, this.icon});
+  String? symbol;
+  String? engName;
+  String? faName;
+  String? imageUrl;
+  bool? hasExternalId;
+  bool? isFiatCurrency;
+  bool? isFeatured;
+  bool? isStableCoin;
+  bool? supportsFixedRate;
+  String? inNetwork;
+  bool? availableForBuy;
+  bool? availableForSell;
+  String? legacyTicker;
+  bool? isActive;
+
+  CurrencyModel(
+      {this.name,
+      this.price,
+      this.label,
+      this.icon,
+      this.symbol,
+      this.engName,
+      this.faName,
+      this.imageUrl,
+      this.hasExternalId,
+      this.isFiatCurrency,
+      this.isFeatured,
+      this.isStableCoin,
+      this.supportsFixedRate,
+      this.inNetwork,
+      this.availableForBuy,
+      this.availableForSell,
+      this.legacyTicker,
+      this.isActive});
+  CurrencyModel.fromJson(Map<String, dynamic> json)
+      : symbol = json['symbol'],
+        engName = json['engName'],
+        faName = json['faName'],
+        imageUrl = json['imageUrl'].toList();
+
+  List<CurrencyModel> CurrencyFromJson(String str) => List<CurrencyModel>.from(
+      json.decode(str).map((x) => CurrencyModel.fromJson(x)));
+
+  @override
+  toString() => "{symbol: $symbol}, {engName: $engName}, {faName: $faName}";
 }
 
 List<CurrencyModel> dataList = [

@@ -66,7 +66,7 @@ class GuideScreen extends StatelessWidget {
         ),
         PageViewModel(
           title: "پشتیبانی 24 ساعته",
-          bodyWidget: Text(
+          bodyWidget: const Text(
             "ارتباط با ما از طریق چت",
             style: kDescriptionTextStyle,
           ),
@@ -105,20 +105,20 @@ class GuideScreen extends StatelessWidget {
       nextStyle: ButtonStyle(
         side: MaterialStateProperty.all(
           BorderSide.lerp(
-              BorderSide(
+              const BorderSide(
                 width: 10.0,
               ),
-              BorderSide(),
+              const BorderSide(),
               10.0),
         ),
       ),
       doneStyle: ButtonStyle(
         side: MaterialStateProperty.all(
           BorderSide.lerp(
-              BorderSide(
+              const BorderSide(
                 width: 10.0,
               ),
-              BorderSide(),
+              const BorderSide(),
               10.0),
         ),
       ),

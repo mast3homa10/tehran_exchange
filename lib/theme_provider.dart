@@ -42,10 +42,10 @@ class MyThemes {
           ),
         ),
       )),
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFF0F1119),
       ),
-      bottomAppBarTheme: BottomAppBarTheme(color: Color(0xFF0F1119)));
+      bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xFF0F1119)));
 
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
@@ -66,9 +66,9 @@ class MyThemes {
         ),
       ),
     )),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFFEFF4FF),
     ),
-    bottomAppBarTheme: BottomAppBarTheme(color: Color(0xFFEFF4FF)),
+    bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xFFEFF4FF)),
   );
 }
