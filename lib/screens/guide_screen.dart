@@ -127,7 +127,7 @@ class GuideScreen extends StatelessWidget {
         width: 164,
         decoration: BoxDecoration(
           border: Border.all(
-            color: kButtonBackgroundColorLightMode,
+            color: kLightButtonColor,
             style: BorderStyle.solid,
             width: 2.0,
           ),
@@ -140,12 +140,12 @@ class GuideScreen extends StatelessWidget {
             children: const [
               Icon(
                 FontAwesomeIcons.angleRight,
-                color: kBackgroundColorLightMode,
+                // color: kBackgroundColorLightMode,
                 size: 20,
               ),
               Text(
                 'بعدی',
-                style: kButtonTextStyle_2,
+                //todo : change style
               ),
             ],
           ),
@@ -161,7 +161,7 @@ class GuideScreen extends StatelessWidget {
         size: Size(10.0, 10.0),
         color: Color(0xFFBDBDBD),
         activeSize: Size(15.0, 15.0),
-        activeColor: kButtonBackgroundColorLightMode,
+        activeColor: kLightButtonColor,
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(500.0)),
         ),

@@ -67,7 +67,7 @@ class AddressScreen extends StatelessWidget {
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(
-                          color: kChangerContainerColor,
+                          color: kLightChangerColor,
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12.0),
                           border: Border.all(

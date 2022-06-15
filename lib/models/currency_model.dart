@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CurrencyModel {
@@ -46,9 +45,6 @@ class CurrencyModel {
         engName = json['engName'],
         faName = json['faName'],
         imageUrl = json['imageUrl'].toList();
-
-  List<CurrencyModel> CurrencyFromJson(String str) => List<CurrencyModel>.from(
-      json.decode(str).map((x) => CurrencyModel.fromJson(x)));
 
   @override
   toString() => "{symbol: $symbol}, {engName: $engName}, {faName: $faName}";

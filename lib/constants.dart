@@ -3,17 +3,29 @@ import 'package:flutter/material.dart';
 import 'components/toggle_switch_button.dart';
 import 'ui/intro/model/page_decoration.dart';
 
-const Color kBackgroundColorLightMode = Colors.white;
-const Color kButtonBackgroundColorLightMode = Color(0xFFA822E7);
-const Color kChangerContainerColor = Color(0xFF0F1119);
+const Color kLightBackgroundColor = Color(0xFFE5E5E5);
+const Color kLightAppBarColor = Color(0xFFEFF4FF);
+const Color kLightNavBarColor = Color(0xFFEFF4FF);
+const Color kLightButtonColor = Color(0xFFA822E7);
+const Color kLightChangerColor = Color(0xFF0F1119);
 
-const TextStyle kButtonTextStyle_1 = TextStyle(
-    fontFamily: 'Yekanbakh',
-    fontSize: 18,
-    color: kButtonBackgroundColorLightMode);
+const Color kDarkBackgroundColor = Color(0xFF171C28);
+const Color kDarkAppBarColor = Color(0xFF0F1119);
+const Color kDarkNavBarColor = Color(0xFF0E0F17);
+const Color kDarkButtonColor = Color(0xFF27E2FF);
+const Color kDarkChangerColor = Color(0xFFEFF4FF);
 
-const TextStyle kButtonTextStyle_2 = TextStyle(
-    fontFamily: 'Yekanbakh', fontSize: 18, color: kBackgroundColorLightMode);
+const TextStyle kTextStyleLight5 = TextStyle(
+    fontFamily: 'Yekanbakh', fontSize: 18, color: kLightBackgroundColor);
+
+const TextStyle kTextStyleDark5 = TextStyle(
+    fontFamily: 'Yekanbakh', fontSize: 18, color: kDarkBackgroundColor);
+
+const TextStyle kTextButtonTextStyleLight5 =
+    TextStyle(fontFamily: 'Yekanbakh', fontSize: 18, color: Color(0xFFA822E7));
+
+const TextStyle kTextButtonTextStyleDark5 =
+    TextStyle(fontFamily: 'Yekanbakh', fontSize: 18, color: kDarkButtonColor);
 
 const TextStyle kDescriptionTextStyle =
     TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Yekanbakh');

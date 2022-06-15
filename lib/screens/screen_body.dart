@@ -6,9 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/menu_screen.dart';
 import '../screens/support_screen.dart';
 import '../screens/history_screen.dart';
-import '../ui/nav_bar/nav_bar.dart';
+import '../ui/nav_bar/first_nav_bar.dart';
 import '../constants.dart';
-import 'exchange_screen.dart';
+import 'exchange_screen_body.dart';
 
 class ScreenBody extends StatefulWidget {
   const ScreenBody({Key? key}) : super(key: key);
@@ -97,30 +97,30 @@ class _ScreenBodyState extends State<ScreenBody> {
           height: 82,
           decoration:
               BoxDecoration(border: Border.all(width: 1.0, color: Colors.grey)),
-          child: BottomNavyBar(
+          child: BottomNavBar(
             selectedIndex: _currentIndex,
             showElevation: true,
             itemCornerRadius: 24,
             curve: Curves.easeIn,
             onItemSelected: (index) => setState(() => _currentIndex = index),
-            items: <BottomNavyBarItem>[
-              BottomNavyBarItem(
+            items: <BottomNavBarItem>[
+              BottomNavBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColorLightMode,
+                activeColor: kLightButtonColor,
                 icon: const Icon(FontAwesomeIcons.ellipsisVertical),
                 title: const Text('منو'),
                 textAlign: TextAlign.center,
               ),
-              BottomNavyBarItem(
+              BottomNavBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColorLightMode,
+                activeColor: kLightButtonColor,
                 icon: const Icon(FontAwesomeIcons.headset),
                 title: const Text('پشتیبانی'),
                 textAlign: TextAlign.center,
               ),
-              BottomNavyBarItem(
+              BottomNavBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColorLightMode,
+                activeColor: kLightButtonColor,
                 icon: const Icon(
                   // ignore: deprecated_member_use
                   FontAwesomeIcons.exchange,
@@ -128,9 +128,9 @@ class _ScreenBodyState extends State<ScreenBody> {
                 title: const Text('مبادله '),
                 textAlign: TextAlign.center,
               ),
-              BottomNavyBarItem(
+              BottomNavBarItem(
                 inactiveColor: Colors.black,
-                activeColor: kButtonBackgroundColorLightMode,
+                activeColor: kLightButtonColor,
                 icon: const Icon(FontAwesomeIcons.clockRotateLeft),
                 title: const Text('تاریخچه سفارشات'),
                 textAlign: TextAlign.center,

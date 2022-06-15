@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-
 class CustomBigButton extends StatelessWidget {
   const CustomBigButton(
       {Key? key, this.label = 'کلیک', required this.onPressed})
@@ -21,8 +19,7 @@ class CustomBigButton extends StatelessWidget {
           height: 62,
           child: Center(
               child: Text(
-            label,
-            style: kButtonTextStyle_2,
+            label, //todo : change style
           )),
         ),
         onPressed: onPressed);

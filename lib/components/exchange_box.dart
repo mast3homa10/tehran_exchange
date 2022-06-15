@@ -29,7 +29,7 @@ class ExchangeBox extends StatelessWidget {
           style: BorderStyle.solid,
           width: 2.0,
         ),
-        color: kChangerContainerColor,
+        color: kLightChangerColor,
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Center(

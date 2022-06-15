@@ -1,12 +1,15 @@
+library bottom_navy_bar;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// A beautiful and animated bottom navigation that paints a rounded shape
 /// around its [items] to provide a wonderful look.
 ///
 /// Update [selectedIndex] to change the selected item.
 /// [selectedIndex] is required and must not be null.
-class BottomNavyBar extends StatelessWidget {
-  const BottomNavyBar({
+class TopNavBar extends StatelessWidget {
+  TopNavBar({
     Key? key,
     this.selectedIndex = 0,
     this.showElevation = true,
@@ -41,7 +44,7 @@ class BottomNavyBar extends StatelessWidget {
 
   /// Defines the appearance of the buttons that are displayed in the bottom
   /// navigation bar. This should have at least two items and five at most.
-  final List<BottomNavyBarItem> items;
+  final List<TopNavBarItem> items;
 
   /// A callback that will be called when a item is pressed.
   final ValueChanged<int> onItemSelected;
@@ -87,7 +90,8 @@ class BottomNavyBar extends StatelessWidget {
                 onTap: () => onItemSelected(index),
                 child: _ItemWidget(
                   item: item,
-                  iconSize: iconSize,
+                  iconSize: item.isIconShow ? iconSize : 0,
+                  isIconShow: item.isIconShow,
                   isSelected: index == selectedIndex,
                   backgroundColor: bgColor,
                   itemCornerRadius: itemCornerRadius,
@@ -106,12 +110,12 @@ class BottomNavyBar extends StatelessWidget {
 class _ItemWidget extends StatelessWidget {
   final double iconSize;
   final bool isSelected;
-  final BottomNavyBarItem item;
+  final TopNavBarItem item;
   final Color backgroundColor;
   final double itemCornerRadius;
   final Duration animationDuration;
   final Curve curve;
-
+  final bool isIconShow;
   const _ItemWidget({
     Key? key,
     required this.item,
@@ -120,6 +124,7 @@ class _ItemWidget extends StatelessWidget {
     required this.animationDuration,
     required this.itemCornerRadius,
     required this.iconSize,
+    this.isIconShow = true,
     this.curve = Curves.linear,
   }) : super(key: key);
 
@@ -129,44 +134,54 @@ class _ItemWidget extends StatelessWidget {
       container: true,
       selected: isSelected,
       child: AnimatedContainer(
-        width: 50,
-        height: 50,
+        width: isSelected ? 130 : 50,
+        height: double.maxFinite,
         duration: animationDuration,
         curve: curve,
+        decoration: BoxDecoration(
+          color:
+              isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
+          borderRadius: BorderRadius.circular(itemCornerRadius),
+        ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          child: SizedBox(
-            width: 50,
-            child: Column(
-              children: [
-                IconTheme(
-                  data: IconThemeData(
-                    size: iconSize,
-                    color: isSelected
-                        ? item.activeColor.withOpacity(1)
-                        : item.inactiveColor ?? item.activeColor,
-                  ),
-                  child: item.icon,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: Container(
-                    child: DefaultTextStyle.merge(
-                      style: TextStyle(
-                        color: isSelected
-                            ? item.activeColor.withOpacity(1)
-                            : item.inactiveColor ?? item.activeColor,
-                        fontFamily: 'Yekanbakh',
-                        fontWeight: FontWeight.bold,
+          physics: NeverScrollableScrollPhysics(),
+          child: Container(
+            width: isSelected ? 130 : 50,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                isIconShow
+                    ? IconTheme(
+                        data: IconThemeData(
+                          size: iconSize,
+                          color: isSelected
+                              ? item.activeColor.withOpacity(1)
+                              : item.inactiveColor == null
+                                  ? item.activeColor
+                                  : item.inactiveColor,
+                        ),
+                        child: item.icon,
+                      )
+                    : Container(),
+                if (isSelected)
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: DefaultTextStyle.merge(
+                        style: TextStyle(
+                          color: item.activeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        textAlign: item.textAlign,
+                        child: item.title,
                       ),
-                      maxLines: 1,
-                      child: item.title,
                     ),
                   ),
-                ),
               ],
             ),
           ),
@@ -176,10 +191,11 @@ class _ItemWidget extends StatelessWidget {
   }
 }
 
-/// The [BottomNavyBar.items] definition.
-class BottomNavyBarItem {
-  BottomNavyBarItem({
+/// The [TopNavBar.items] definition.
+class TopNavBarItem {
+  TopNavBarItem({
     required this.icon,
+    this.isIconShow = true,
     required this.title,
     this.activeColor = Colors.blue,
     this.textAlign,
@@ -188,6 +204,7 @@ class BottomNavyBarItem {
 
   /// Defines this item's icon which is placed in the right side of the [title].
   final Widget icon;
+  final bool isIconShow;
 
   /// Defines this item's title which placed in the left side of the [icon].
   final Widget title;

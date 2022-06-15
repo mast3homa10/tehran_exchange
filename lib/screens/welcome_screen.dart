@@ -25,7 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-              color: kBackgroundColorLightMode,
+              // color: kBackgroundColorLightMode,
               image: DecorationImage(
                   image: AssetImage('assets/images/welcomebackground.png'),
                   fit: BoxFit.cover)),
@@ -118,7 +118,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: const Center(
                   child: Text(
                     'مطالعه راهنما',
-                    style: kButtonTextStyle_1,
                   ),
                 ),
               ),
@@ -129,7 +128,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: CustomSmallButton(
                 child: const Text(
                   'شروع تبادل',
-                  style: kButtonTextStyle_2,
+
+                  //todo : change style
                 ),
                 press: () {
                   // Get.snackbar('توجه!', "در حال توسعه ...");
