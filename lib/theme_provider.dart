@@ -32,6 +32,7 @@ class ThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
+      cardColor: Color(0xFF0A0C11),
       backgroundColor: kDarkButtonColor,
       scaffoldBackgroundColor: Colors.grey.shade900,
       primaryColor: Colors.black,
@@ -74,6 +75,7 @@ class MyThemes {
 //////////////////////////// Light Theme //////////////////////////////////////////
   static final lightTheme = ThemeData(
       backgroundColor: kLightButtonColor,
+      cardColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       primaryColor: Colors.white,
       elevatedButtonTheme: ElevatedButtonThemeData(

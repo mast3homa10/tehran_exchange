@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -34,14 +35,14 @@ class Network {
             list.add(CurrencyModel.fromJson(item));
           }
         } catch (e) {
-          print(e);
+          log("$e");
         }
 
-        print("///////////////////////////////////////");
+        log("///////////////////////////////////////");
       }
-      print(list);
+      log("$list");
     } else {
-      print(response.statusCode);
+      log("${response.statusCode}");
     }
   }
 }

@@ -95,7 +95,7 @@ class GuideScreen extends StatelessWidget {
         ),
       ),
       onDone: () {
-        Get.off(const ScreenBody());
+        Get.off(ScreenBody());
       }, //_onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: false,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tehran_exchange/components/custom_big_button.dart';
-import 'package:tehran_exchange/screens/screen_body.dart';
-import 'package:tehran_exchange/screens/welcome_screen.dart';
 
-import 'exchange_screen_body.dart';
+import 'package:get/get.dart';
+
+import '../components/custom_big_button.dart';
+import '../screens/screen_body.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({Key? key}) : super(key: key);

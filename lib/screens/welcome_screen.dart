@@ -6,6 +6,7 @@ import '../components/custom_small_button.dart';
 import '../controllers/controller_1.dart';
 import 'guide_screen.dart';
 import 'screen_body.dart';
+import 'sub_screen/qr_code_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -130,7 +131,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 press: () {
                   // Get.snackbar('توجه!', "در حال توسعه ...");
-                  Get.off(const ScreenBody());
+                  // Get.off(ScreenBody());
+                  Get.off(QRCodeScreen());
                 },
               ),
             ),

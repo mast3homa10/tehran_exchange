@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +11,7 @@ import '../theme_provider.dart';
 import 'screens/exchange_screen_body.dart';
 import 'screens/guide_screen.dart';
 import 'screens/screen_body.dart';
+import 'screens/sub_screen/qr_code_screen.dart';
 import 'screens/welcome_screen.dart';
 
 void main() async {
@@ -19,7 +22,7 @@ void main() async {
   ]);
   SharedPreferences.getInstance().then((prefs) {
     var isDarkTheme = prefs.getBool("darkTheme") ?? false;
-    print(isDarkTheme);
+    log("$isDarkTheme");
     runApp(ChangeNotifierProvider(
         create: (context) => ThemeProvider(isDarkTheme),
         builder: (context, _) {
@@ -42,12 +45,17 @@ void main() async {
               ),
               GetPage(
                 name: '/main_screen',
-                page: () => const ScreenBody(),
+                page: () => ScreenBody(),
                 transition: Transition.downToUp,
               ),
               GetPage(
                 name: '/exchange_screen',
                 page: () => ExchangeScreen(),
+                transition: Transition.downToUp,
+              ),
+              GetPage(
+                name: '/scanner_screen',
+                page: () => QRCodeScreen(),
                 transition: Transition.downToUp,
               ),
             ],
