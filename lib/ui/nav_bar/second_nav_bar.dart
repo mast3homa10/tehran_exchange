@@ -1,7 +1,6 @@
 library bottom_navy_bar;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// A beautiful and animated bottom navigation that paints a rounded shape
 /// around its [items] to provide a wonderful look.
@@ -9,7 +8,7 @@ import 'package:flutter/widgets.dart';
 /// Update [selectedIndex] to change the selected item.
 /// [selectedIndex] is required and must not be null.
 class TopNavBar extends StatelessWidget {
-  TopNavBar({
+  const TopNavBar({
     Key? key,
     this.selectedIndex = 0,
     this.showElevation = true,
@@ -64,7 +63,8 @@ class TopNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
+    final bgColor =
+        backgroundColor ?? Theme.of(context).scaffoldBackgroundColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -139,16 +139,17 @@ class _ItemWidget extends StatelessWidget {
         duration: animationDuration,
         curve: curve,
         decoration: BoxDecoration(
-          color:
-              isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
+          color: isSelected
+              ? Theme.of(context).backgroundColor.withOpacity(0.2)
+              : backgroundColor,
           borderRadius: BorderRadius.circular(itemCornerRadius),
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Container(
             width: isSelected ? 130 : 50,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -159,10 +160,9 @@ class _ItemWidget extends StatelessWidget {
                         data: IconThemeData(
                           size: iconSize,
                           color: isSelected
-                              ? item.activeColor.withOpacity(1)
-                              : item.inactiveColor == null
-                                  ? item.activeColor
-                                  : item.inactiveColor,
+                              ? Theme.of(context).backgroundColor.withOpacity(1)
+                              : Theme.of(context).iconTheme.color ??
+                                  item.activeColor,
                         ),
                         child: item.icon,
                       )
@@ -170,12 +170,13 @@ class _ItemWidget extends StatelessWidget {
                 if (isSelected)
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: DefaultTextStyle.merge(
-                        style: TextStyle(
-                          color: item.activeColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              color: Theme.of(context).backgroundColor,
+                              fontFamily: "YekanBakh",
+                              fontWeight: FontWeight.bold,
+                            ),
                         maxLines: 1,
                         textAlign: item.textAlign,
                         child: item.title,

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../components/convert_button.dart';
 import '../../components/custom_big_button.dart';
 import '../../components/exchange_box.dart';
 import '../../controllers/controller_1.dart';
-import '../../constants.dart';
 
-class AddressScreen extends StatelessWidget {
-  const AddressScreen({
+class CalculateScreen extends StatelessWidget {
+  const CalculateScreen({
     Key? key,
     required this.controller,
   }) : super(key: key);
@@ -34,7 +34,7 @@ class AddressScreen extends StatelessWidget {
                 cryptoTitle: 'USDT',
                 iconColour: Colors.green,
               ),
-              // calculate button
+              // calculate result
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Row(
@@ -42,7 +42,13 @@ class AddressScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Text('BTC ~ '),
+                        Text(
+                          'BTC ~ ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(fontWeight: FontWeight.w700),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                               color: Colors.green,
@@ -50,52 +56,30 @@ class AddressScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Row(
-                              children: const [
+                              children: [
                                 Text(
                                   '2313645661',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.0,
+                                      ),
                                 ),
-                                Icon(FontAwesomeIcons.circleArrowDown,
-                                    color: Colors.white),
+                                const Padding(
+                                  padding: EdgeInsets.all(2.0),
+                                  child: Icon(FontAwesomeIcons.circleArrowDown,
+                                      color: Colors.white),
+                                ),
                               ],
                             ),
                           ),
                         )
                       ],
                     ),
-                    GestureDetector(
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: kLightChangerColor,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12.0),
-                          border: Border.all(
-                            color: const Color(0xFFEEEEEE),
-                            style: BorderStyle.solid,
-                            width: 0.8,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              FontAwesomeIcons.arrowUp,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            Icon(
-                              FontAwesomeIcons.arrowDown,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        Get.snackbar("توجه !", "در حال توسعه ...");
-                      },
-                    ),
+                    //  convret button
+                    const ConvretButton(),
                   ],
                 ),
               ),

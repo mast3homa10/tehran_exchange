@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tehran_exchange/components/custom_small_button.dart';
 
+import '../components/custom_small_button.dart';
 import '../controllers/controller_1.dart';
-import '../constants.dart';
 import 'guide_screen.dart';
 import 'screen_body.dart';
 
@@ -47,13 +46,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'خوش آمدید به',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontFamily: 'Yekanbakh',
-                    ),
+                    style: Theme.of(context).textTheme.headline2,
                     textAlign: TextAlign.center,
                   ),
                   Container(
@@ -78,15 +73,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                     ),
                   ),
-                  const Text(
+                  Text(
                     'تهران اکسچنج',
-                    style: kTitleTextStyle,
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                     textAlign: TextAlign.center,
                   ),
-                  const Text(
+                  Text(
                     'صرافی به حد و حصر کریپتو با بیش از 1000 \n'
                     'جفت تجاری سریع و ایمن',
-                    style: kDescriptionTextStyle,
+                    style: Theme.of(context).textTheme.headline5,
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -126,10 +123,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               constraints:
                   const BoxConstraints.tightFor(width: 166, height: 62),
               child: CustomSmallButton(
-                child: const Text(
+                child: Text(
                   'شروع تبادل',
-
-                  //todo : change style
+                  style: Theme.of(context).textTheme.button!.copyWith(
+                      color: Theme.of(context).scaffoldBackgroundColor),
                 ),
                 press: () {
                   // Get.snackbar('توجه!', "در حال توسعه ...");

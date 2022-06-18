@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/components/custom_big_button.dart';
-import 'package:tehran_exchange/controllers/controller_1.dart';
-
-import '../../constants.dart';
+import '../../components/custom_big_button.dart';
+import '../../controllers/controller_1.dart';
 
 class ExchangePart extends StatelessWidget {
   ExchangePart({
@@ -21,11 +19,12 @@ class ExchangePart extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             border: Border.all(
-              color: const Color(0xFFEEEEEE),
+              color: Theme.of(context).dividerTheme.color ??
+                  const Color(0xFFEEEEEE),
               style: BorderStyle.solid,
               width: 2.0,
             ),
-            color: kLightChangerColor,
+            color: Theme.of(context).appBarTheme.backgroundColor,
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Center(
@@ -40,8 +39,11 @@ class ExchangePart extends StatelessWidget {
                         shape: MaterialStateProperty.all<OutlinedBorder>(
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)))),
-                    child: const Text(
+                    child: Text(
                       "چسباندن",
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                          fontFamily: "Yekabakh",
+                          color: Theme.of(context).scaffoldBackgroundColor),
                     ),
                     onPressed: () {
                       Get.snackbar('توجه!', "در حال توسعه ...");
@@ -61,12 +63,13 @@ class ExchangePart extends StatelessWidget {
                         color: Colors.white,
                         fontFamily: 'Yekanbakh',
                         fontSize: 20),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'وارد کردن آدرس',
-                      hintStyle: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Yekanbakh',
-                          fontSize: 20),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(
+                              color: Theme.of(context).dividerTheme.color),
                     ),
                     onChanged: (value) {},
                   ),
@@ -81,7 +84,13 @@ class ExchangePart extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 18.0, left: 18.0),
               child: GestureDetector(
-                child: const Text('کیف پول ندارید؟'),
+                child: Text(
+                  'کیف پول ندارید؟',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Theme.of(context).dividerTheme.color),
+                ),
                 onTap: () {
                   Get.snackbar("توجه!", "در حال توسعه ...");
                 },

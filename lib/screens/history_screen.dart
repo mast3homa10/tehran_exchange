@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tehran_exchange/components/custom_big_button.dart';
+import 'package:tehran_exchange/screens/screen_body.dart';
+import 'package:tehran_exchange/screens/welcome_screen.dart';
+
+import 'exchange_screen_body.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -22,23 +26,32 @@ class HistoryScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Center(
+          Center(
             child: Text(
               'هنوز هیچ تراکنیش نداشتید!',
-              style: TextStyle(
-                  fontFamily: 'Yekanbakh',
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2!
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-          const Text(
-              'همه تراکنش های شما در این جا ذخیره خواهند شد. \nشما می توانید اولین تبادل خود را همین حال آغاز کنید'),
+          Text(
+            'همه تراکنش های شما در این جا ذخیره خواهند شد. \nشما می توانید اولین تبادل خود را همین حال آغاز کنید',
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: CustomBigButton(
               label: 'شروع تبادل',
               onPressed: () {
-                Get.snackbar('توجه!', "در حال توسعه ...");
+                // Get.snackbar(
+                //   'توجه!',
+                //   "در حال توسعه ...",
+                // );
+                Get.off(ScreenBody());
               },
             ),
           ),

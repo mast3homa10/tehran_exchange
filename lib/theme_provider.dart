@@ -17,7 +17,6 @@ class ThemeProvider extends ChangeNotifier {
       return brightness == Brightness.dark;
     } else {
       return themeMode == ThemeMode.dark;
-      print('isdark');
     }
   }
 
@@ -33,19 +32,19 @@ class ThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
+      backgroundColor: kDarkButtonColor,
       scaffoldBackgroundColor: Colors.grey.shade900,
       primaryColor: Colors.black,
       textTheme: const TextTheme(
-        headline1: TextStyle(),
-        bodyText1: TextStyle(),
-        bodyText2: TextStyle(),
-        button: kTextStyleDark5,
+        headline1: TextStyle(fontFamily: 'Yekanbakh', fontSize: 45),
+        headline2: TextStyle(fontFamily: 'Yekanbakh', fontSize: 30),
+        headline3: TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
+        headline4: TextStyle(fontFamily: 'Yekanbakh', fontSize: 18),
+        headline5: TextStyle(fontFamily: 'Yekanbakh', fontSize: 16),
+        button: TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
       ).apply(
         bodyColor: Colors.white,
-        displayColor: Colors.blue,
-      ),
-      buttonTheme: const ButtonThemeData(
-        buttonColor: Colors.amber,
+        displayColor: Colors.white,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -55,54 +54,59 @@ class MyThemes {
         ),
       ),
       textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-        side: MaterialStateProperty.all<BorderSide>(
-          const BorderSide(
+        style: TextButton.styleFrom(
+          primary: kDarkButtonColor, // This is a custom color variable
+          side: const BorderSide(
             width: 2,
-            color: Color(0xFF27E2FF),
+            color: kDarkButtonColor,
           ),
         ),
-      )),
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFF0F1119),
       ),
-      navigationBarTheme: NavigationBarThemeData(
+      navigationBarTheme: const NavigationBarThemeData(
         backgroundColor: Color(0xFF0F1119),
       ),
-      bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xFF0F1119)));
+      dividerTheme: const DividerThemeData(color: kDarkDividerColor),
+      iconTheme: const IconThemeData(color: kDarkIconColor));
 ////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Light Theme //////////////////////////////////////////
   static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    primaryColor: Colors.white,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          const Color(0xFFA822E7),
+      backgroundColor: kLightButtonColor,
+      scaffoldBackgroundColor: Colors.white,
+      primaryColor: Colors.white,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            const Color(0xFFA822E7),
+          ),
         ),
       ),
-    ),
-    textTheme: const TextTheme(
-      headline1: TextStyle(),
-      bodyText1: TextStyle(),
-      bodyText2: TextStyle(),
-      button: kTextStyleLight5,
-    ).apply(
-      bodyColor: Colors.black,
-      displayColor: Colors.blue,
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        primary: kLightButtonColor, // This is a custom color variable
-        textStyle: kTextButtonTextStyleLight5,
-        side: const BorderSide(
-          width: 2,
-          color: kLightButtonColor,
+      textTheme: const TextTheme(
+        headline1: TextStyle(fontFamily: 'Yekanbakh', fontSize: 45),
+        headline2: TextStyle(fontFamily: 'Yekanbakh', fontSize: 30),
+        headline3: TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
+        headline4: TextStyle(fontFamily: 'Yekanbakh', fontSize: 18),
+        headline5: TextStyle(fontFamily: 'Yekanbakh', fontSize: 16),
+        button: TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
+      ).apply(
+        bodyColor: Colors.black,
+        displayColor: Colors.black,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: kLightButtonColor, // This is a custom color variable
+          side: const BorderSide(
+            width: 2,
+            color: kLightButtonColor,
+          ),
         ),
       ),
-    ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFFEFF4FF),
-    ),
-    bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xFFEFF4FF)),
-  );
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFFEFF4FF),
+      ),
+      bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xFFEFF4FF)),
+      dividerTheme: const DividerThemeData(color: kLightDividerColor),
+      iconTheme: const IconThemeData(color: kLightIconColor));
 }

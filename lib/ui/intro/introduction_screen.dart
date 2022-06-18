@@ -500,7 +500,8 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                   width: double.infinity,
                   height: 80,
                   child: Container(
-                    decoration: const BoxDecoration(color: Color(0xFFEFF4FF)),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).appBarTheme.backgroundColor),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(

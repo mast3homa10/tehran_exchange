@@ -93,47 +93,56 @@ class _ScreenBodyState extends State<ScreenBody> {
             index: _currentIndex,
           ),
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar: SizedBox(
           height: 82,
-          decoration:
-              BoxDecoration(border: Border.all(width: 1.0, color: Colors.grey)),
-          child: BottomNavBar(
-            selectedIndex: _currentIndex,
-            showElevation: true,
-            itemCornerRadius: 24,
-            curve: Curves.easeIn,
-            onItemSelected: (index) => setState(() => _currentIndex = index),
-            items: <BottomNavBarItem>[
-              BottomNavBarItem(
-                inactiveColor: Colors.black,
-                activeColor: kLightButtonColor,
-                icon: const Icon(FontAwesomeIcons.ellipsisVertical),
-                title: const Text('منو'),
-                textAlign: TextAlign.center,
+          child: Column(
+            children: [
+              const Divider(
+                height: 3,
+                thickness: 2,
               ),
-              BottomNavBarItem(
-                inactiveColor: Colors.black,
-                activeColor: kLightButtonColor,
-                icon: const Icon(FontAwesomeIcons.headset),
-                title: const Text('پشتیبانی'),
-                textAlign: TextAlign.center,
-              ),
-              BottomNavBarItem(
-                inactiveColor: Colors.black,
-                activeColor: kLightButtonColor,
-                icon: const Icon(
-                  // ignore: deprecated_member_use
-                  FontAwesomeIcons.exchange,
+              Expanded(
+                child: BottomNavBar(
+                  selectedIndex: _currentIndex,
+                  showElevation: true,
+                  itemCornerRadius: 24,
+                  curve: Curves.easeIn,
+                  onItemSelected: (index) =>
+                      setState(() => _currentIndex = index),
+                  items: <BottomNavBarItem>[
+                    BottomNavBarItem(
+                      inactiveColor: Theme.of(context).iconTheme.color,
+                      activeColor: kLightButtonColor,
+                      icon: const Icon(FontAwesomeIcons.ellipsisVertical),
+                      title: const Text('منو'),
+                      textAlign: TextAlign.center,
+                    ),
+                    BottomNavBarItem(
+                      inactiveColor: Colors.black,
+                      activeColor: kLightButtonColor,
+                      icon: const Icon(FontAwesomeIcons.headset),
+                      title: const Text('پشتیبانی'),
+                      textAlign: TextAlign.center,
+                    ),
+                    BottomNavBarItem(
+                      inactiveColor: Colors.black,
+                      activeColor: kLightButtonColor,
+                      icon: const Icon(
+                        // ignore: deprecated_member_use
+                        FontAwesomeIcons.exchange,
+                      ),
+                      title: const Text('مبادله '),
+                      textAlign: TextAlign.center,
+                    ),
+                    BottomNavBarItem(
+                      inactiveColor: Colors.black,
+                      activeColor: kLightButtonColor,
+                      icon: const Icon(FontAwesomeIcons.clockRotateLeft),
+                      title: const Text('تاریخچه سفارشات'),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                title: const Text('مبادله '),
-                textAlign: TextAlign.center,
-              ),
-              BottomNavBarItem(
-                inactiveColor: Colors.black,
-                activeColor: kLightButtonColor,
-                icon: const Icon(FontAwesomeIcons.clockRotateLeft),
-                title: const Text('تاریخچه سفارشات'),
-                textAlign: TextAlign.center,
               ),
             ],
           ),

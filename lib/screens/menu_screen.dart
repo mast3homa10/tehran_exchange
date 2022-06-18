@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class MenuScreen extends StatelessWidget {
           const Center(
             child: Text(
               'test1',
-              style: kTitleTextStyle,
             ),
           ),
           SizedBox(

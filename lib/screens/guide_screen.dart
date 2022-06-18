@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/screens/screen_body.dart';
 
+import '../screens/screen_body.dart';
+import '../ui/intro/model/page_decoration.dart';
 import '../ui/intro/introduction_screen.dart';
 import '../ui/intro/model/page_view_model.dart';
-import '../constants.dart';
 
 class GuideScreen extends StatelessWidget {
   GuideScreen({Key? key}) : super(key: key);
@@ -23,9 +23,19 @@ class GuideScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final kPageDecoration = PageDecoration(
+      titleTextStyle: Theme.of(context)
+          .textTheme
+          .headline2!
+          .copyWith(fontWeight: FontWeight.w700),
+      bodyTextStyle: Theme.of(context).textTheme.headline5!,
+
+      // bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      pageColor: Theme.of(context).scaffoldBackgroundColor,
+      imagePadding: EdgeInsets.zero,
+    );
     return IntroductionScreen(
       key: introKey,
-      globalBackgroundColor: Colors.white,
       globalHeader: const Align(
         alignment: Alignment.topRight,
         child: SafeArea(
@@ -38,40 +48,37 @@ class GuideScreen extends StatelessWidget {
 
       pages: [
         PageViewModel(
-          title: "تبادل کریپتو در 3 مرحله",
-          bodyWidget: Text(
-            guideText1,
-            style: kDescriptionTextStyle,
-          ),
-          image: _buildImage(),
-          decoration: kPageDecorationLightMode,
-        ),
+            title: "تبادل کریپتو در 3 مرحله",
+            bodyWidget: Text(
+              guideText1,
+              style: Theme.of(context).textTheme.headline5,
+            ),
+            image: _buildImage(),
+            decoration: kPageDecoration),
         PageViewModel(
           title: "خرید و فروش کریپتو برای فیات",
-          bodyWidget: const Text(
-            "مبادله وجه با تمامی کارت های عضو شتال",
-            style: kDescriptionTextStyle,
-          ),
+          bodyWidget: Text("مبادله وجه با تمامی کارت های عضو شتال",
+              style: Theme.of(context).textTheme.headline5),
           image: _buildImage(),
-          decoration: kPageDecorationLightMode,
+          decoration: kPageDecoration,
         ),
         PageViewModel(
           title: "نرخ ثابت برای 20 دقیقه",
-          bodyWidget: const Text(
+          bodyWidget: Text(
             "اگه مشکلی باشه با ما از طرق چت حلش کنین",
-            style: kDescriptionTextStyle,
+            style: Theme.of(context).textTheme.headline5,
           ),
           image: _buildImage(),
-          decoration: kPageDecorationLightMode,
+          decoration: kPageDecoration,
         ),
         PageViewModel(
           title: "پشتیبانی 24 ساعته",
-          bodyWidget: const Text(
+          bodyWidget: Text(
             "ارتباط با ما از طریق چت",
-            style: kDescriptionTextStyle,
+            style: Theme.of(context).textTheme.headline5,
           ),
           image: _buildImage(),
-          decoration: kPageDecorationLightMode,
+          decoration: kPageDecoration,
         ),
       ],
       done: Container(
@@ -80,11 +87,10 @@ class GuideScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             'بستن راهنما',
-            style: TextStyle(
-                fontFamily: 'Yekanbakh', fontSize: 18, color: Colors.black),
+            style: Theme.of(context).textTheme.headline4!,
           ),
         ),
       ),
@@ -127,25 +133,32 @@ class GuideScreen extends StatelessWidget {
         width: 164,
         decoration: BoxDecoration(
           border: Border.all(
-            color: kLightButtonColor,
+            color: Theme.of(context).backgroundColor,
             style: BorderStyle.solid,
             width: 2.0,
           ),
-          color: const Color(0xFFA822E7),
+          boxShadow: [
+            BoxShadow(color: Theme.of(context).backgroundColor, blurRadius: 10)
+          ],
+          color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(
                 FontAwesomeIcons.angleRight,
-                // color: kBackgroundColorLightMode,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 size: 20,
               ),
               Text(
                 'بعدی',
                 //todo : change style
+                style: Theme.of(context)
+                    .textTheme
+                    .button!
+                    .copyWith(color: Theme.of(context).scaffoldBackgroundColor),
               ),
             ],
           ),
@@ -157,18 +170,18 @@ class GuideScreen extends StatelessWidget {
       controlsPadding: kIsWeb
           ? const EdgeInsets.all(12.0)
           : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
-        activeSize: Size(15.0, 15.0),
-        activeColor: kLightButtonColor,
-        activeShape: RoundedRectangleBorder(
+      dotsDecorator: DotsDecorator(
+        size: const Size(10.0, 10.0),
+        color: Theme.of(context).appBarTheme.backgroundColor!,
+        activeSize: const Size(15.0, 15.0),
+        activeColor: Theme.of(context).backgroundColor,
+        activeShape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(500.0)),
         ),
       ),
-      dotsContainerDecorator: const ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
+      dotsContainerDecorator: ShapeDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),

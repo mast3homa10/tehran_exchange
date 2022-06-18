@@ -20,6 +20,10 @@ class CustomBigButton extends StatelessWidget {
           child: Center(
               child: Text(
             label, //todo : change style
+            style: Theme.of(context)
+                .textTheme
+                .button!
+                .copyWith(color: Theme.of(context).scaffoldBackgroundColor),
           )),
         ),
         onPressed: onPressed);

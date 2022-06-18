@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../constants.dart';
 import 'custom_search_delegate.dart';
 
 class ExchangeBox extends StatelessWidget {
@@ -25,11 +24,12 @@ class ExchangeBox extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(
-          color: const Color(0xFFEEEEEE),
+          color:
+              Theme.of(context).dividerTheme.color ?? const Color(0xFFEEEEEE),
           style: BorderStyle.solid,
           width: 2.0,
         ),
-        color: kLightChangerColor,
+        color: Theme.of(context).appBarTheme.backgroundColor,
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Center(
@@ -52,7 +52,10 @@ class ExchangeBox extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5!
+                        .copyWith(color: Theme.of(context).dividerTheme.color),
                   ),
                   GestureDetector(
                     child: Row(
@@ -61,11 +64,16 @@ class ExchangeBox extends StatelessWidget {
                       children: [
                         Text(
                           cryptoTitle,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 18),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(
+                                  color: Theme.of(context).dividerTheme.color,
+                                  fontSize: 18),
                         ),
-                        const Icon(FontAwesomeIcons.angleDown,
-                            color: Colors.white),
+                        const Icon(
+                          FontAwesomeIcons.angleDown,
+                        ),
                       ],
                     ),
                     onTap: () {
@@ -86,27 +94,29 @@ class ExchangeBox extends StatelessWidget {
               endIndent: 9,
             ),
             if (isHaveIcon)
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   FontAwesomeIcons.unlockKeyhole,
-                  color: Colors.white,
+                  color: Theme.of(context).dividerTheme.color,
                 ),
               ),
-            SizedBox(
-              width: 150,
-              // todo: fix this textfield
-              child: TextField(
-                style: const TextStyle(
-                    color: Colors.white, fontFamily: 'Yekanbakh', fontSize: 20),
-                decoration: const InputDecoration(
-                  hintText: 'مقدار را وارد کنید',
-                  hintStyle: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Yekanbakh',
-                      fontSize: 20),
+            Expanded(
+              child: SizedBox(
+                width: 150,
+                // todo: fix this textfield
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
+                  decoration: InputDecoration(
+                      hintText: 'مقدار را وارد کنید',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(
+                              color: Theme.of(context).dividerTheme.color)),
+                  onChanged: (value) {},
                 ),
-                onChanged: (value) {},
               ),
             )
           ],

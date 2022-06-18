@@ -24,8 +24,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
       children: [
         Container(
           margin: const EdgeInsets.all(8.0),
@@ -44,51 +43,26 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                 child: Column(
               children: [
                 SizedBox(
-                  width: Get.width,
-                  height: Get.height * 0.15,
-                  child: TopNavBar(
-                    selectedIndex: currentIndex,
-                    showElevation: true,
-                    itemCornerRadius: 24,
-                    curve: Curves.easeIn,
-                    onItemSelected: (index) =>
-                        setState(() => currentIndex = index),
-                    items: <TopNavBarItem>[
-                      TopNavBarItem(
-                        inactiveColor: Colors.black,
-                        activeColor: kLightButtonColor,
-                        icon: const Icon(FontAwesomeIcons.qrcode),
-                        isIconShow: false,
-                        title: const Text('مورد علاقه'),
-                        textAlign: TextAlign.center,
+                    width: Get.width,
+                    height: Get.height * 0.15,
+                    child: Container(
+                      child: Row(
+                        children: [Text('data'), Text('data')],
                       ),
-                      TopNavBarItem(
-                        inactiveColor: Colors.black,
-                        activeColor: kLightButtonColor,
-                        icon: const Icon(FontAwesomeIcons.wallet),
-                        isIconShow: false,
-                        title: const Text('کیف پول های اخیر'),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
+                    )),
                 subScreen[currentIndex],
               ],
             )),
           ),
         ),
         SizedBox(height: Get.height / 3.53),
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: CustomBigButton(
-            label: 'اضافه کردن کیف پول',
-            onPressed: () {
-              Get.snackbar('توجه!', "در حال توسعه ...");
-            },
-          ),
+        CustomBigButton(
+          label: 'اضافه کردن کیف پول',
+          onPressed: () {
+            Get.snackbar('توجه!', "در حال توسعه ...");
+          },
         ),
       ],
-    ));
+    );
   }
 }

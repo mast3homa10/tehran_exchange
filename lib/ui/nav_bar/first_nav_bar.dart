@@ -61,7 +61,8 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
+    final bgColor =
+        backgroundColor ?? Theme.of(context).navigationBarTheme.backgroundColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -89,7 +90,7 @@ class BottomNavBar extends StatelessWidget {
                   item: item,
                   iconSize: iconSize,
                   isSelected: index == selectedIndex,
-                  backgroundColor: bgColor,
+                  backgroundColor: bgColor ?? Colors.white,
                   itemCornerRadius: itemCornerRadius,
                   animationDuration: animationDuration,
                   curve: curve,
@@ -144,8 +145,8 @@ class _ItemWidget extends StatelessWidget {
                   data: IconThemeData(
                     size: iconSize,
                     color: isSelected
-                        ? item.activeColor.withOpacity(1)
-                        : item.inactiveColor ?? item.activeColor,
+                        ? Theme.of(context).backgroundColor.withOpacity(1)
+                        : Theme.of(context).iconTheme.color ?? item.activeColor,
                   ),
                   child: item.icon,
                 ),
@@ -157,8 +158,9 @@ class _ItemWidget extends StatelessWidget {
                     child: DefaultTextStyle.merge(
                       style: TextStyle(
                         color: isSelected
-                            ? item.activeColor.withOpacity(1)
-                            : item.inactiveColor ?? item.activeColor,
+                            ? Theme.of(context).backgroundColor.withOpacity(1)
+                            : Theme.of(context).iconTheme.color ??
+                                item.activeColor,
                         fontFamily: 'Yekanbakh',
                         fontWeight: FontWeight.bold,
                       ),

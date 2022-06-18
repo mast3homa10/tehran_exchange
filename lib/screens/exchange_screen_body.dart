@@ -7,7 +7,7 @@ import 'package:tehran_exchange/ui/nav_bar/second_nav_bar.dart';
 import '../controllers/controller_1.dart';
 import '../constants.dart';
 import 'sub_screen/address_book_screen.dart';
-import 'sub_screen/address_screen.dart';
+import 'sub_screen/calculate_screen.dart';
 import 'sub_screen/exchange_part.dart';
 
 class ExchangeScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class ExchangeScreen extends StatelessWidget {
       body: Obx(
         () => controller.isChangeScreen.toInt() == 1
             ? ExchangeScreenBody(controller: controller)
-            : AddressScreen(controller: controller),
+            : CalculateScreen(controller: controller),
       ),
     );
   }
@@ -44,12 +44,9 @@ class ExchangeScreenBody extends StatefulWidget {
 class _ExchangeScreenBodyState extends State<ExchangeScreenBody> {
   int currentIndex = 1;
   final subScreen = [
-    Center(
-        child: Container(
-      child: Text('test'),
-    )),
+    const Center(child: Text('test')),
     ExchangePart(),
-    AddressBookScreen(),
+    const AddressBookScreen(),
   ];
 
   @override

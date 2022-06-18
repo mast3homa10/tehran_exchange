@@ -46,7 +46,7 @@ void main() async {
                 transition: Transition.downToUp,
               ),
               GetPage(
-                name: '/home_screen',
+                name: '/exchange_screen',
                 page: () => ExchangeScreen(),
                 transition: Transition.downToUp,
               ),

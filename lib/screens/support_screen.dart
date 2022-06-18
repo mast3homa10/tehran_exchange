@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class SupportScreen extends StatelessWidget {
           Center(
             child: Text(
               'test2',
-              style: kTitleTextStyle,
             ),
           )
         ],
