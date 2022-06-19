@@ -50,10 +50,9 @@ class CustomSearchDelegate extends SearchDelegate {
     return Column(
       children: [
         SizedBox(
-          height: Get.height / 14,
+          height: Get.height / 30,
         ),
-        SizedBox(
-          height: Get.height / 1.24,
+        Expanded(
           child: ListView.builder(
               itemCount: suggestions.length,
               itemBuilder: (context, index) {

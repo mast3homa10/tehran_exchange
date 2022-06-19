@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tehran_exchange/ui/intro/model/page_view_model.dart';
+import '../../../../pages/guide/intro/model/page_view_model.dart';
 
 class IntroContent extends StatelessWidget {
   final PageViewModel page;

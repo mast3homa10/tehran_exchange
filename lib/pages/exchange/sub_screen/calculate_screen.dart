@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/pages/exchange/exchange_page_controller.dart';
 
-import '../../components/convert_button.dart';
-import '../../components/custom_big_button.dart';
-import '../../components/exchange_box.dart';
-import '../../controllers/controller_1.dart';
+import '../../../components/exchange_box.dart';
+import '../../../components/convert_button.dart';
+import '../../../components/custom_big_button.dart';
 
-class CalculateScreen extends StatelessWidget {
-  const CalculateScreen({
+class CalculatePage extends GetView<ExchangePageController> {
+  CalculatePage({
     Key? key,
-    required this.controller,
   }) : super(key: key);
-
-  final Controller controller;
 
   @override
   Widget build(BuildContext context) {

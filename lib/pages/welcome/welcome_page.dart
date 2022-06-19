@@ -2,21 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../components/custom_small_button.dart';
-import '../controllers/controller_1.dart';
-import 'guide_screen.dart';
-import 'screen_body.dart';
-import 'sub_screen/qr_code_screen.dart';
+import '../../components/custom_small_button.dart';
+import '../guide/guide_page.dart';
+import '../dashboard_body.dart';
+import 'welcome_page_controller.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  final controller = Get.put(Controller());
+class WelcomePage extends GetView<WelcomePageController> {
+  const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 onPressed: () {
                   // Get.snackbar('توجه!', "در حال توسعه ...");
-                  Get.off(GuideScreen());
+                  Get.off(GuidePage());
                 },
                 child: const Center(
                   child: Text(
@@ -131,8 +123,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 press: () {
                   // Get.snackbar('توجه!', "در حال توسعه ...");
-                  // Get.off(ScreenBody());
-                  Get.off(QRCodeScreen());
+                  Get.off(DashboardBody());
+                  // Get.off(QRCodeScreen());
                 },
               ),
             ),

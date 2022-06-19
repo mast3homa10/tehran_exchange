@@ -1,13 +1,11 @@
-library introduction_screen;
-
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:dots_indicator/dots_indicator.dart';
-import 'package:tehran_exchange/ui/intro/helper.dart';
-import 'package:tehran_exchange/ui/intro/ui/intro_page.dart';
 
+import 'package:dots_indicator/dots_indicator.dart';
+
+import '../../../../pages/guide/intro/helper.dart';
+import '../../../../pages/guide/intro/ui/intro_page.dart';
 import 'model/page_view_model.dart';
 import 'model/position.dart';
 import 'ui/intro_button.dart';

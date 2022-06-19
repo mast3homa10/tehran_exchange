@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tehran_exchange/ui/intro/helper.dart';
-import 'package:tehran_exchange/ui/intro/model/page_view_model.dart';
+import '../../../../pages/guide/intro/model/page_view_model.dart';
+import '../../../../pages/guide/intro/helper.dart';
 
 import 'intro_content.dart';
 

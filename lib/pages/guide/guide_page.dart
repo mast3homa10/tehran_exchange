@@ -5,13 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
 
-import '../screens/screen_body.dart';
-import '../ui/intro/model/page_decoration.dart';
-import '../ui/intro/introduction_screen.dart';
-import '../ui/intro/model/page_view_model.dart';
+import '../dashboard_body.dart';
+import 'intro/model/page_decoration.dart';
+import 'intro/introduction_screen.dart';
+import 'intro/model/page_view_model.dart';
 
-class GuideScreen extends StatelessWidget {
-  GuideScreen({Key? key}) : super(key: key);
+class GuidePage extends StatelessWidget {
+  GuidePage({Key? key}) : super(key: key);
   final introKey = GlobalKey<IntroductionScreenState>();
   final String guideText1 = '1. دریافت مقدار رمزارز و کیف پول\n'
       '2. ارسال ارز برای میادله\n'
@@ -95,7 +95,7 @@ class GuideScreen extends StatelessWidget {
         ),
       ),
       onDone: () {
-        Get.off(ScreenBody());
+        Get.off(DashboardBody());
       }, //_onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: false,

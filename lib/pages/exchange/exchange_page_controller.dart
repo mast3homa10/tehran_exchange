@@ -1,18 +1,29 @@
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../models/currency_model.dart';
+import '../../models/currency_model.dart';
 
 const String _baseUrl = 'http://65.108.225.114:3001/api/v1/Decentralized/';
 const String currencyListEndpoint = 'currencies-list';
 
-class Controller extends GetConnect implements GetxService {
+class ExchangePageController extends GetxController {
   var isChangeScreen = 0.obs;
+  var currentTopItem = 1.obs;
 
-  changeScreen() =>
-      isChangeScreen == 0.obs ? isChangeScreen + 1 : isChangeScreen - 1;
+  getCurrentTopItem(int index) {
+    currentTopItem = index.obs;
+    update();
+  }
+
+  changeScreen() {
+    isChangeScreen == 0.obs ? isChangeScreen + 1 : isChangeScreen - 1;
+    update();
+  }
+}
+
+class WelcomePageController extends GetConnect implements GetxService {
   // Post request'http://65.108.225.114:3001/api/v1/Decentralized/currencies-list'
 
 }
