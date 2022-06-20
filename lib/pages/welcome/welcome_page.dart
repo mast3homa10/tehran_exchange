@@ -122,9 +122,7 @@ class WelcomePage extends GetView<WelcomePageController> {
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
                 press: () {
-                  // Get.snackbar('توجه!', "در حال توسعه ...");
                   Get.off(DashboardBody());
-                  // Get.off(QRCodeScreen());
                 },
               ),
             ),

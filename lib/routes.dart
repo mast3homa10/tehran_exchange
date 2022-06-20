@@ -34,13 +34,13 @@ List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: '/menu_page',
-    page: () => MenuPage(),
+    page: () => const MenuPage(),
     binding: DashboardBodyBinding(),
     transition: Transition.downToUp,
   ),
   GetPage(
     name: '/scanner_page',
-    page: () => QRCodeScreen(),
+    page: () => const QRCodeScreen(),
     binding: DashboardBodyBinding(),
     transition: Transition.downToUp,
   ),

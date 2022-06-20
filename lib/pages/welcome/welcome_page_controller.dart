@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../models/currency_model.dart';
@@ -40,5 +41,13 @@ class Network {
     } else {
       log("${response.statusCode}");
     }
+  }
+
+  dioPostUser() async {
+    var dio = Dio();
+
+    final response = await dio.post(_baseUrl + currencyListEndpoint,
+        data: {'id': 12, 'name': 'wendu'});
+    log('$response');
   }
 }

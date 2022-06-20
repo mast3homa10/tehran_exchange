@@ -17,12 +17,8 @@ class AddressBookScreen extends StatefulWidget {
 class _AddressBookScreenState extends State<AddressBookScreen> {
   int counter = 0;
   final subScreen = [
-    Container(
-      child: Text('test1'),
-    ),
-    Container(
-      child: Text('test2'),
-    ),
+    const Text('test1'),
+    const Text('test2'),
   ];
 
   @override
@@ -32,7 +28,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
         SizedBox(
           height: Get.height * 0.12,
           child: ToggleBar(
-              labels: ['موردعلاقه ها', 'آدرس های اخیر'],
+              labels: const ['موردعلاقه ها', 'آدرس های اخیر'],
               backgroundBorder: Border.all(width: 0.0),
               onSelectionUpdated: (index) {
                 setState(() {
@@ -41,7 +37,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
               }),
         ),
         SizedBox(
-          height: Get.height < 700 ? Get.height * 0.35 : Get.height * 0.38,
+          height: Get.height < 700 ? Get.height * 0.35 : Get.height * 0.4,
           child: Column(
             children: [
               subScreen[counter],

@@ -1,20 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'custom_search_delegate.dart';
 
 class ExchangeBox extends StatelessWidget {
-  const ExchangeBox(
-      {Key? key,
-      this.title = '',
-      this.cryptoTitle = '',
-      this.isHaveIcon = false,
-      this.iconColour = Colors.white})
-      : super(key: key);
+  const ExchangeBox({
+    Key? key,
+    this.title = '',
+    this.cryptoTitle = '',
+    this.isHaveIcon = false,
+    this.isIconChange = 0,
+    this.iconColour = Colors.white,
+    this.openIconPressed,
+    this.closeIconPressed,
+  }) : super(key: key);
   final String title;
   final String cryptoTitle;
   final Color iconColour;
   final bool isHaveIcon;
+  final int isIconChange;
+  final VoidCallback? openIconPressed;
+  final VoidCallback? closeIconPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -33,95 +40,113 @@ class ExchangeBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Icon(
+          child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
               FontAwesomeIcons.bitcoin,
               color: iconColour,
               size: 30,
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(color: Theme.of(context).dividerTheme.color),
-                  ),
-                  GestureDetector(
-                    child: Row(
-                      textBaseline: TextBaseline.ideographic,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      children: [
-                        Text(
-                          cryptoTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(
-                                  color: Theme.of(context).dividerTheme.color,
-                                  fontSize: 18),
-                        ),
-                        const Icon(
-                          FontAwesomeIcons.angleDown,
-                        ),
-                      ],
+          ),
+          TextButton(
+            onPressed: () {
+              // launch searchbox by tap here
+              showSearch(context: context, delegate: CustomSearchDelegate());
+            },
+            style: ButtonStyle(
+                side: MaterialStateProperty.all<BorderSide>(BorderSide(
+                    width: 0,
+                    color: Theme.of(context).appBarTheme.backgroundColor ??
+                        Theme.of(context).scaffoldBackgroundColor))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Theme.of(context).dividerTheme.color),
+                ),
+                Row(
+                  textBaseline: TextBaseline.ideographic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  children: [
+                    Text(
+                      cryptoTitle,
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                          color: Theme.of(context).dividerTheme.color,
+                          fontSize: 18),
                     ),
-                    onTap: () {
-                      // launch searchbox by tap here
-                      showSearch(
-                          context: context, delegate: CustomSearchDelegate());
-                    },
-                  ),
-                ],
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Icon(
+                      FontAwesomeIcons.angleDown,
+                      color: Theme.of(context).dividerTheme.color,
+                      size: 18,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const VerticalDivider(
+            color: Color(0xFFFFFFFF),
+            indent: 9,
+            endIndent: 9,
+          ),
+          // following part is for provide for fixer.
+          buildFixer(context),
+          //end of fixer
+
+          Expanded(
+            child: SizedBox(
+              width: 150,
+              // todo: textfield
+              child: TextField(
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
+                decoration: InputDecoration(
+                    hintText: 'مقدار را وارد کنید',
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Theme.of(context).dividerTheme.color)),
+                onChanged: (value) {},
               ),
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            const VerticalDivider(
-              color: Color(0xFFFFFFFF),
-              indent: 9,
-              endIndent: 9,
-            ),
-            if (isHaveIcon)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  FontAwesomeIcons.unlockKeyhole,
+          )
+        ],
+      )),
+    );
+  }
+
+  Widget buildFixer(BuildContext context) {
+    if (isHaveIcon) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: isIconChange == 1
+            ? IconButton(
+                onPressed: closeIconPressed,
+                icon: Icon(
+                  CupertinoIcons.lock,
+                  color: Theme.of(context).backgroundColor,
+                ),
+              )
+            : IconButton(
+                onPressed: openIconPressed,
+                icon: Icon(
+                  CupertinoIcons.lock_open,
                   color: Theme.of(context).dividerTheme.color,
                 ),
               ),
-            Expanded(
-              child: SizedBox(
-                width: 150,
-                // todo: fix this textfield
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
-                  decoration: InputDecoration(
-                      hintText: 'مقدار را وارد کنید',
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(
-                              color: Theme.of(context).dividerTheme.color)),
-                  onChanged: (value) {},
-                ),
-              ),
-            )
-          ],
-        ),
-      )),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }

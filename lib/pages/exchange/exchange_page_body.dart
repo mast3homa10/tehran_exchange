@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/components/custom_big_button.dart';
-import 'package:tehran_exchange/pages/exchange/exchange_page_controller.dart';
-import 'package:tehran_exchange/pages/exchange/sub_screen/qr_code_screen.dart';
 
+import '../../pages/exchange/exchange_page_controller.dart';
 import '../../ui/nav_bar/second_nav_bar.dart';
 import '../../constants.dart';
 import 'sub_screen/address_book_screen.dart';
@@ -24,7 +22,7 @@ class ExchangePage extends GetView<ExchangePageController> {
         resizeToAvoidBottomInset: false,
         body: controller.isChangeScreen.toInt() == 1
             ? ExchangePageBody()
-            : CalculatePage(),
+            : const CalculatePage(),
       );
     });
   }
@@ -36,24 +34,24 @@ class ExchangePageBody extends GetView<ExchangePageController> {
   }) : super(key: key);
 
   final subScreen = [
-    Center(
-        child: Column(
-      children: [
-        SizedBox(
-          height: Get.height < 700 ? Get.height * 0.47 : Get.height * 0.5,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: CustomBigButton(
-            label: 'اسکن',
-            onPressed: () {
-              Get.to(const QRCodeScreen());
-            },
-          ),
-        ),
-      ],
-    )),
-    ExchangePart(),
+    // Center(
+    //     child: Column(
+    //   children: [
+    //     SizedBox(
+    //       height: Get.height < 700 ? Get.height * 0.47 : Get.height * 0.5,
+    //     ),
+    //     Padding(
+    //       padding: const EdgeInsets.all(15.0),
+    //       child: CustomBigButton(
+    //         label: 'اسکن',
+    //         onPressed: () {
+    //           Get.to(const QRCodeScreen());
+    //         },
+    //       ),
+    //     ),
+    //   ],
+    // )),
+    const ExchangePart(),
     const AddressBookScreen(),
   ];
 
@@ -81,13 +79,13 @@ class ExchangePageBody extends GetView<ExchangePageController> {
 }
 
 List<TopNavBarItem> topItems = [
-  TopNavBarItem(
-    inactiveColor: Colors.black,
-    activeColor: kLightButtonColor,
-    icon: const Icon(FontAwesomeIcons.qrcode),
-    title: const Text('اسکن کیف پول'),
-    textAlign: TextAlign.center,
-  ),
+  // TopNavBarItem(
+  //   inactiveColor: Colors.black,
+  //   activeColor: kLightButtonColor,
+  //   icon: const Icon(FontAwesomeIcons.qrcode),
+  //   title: const Text('اسکن کیف پول'),
+  //   textAlign: TextAlign.center,
+  // ),
   TopNavBarItem(
     inactiveColor: Colors.black,
     activeColor: kLightButtonColor,

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tehran_exchange/pages/dashboard_body_controller.dart';
-import 'package:tehran_exchange/pages/exchange/exchange_page_controller.dart';
+import '../../pages/dashboard_body_controller.dart';
 
 import '../../components/custom_big_button.dart';
-import '../dashboard_body.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({Key? key}) : super(key: key);

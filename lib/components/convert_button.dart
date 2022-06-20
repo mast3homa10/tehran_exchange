@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 
 import '../constants.dart';
 
-class ConvretButton extends StatelessWidget {
-  const ConvretButton({
+class ConvertButton extends StatelessWidget {
+  const ConvertButton({
     Key? key,
   }) : super(key: key);
 

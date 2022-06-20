@@ -17,7 +17,7 @@ class TopNavBar extends StatelessWidget {
     this.itemCornerRadius = 50,
     this.containerHeight = 56,
     this.animationDuration = const Duration(milliseconds: 270),
-    this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
+    this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
     required this.items,
     required this.onItemSelected,
     this.curve = Curves.linear,
