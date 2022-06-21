@@ -47,6 +47,8 @@ class MyThemes {
         bodyColor: Colors.white,
         displayColor: Colors.white,
       ),
+      bottomSheetTheme:
+          const BottomSheetThemeData(backgroundColor: Color(0xFF040507)),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
@@ -96,6 +98,8 @@ class MyThemes {
         bodyColor: Colors.black,
         displayColor: Colors.black,
       ),
+      bottomSheetTheme:
+          const BottomSheetThemeData(backgroundColor: Color(0xFFFFFFFF)),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           primary: kLightButtonColor, // This is a custom color variable

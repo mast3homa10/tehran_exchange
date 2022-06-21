@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import '/pages/menu/menu_page.dart';
-import 'pages/dashboard_body_binding.dart';
-import 'pages/exchange/exchange_page_body.dart';
-import 'pages/exchange/sub_screen/qr_code_screen.dart';
-import 'pages/guide/guide_page.dart';
-import 'pages/dashboard_body.dart';
-import 'pages/welcome/welcome_page.dart';
+import 'frontend/pages/dashboard/dashboard_body_binding.dart';
+import 'frontend/pages/exchange/exchange_page_body.dart';
+import 'frontend/pages/exchange/sub_screen/qr_code_screen.dart';
+import 'frontend/pages/guide/guide_page.dart';
+import 'frontend/pages/menu/menu_page.dart';
+import 'frontend/pages/welcome/welcome_page.dart';
+import 'frontend/pages/dashboard/dashboard_body.dart';
 
 List<GetPage<dynamic>> routes = [
   GetPage(

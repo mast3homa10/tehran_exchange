@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'components/toggle_switch_button.dart';
+import 'frontend/components/toggle_switch_button.dart';
 
 const Color kLightBackgroundColor = Color(0xFFE5E5E5);
 const Color kLightAppBarColor = Color(0xFFEFF4FF);
