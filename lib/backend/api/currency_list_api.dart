@@ -8,22 +8,27 @@ const String _baseUrl = 'http://65.108.225.114:3001/api/v1/Decentralized/';
 const String currencyListEndpoint = 'currencies-list';
 
 class CurrencyListApi {
-  Future<List<CurrencyModel>> getCurrencyList() async {
+  Future<List<CurrencyModel>?> getList() async {
     List<CurrencyModel> list = [];
-    http.Response response = await http.post(
-        Uri.parse(_baseUrl + currencyListEndpoint),
-        body: json.encode({"active": true, "type": "not-fix"}),
-        headers: {'Content-Type': 'application/json'});
+    try {
+      http.Response response =
+          await http.post(Uri.parse(_baseUrl + currencyListEndpoint),
+              body: json.encode({
+                "active": true,
+              }),
+              headers: {'Content-Type': 'application/json'});
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body)['data']['currencies'];
-      data.removeWhere((element) => element == null);
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body)['data']['currencies'];
+        data.removeWhere((element) => element == null);
 
-      data.map((item) => CurrencyModel().fromJson(item)).toList();
-      return list;
-    } else {
-      log("${response.statusCode}");
-      return list;
+        list = data.map((item) => CurrencyModel.fromJson(item)).toList();
+        return list;
+      } else {
+        log("${response.statusCode}");
+      }
+    } catch (e) {
+      log('$e');
     }
   }
 }

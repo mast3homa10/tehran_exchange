@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tehran_exchange/backend/api/check_pair_be_vaild.dart';
-import 'package:tehran_exchange/backend/api/create_transaction.dart';
-import 'package:tehran_exchange/backend/api/currency_list_api.dart';
-import 'package:tehran_exchange/backend/api/estimate_exchange_amount.dart';
 
+import '../../../backend/api/check_pair_be_vaild.dart';
+import '../../../backend/api/create_transaction.dart';
+import '../../../backend/api/currency_list_api.dart';
+import '../../../backend/api/estimate_exchange_amount.dart';
+import '../../../backend/api/get_exchange_rate.dart';
+import '../../../backend/api/get_transaction_status.dart';
+import '../../../backend/api/validation_address.dart';
 import '../../components/custom_small_button.dart';
 import '../guide/guide_page.dart';
 import '../dashboard/dashboard_body.dart';
@@ -126,9 +129,15 @@ class WelcomePage extends GetView<WelcomePageController> {
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
                 press: () {
-                  // Get.off(DashboardBody());
+                  Get.off(DashboardBody());
+                  // TODO: Api
+                  // CheckPairBeVaildApi().getPairBeVaild();
                   // CreateTransactionApi().create();
-                  EstimateExchangeAmountApi().getEstimateExchangeAmount();
+                  // CurrencyListApi().getList();
+                  // EstimateExchangeAmountApi().getAmount();
+                  // GetExchangeRateApi().getExchangeRate();
+                  // GetTransactionStatusApi().getExchangeRate();
+                  // ValidationAddressApi().getValidation();
                 },
               ),
             ),

@@ -8,7 +8,7 @@ const String _baseUrl = 'http://65.108.225.114:3001/api/v1/Decentralized/';
 const String esimatExchangeAmountEndpoint = 'estimate-exchange-amount';
 
 class EstimateExchangeAmountApi {
-  Future<List<CurrencyModel>> getEstimateExchangeAmount() async {
+  Future<List<CurrencyModel>> getAmount() async {
     List<CurrencyModel> list = [];
     http.Response response =
         await http.post(Uri.parse(_baseUrl + esimatExchangeAmountEndpoint),
@@ -27,8 +27,8 @@ class EstimateExchangeAmountApi {
       Map<String, dynamic> data =
           json.decode(response.body)['data']['estimateExchangeAmount'];
 
-      var a = EstimateExchangeAmountModel().fromJson(data);
-      log('${a}');
+      var decodedData = EstimateExchangeAmountModel().fromJson(data);
+      log('$decodedData');
       return list;
     } else {
       log("${response.statusCode}");
@@ -36,29 +36,6 @@ class EstimateExchangeAmountApi {
     }
   }
 }
-// var headers = {
-//   'Content-Type': 'application/json'
-// };
-// var request = http.Request('POST', Uri.parse('65.108.225.114:3001/api/v1/Decentralized/estimate-exchange-amount'));
-// request.body = json.encode({
-//   "sourceCurrency": "btc",
-//   "destinationCurrency": "usdt",
-//   "type": "fix",
-//   "directionOfExchangeFlow": "direct",
-//   "sourceAmount": 0.1,
-//   "sourceNetwork": "btc",
-//   "destinationNetwork": "eth"
-// });
-// request.headers.addAll(headers);
-
-// http.StreamedResponse response = await request.send();
-
-// if (response.statusCode == 200) {
-//   print(await response.stream.bytesToString());
-// }
-// else {
-//   print(response.reasonPhrase);
-// }
 
 class EstimateExchangeAmountModel {
   String? sourceCurrency;
@@ -108,27 +85,3 @@ class EstimateExchangeAmountModel {
   toString() =>
       "{rateId: $rateId}, {destinationAmount: $destinationAmount}, {destinationCurrency: $destinationCurrency ...}";
 }
-
-// var headers = {
-//   'Content-Type': 'application/json'
-// };
-// var request = http.Request('POST', Uri.parse('65.108.225.114:3001/api/v1/Decentralized/estimate-exchange-amount'));
-// request.body = json.encode({
-//   "sourceCurrency": "btc",
-//   "destinationCurrency": "usdt",
-//   "type": "fix",
-//   "directionOfExchangeFlow": "direct",
-//   "sourceAmount": 0.1,
-//   "sourceNetwork": "btc",
-//   "destinationNetwork": "eth"
-// });
-// request.headers.addAll(headers);
-
-// http.StreamedResponse response = await request.send();
-
-// if (response.statusCode == 200) {
-//   print(await response.stream.bytesToString());
-// }
-// else {
-//   print(response.reasonPhrase);
-// }

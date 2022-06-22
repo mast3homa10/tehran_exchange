@@ -36,8 +36,8 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
         borderWidth: 2.0,
         indicatorSize: const Size(30.0, double.infinity),
         height: 40,
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
             spreadRadius: 1,
             blurRadius: 2,
@@ -47,7 +47,7 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
         onChanged: (b) => setState(() {
           positive = b;
           final provider = Provider.of<ThemeProvider>(context, listen: false);
-          provider.toggleTheme(b);
+          provider.toggleTheme();
         }),
         colorBuilder: (b) => b ? Colors.black : Colors.white,
         iconBuilder: (value) => value
@@ -63,19 +63,3 @@ class _ToggleSwitchButtonState extends State<ToggleSwitchButton> {
     );
   }
 }
-
-ThemeData _darkTheme = ThemeData(
-  appBarTheme: const AppBarTheme(
-    color: Colors.red,
-  ),
-  brightness: Brightness.dark,
-  primaryColor: Colors.amber,
-);
-
-ThemeData _lightTheme = ThemeData(
-    backgroundColor: Colors.red,
-    appBarTheme: const AppBarTheme(
-      color: Colors.red,
-    ),
-    brightness: Brightness.light,
-    primaryColor: Colors.blue);

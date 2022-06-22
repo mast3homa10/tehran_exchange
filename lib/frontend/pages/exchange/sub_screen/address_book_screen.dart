@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../toggel_bar.dart';
+import '../../../components/toggel_bar.dart';
 import '../../../components/custom_big_button.dart';
 
 class AddressBookScreen extends StatefulWidget {
@@ -38,10 +38,9 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
         ),
         SizedBox(
           height: Get.height < 700 ? Get.height * 0.35 : Get.height * 0.4,
-          child: Column(
-            children: [
-              subScreen[counter],
-            ],
+          child: IndexedStack(
+            index: counter,
+            children: subScreen,
           ),
         ),
         Padding(

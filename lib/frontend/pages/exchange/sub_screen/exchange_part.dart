@@ -123,20 +123,23 @@ class PasteAddressContainer extends StatelessWidget {
               indent: 9,
               endIndent: 9,
             ),
-            SizedBox(
-              width: Get.width < 400 ? 100 : 150,
-              // todo: fix this textfield
-              child: TextField(
-                style: const TextStyle(
-                    color: Colors.white, fontFamily: 'Yekanbakh', fontSize: 20),
-                decoration: InputDecoration(
-                  hintText: hintText,
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Theme.of(context).dividerTheme.color),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Yekanbakh',
+                      fontSize: 20),
+                  decoration: InputDecoration(
+                    hintText: hintText,
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Theme.of(context).dividerTheme.color),
+                  ),
+                  onChanged: (value) {},
                 ),
-                onChanged: (value) {},
               ),
             ),
             IconButton(

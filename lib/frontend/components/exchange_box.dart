@@ -1,30 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../frontend/pages/exchange/exchange_page_controller.dart';
-import 'custom_search_delegate.dart';
 
 class ExchangeBox extends GetView<ExchangePageController> {
   const ExchangeBox({
     Key? key,
     this.title = '',
+    this.search = 0,
     this.cryptoTitle = '',
     this.isHaveIcon = false,
+    this.imgUrl,
     this.isIconChange = 0,
-    this.iconColour = Colors.white,
+    this.onPressed,
     this.openIconPressed,
     this.closeIconPressed,
   }) : super(key: key);
+
   final String title;
+  final int search;
+  final String? imgUrl;
   final String cryptoTitle;
-  final Color iconColour;
   final bool isHaveIcon;
   final int isIconChange;
   final VoidCallback? openIconPressed;
   final VoidCallback? closeIconPressed;
-
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,18 +49,9 @@ class ExchangeBox extends GetView<ExchangePageController> {
           child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              FontAwesomeIcons.bitcoin,
-              color: iconColour,
-              size: 30,
-            ),
-          ),
+              padding: const EdgeInsets.all(8.0), child: buildImage(imgUrl)),
           TextButton(
-            onPressed: () {
-              // launch searchbox by tap here
-              showSearch(context: context, delegate: CustomSearchDelegate());
-            },
+            onPressed: onPressed,
             style: ButtonStyle(
                 side: MaterialStateProperty.all<BorderSide>(BorderSide(
                     width: 0,
@@ -68,10 +63,7 @@ class ExchangeBox extends GetView<ExchangePageController> {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(color: Theme.of(context).dividerTheme.color),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Row(
                   textBaseline: TextBaseline.ideographic,
@@ -79,9 +71,7 @@ class ExchangeBox extends GetView<ExchangePageController> {
                   children: [
                     Text(
                       cryptoTitle,
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Theme.of(context).dividerTheme.color,
-                          fontSize: 18),
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                     const SizedBox(
                       width: 2,
@@ -124,6 +114,18 @@ class ExchangeBox extends GetView<ExchangePageController> {
         ],
       )),
     );
+  }
+
+  Widget? buildImage(String? imageUrl) {
+    try {
+      return SvgPicture.network(
+        imageUrl!,
+        semanticsLabel: 'A shark?!',
+        placeholderBuilder: (BuildContext context) => Container(
+            padding: const EdgeInsets.all(30.0),
+            child: const CircularProgressIndicator()),
+      );
+    } catch (e) {}
   }
 
   Widget buildFixer(BuildContext context) {

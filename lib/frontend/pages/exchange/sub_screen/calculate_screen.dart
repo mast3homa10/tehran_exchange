@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../backend/api/currency_list_api.dart';
+import '../../../../backend/models/currency_model.dart';
+import '../../../../frontend/components/custom_search_delegate.dart';
 import '../../../../constants.dart';
 import '../../../components/exchange_box.dart';
 import '../../../components/convert_button.dart';
@@ -16,144 +19,181 @@ class CalculatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ExchangePageController>(
-      builder: (controller) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // the padding widget below contains ''' cryptocurrency calculator '''.
-            SizedBox(
-              height: Get.height * 0.4,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+    return FutureBuilder<List<CurrencyModel>?>(
+      future: CurrencyListApi().getList(),
+      builder: (context, snapShot) {
+        switch (snapShot.connectionState) {
+          case ConnectionState.waiting:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          default:
+            return GetBuilder<ExchangePageController>(
+              builder: (controller) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    /// first box
-                    const ExchangeBox(
-                      title: 'Tether',
-                      cryptoTitle: 'USDT',
-                      iconColour: Colors.green,
-                    ),
-                    // calculate result
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
+                    // the padding widget below contains ''' cryptocurrency calculator '''.
+                    Expanded(
+                      child: SizedBox(
+                        height: Get.height * 0.4,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                'BTC ~ ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5!
-                                    .copyWith(fontWeight: FontWeight.w700),
+                              /// first box
+                              ExchangeBox(
+                                onPressed: () {
+                                  // launch searchbox by tap here
+                                  showSearch(
+                                      context: context,
+                                      delegate: CustomSearchDelegate(item: 0));
+                                },
+                                title: controller.firstCurrencyChoiceEnglishName
+                                    .toString(),
+                                cryptoTitle: controller
+                                    .firstCurrencyChoiceSymbol
+                                    .toString()
+                                    .toUpperCase(),
+                                imgUrl: controller.firstCurrencyChoiceImageUrl
+                                    .toString(),
                               ),
-                              buildFixer(context, controller),
+                              // calculate result
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, right: 10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'BTC ~ ',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w700),
+                                        ),
+                                        buildFixer(context, controller),
+                                      ],
+                                    ),
+                                    //  convert button
+                                    const ConvertButton(),
+                                  ],
+                                ),
+                              ),
+                              // second box
+                              ExchangeBox(
+                                onPressed: () {
+                                  // launch searchbox by tap here
+                                  showSearch(
+                                      context: context,
+                                      delegate: CustomSearchDelegate(item: 1));
+                                },
+                                search: controller.searchController.toInt(),
+                                title: controller
+                                    .secondCurrencyChoiceEnglishName
+                                    .toString(),
+                                cryptoTitle: controller
+                                    .secondCurrencyChoiceSymbol
+                                    .toString()
+                                    .toUpperCase(),
+                                isHaveIcon: true,
+                                imgUrl: controller.secondCurrencyChoiceImageUrl
+                                    .toString(),
+                                isIconChange: controller.isIconChange.toInt(),
+                                openIconPressed: () {
+                                  buildSnakBar(context);
+
+                                  controller.changeIcon();
+                                },
+                                closeIconPressed: () {
+                                  controller.changeIcon();
+                                },
+                              ),
                             ],
                           ),
-                          //  convert button
-                          const ConvertButton(),
-                        ],
+                        ),
                       ),
                     ),
-                    // second box
-                    ExchangeBox(
-                      title: "Bitcoin",
-                      cryptoTitle: "BTC",
-                      isHaveIcon: true,
-                      iconColour: Colors.orange,
-                      isIconChange: controller.isIconChange.toInt(),
-                      openIconPressed: () {
-                        showModalBottomSheet(
-                            isDismissible: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(50),
-                              ),
-                            ),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            context: context,
-                            builder: (builder) {
-                              return Container(
-                                height: Get.height * 0.3,
-                                color: Theme.of(context)
-                                    .bottomSheetTheme
-                                    .backgroundColor,
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          height: 5,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .dividerTheme
-                                                  .color,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'این یک نرخ مورد انتظار است',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline3,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'تغییر اکنون بهترین نرخرا برای شما در لحظه مبادله انتخاب می کند'
-                                          '\n هزینه های شبکه و سایر هزینه های مبادله در نرخ گنجانده شده است'
-                                          '\n ما هییچ هزنیه اضافی را تضمین نمی کنیم .',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
 
-                        controller.changeIcon();
-                      },
-                      closeIconPressed: () {
-                        controller.changeIcon();
-                      },
+                    // SizedBox(
+                    //   height: Get.height < 700
+                    //       ? Get.height * 0.195
+                    //       : Get.height * 0.165,
+                    // ),
+                    // the padding widget below contains '''add address button'''.
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: CustomBigButton(
+                        label: 'وارد کردن آدرس',
+                        onPressed: () {
+                          // Get.snackbar('توجه!', "در حال توسعه ...");
+                          controller.changeScreen();
+                        },
+                      ),
                     ),
                   ],
-                ),
-              ),
-            ),
-
-            SizedBox(
-              height:
-                  Get.height < 700 ? Get.height * 0.195 : Get.height * 0.165,
-            ),
-            // the padding widget below contains '''add address button'''.
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: CustomBigButton(
-                label: 'وارد کردن آدرس',
-                onPressed: () {
-                  // Get.snackbar('توجه!', "در حال توسعه ...");
-                  controller.changeScreen();
-                },
-              ),
-            ),
-          ],
-        );
+                );
+              },
+            );
+        }
       },
     );
+  }
+
+  void buildSnakBar(BuildContext context) {
+    showModalBottomSheet(
+        isDismissible: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(50),
+          ),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        context: context,
+        builder: (builder) {
+          return Container(
+            height: Get.height * 0.3,
+            color: Theme.of(context).bottomSheetTheme.backgroundColor,
+            child: Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 5,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).dividerTheme.color,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'این یک نرخ مورد انتظار است',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'تغییر اکنون بهترین نرخرا برای شما در لحظه مبادله انتخاب می کند'
+                      '\n هزینه های شبکه و سایر هزینه های مبادله در نرخ گنجانده شده است'
+                      '\n ما هییچ هزنیه اضافی را تضمین نمی کنیم .',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Widget buildFixer(BuildContext context, ExchangePageController controller) {

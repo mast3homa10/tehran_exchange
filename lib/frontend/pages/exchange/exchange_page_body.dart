@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/frontend/components/nav_bar/second_nav_bar.dart';
 
+import '../../../frontend/components/nav_bar/second_nav_bar.dart';
 import '../../../constants.dart';
 import '../../pages/exchange/exchange_page_controller.dart';
 import 'sub_screen/address_book_screen.dart';
@@ -34,23 +34,6 @@ class ExchangePageBody extends GetView<ExchangePageController> {
   }) : super(key: key);
 
   final subScreen = [
-    // Center(
-    //     child: Column(
-    //   children: [
-    //     SizedBox(
-    //       height: Get.height < 700 ? Get.height * 0.47 : Get.height * 0.5,
-    //     ),
-    //     Padding(
-    //       padding: const EdgeInsets.all(15.0),
-    //       child: CustomBigButton(
-    //         label: 'اسکن',
-    //         onPressed: () {
-    //           Get.to(const QRCodeScreen());
-    //         },
-    //       ),
-    //     ),
-    //   ],
-    // )),
     const ExchangePart(),
     const AddressBookScreen(),
   ];
@@ -97,7 +80,6 @@ List<TopNavBarItem> topItems = [
     inactiveColor: Colors.black,
     activeColor: kLightButtonColor,
     icon: const Icon(
-      // ignore: deprecated_member_use
       FontAwesomeIcons.book,
     ),
     title: const Text('دفترچه آدرس '),

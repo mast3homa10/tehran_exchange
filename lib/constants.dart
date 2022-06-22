@@ -26,6 +26,7 @@ const Color kDarkDividerColor = Color(0xFFFFFFFF);
 // );
 
 AppBar kAppbar = AppBar(
+  elevation: 0.0,
   title: const SizedBox(
     height: 40,
     width: 40,

@@ -30,7 +30,8 @@ class CheckPairBeVaildApi {
       log('${data["data"]["checkPair"]}');
       data["data"]["checkPair"].removeWhere((element) => element == null);
 
-      var a = CheckPairBeVaildModel.fromJson(data);
+      var decodedData = CheckPairBeVaildModel.fromJson(data);
+      log('$decodedData');
       return list;
     } else {
       log("${response.statusCode}");

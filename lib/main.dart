@@ -16,7 +16,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   SharedPreferences.getInstance().then((prefs) {
-    var isDarkTheme = prefs.getBool("darkTheme") ?? false;
+    var isDarkTheme = prefs.getString("theme") ?? 'light';
     log("theme is $isDarkTheme");
     log("height : ${Get.height}");
     log("width : ${Get.width}");
@@ -26,7 +26,7 @@ void main() async {
           final themeProvider = Provider.of<ThemeProvider>(context);
 
           return GetMaterialApp(
-            themeMode: themeProvider.getTheme(),
+            themeMode: themeProvider.theme,
             theme: MyThemes.lightTheme,
             darkTheme: MyThemes.darkTheme,
             locale: const Locale('fa', 'IR'),

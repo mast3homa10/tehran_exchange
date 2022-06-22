@@ -5,7 +5,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import '../../../toggel_bar.dart';
+import '../../components/toggel_bar.dart';
 import '../../pages/menu/menu_page_controller.dart';
 
 class MenuPage extends StatelessWidget {

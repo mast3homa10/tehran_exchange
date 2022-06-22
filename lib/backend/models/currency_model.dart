@@ -30,21 +30,21 @@ class CurrencyModel {
       this.legacyTicker = 'test',
       this.isActive = false});
 
-  CurrencyModel fromJson(json) => CurrencyModel(
-      symbol: json['symbol'],
-      engName: json['engName'],
-      faName: json['faName'],
-      imageUrl: json['imageUrl'],
-      hasExternalId: json['hasExternalId'],
-      isFiatCurrency: json['isFiatCurrency'],
-      isFeatured: json['isFeatured'],
-      isStableCoin: json['isStableCoin'],
-      supportsFixedRate: json['supportsFixedRate'],
-      inNetwork: json['inNetwork'],
-      availableForBuy: json['availableForBuy'],
-      availableForSell: json['availableForSell'],
-      legacyTicker: json['legacyTicker'],
-      isActive: json['isActive']);
+  CurrencyModel.fromJson(json)
+      : symbol = json['symbol'],
+        engName = json['engName'],
+        faName = json['faName'],
+        imageUrl = json['imageUrl'],
+        hasExternalId = json['hasExternalId'],
+        isFiatCurrency = json['isFiatCurrency'],
+        isFeatured = json['isFeatured'],
+        isStableCoin = json['isStableCoin'],
+        supportsFixedRate = json['supportsFixedRate'],
+        inNetwork = json['inNetwork'],
+        availableForBuy = json['availableForBuy'],
+        availableForSell = json['availableForSell'],
+        legacyTicker = json['legacyTicker'],
+        isActive = json['isActive'];
 
   @override
   toString() => "{symbol: $symbol}, {engName: $engName}, {faName: $faName}";

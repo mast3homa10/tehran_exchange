@@ -28,8 +28,8 @@ class CreateTransactionApi {
       Map<String, dynamic> data =
           json.decode(response.body)['data']['createExchangeResult'];
 
-      var a = CreateTransactionModel().fromJson(data);
-      log('${a}');
+      var decodedData = CreateTransactionModel().fromJson(data);
+      log('$decodedData');
       return list;
     } else {
       log("${response.statusCode}");
