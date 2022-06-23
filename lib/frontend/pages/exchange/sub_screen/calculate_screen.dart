@@ -51,9 +51,10 @@ class CalculatePage extends StatelessWidget {
                                       context: context,
                                       delegate: CustomSearchDelegate(item: 0));
                                 },
-                                title: controller.firstCurrencyChoiceEnglishName
+                                currencyEnglishName: controller
+                                    .firstCurrencyChoiceEnglishName
                                     .toString(),
-                                cryptoTitle: controller
+                                currencySymbol: controller
                                     .firstCurrencyChoiceSymbol
                                     .toString()
                                     .toUpperCase(),
@@ -92,13 +93,22 @@ class CalculatePage extends StatelessWidget {
                                   // launch searchbox by tap here
                                   showSearch(
                                       context: context,
-                                      delegate: CustomSearchDelegate(item: 1));
+                                      delegate: CustomSearchDelegate(
+                                          item: 1,
+                                          inputStyle: InputDecorationTheme(
+                                              labelStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4,
+                                              focusColor: Colors.white,
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4)));
                                 },
                                 search: controller.searchController.toInt(),
-                                title: controller
+                                currencyEnglishName: controller
                                     .secondCurrencyChoiceEnglishName
                                     .toString(),
-                                cryptoTitle: controller
+                                currencySymbol: controller
                                     .secondCurrencyChoiceSymbol
                                     .toString()
                                     .toUpperCase(),

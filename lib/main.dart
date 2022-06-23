@@ -24,7 +24,6 @@ void main() async {
         create: (context) => ThemeProvider(isDarkTheme),
         builder: (context, _) {
           final themeProvider = Provider.of<ThemeProvider>(context);
-
           return GetMaterialApp(
             themeMode: themeProvider.theme,
             theme: MyThemes.lightTheme,
@@ -36,3 +35,13 @@ void main() async {
         }));
   });
 }
+
+// check connection to network
+// try {
+//   final result = await InternetAddress.lookup('example.com');
+//   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+//     print('connected');
+//   }
+// } on SocketException catch (_) {
+//   print('not connected');
+// }

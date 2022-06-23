@@ -11,12 +11,10 @@ class CurrencyListApi {
   Future<List<CurrencyModel>?> getList() async {
     List<CurrencyModel> list = [];
     try {
-      http.Response response =
-          await http.post(Uri.parse(_baseUrl + currencyListEndpoint),
-              body: json.encode({
-                "active": true,
-              }),
-              headers: {'Content-Type': 'application/json'});
+      http.Response response = await http.post(
+          Uri.parse(_baseUrl + currencyListEndpoint),
+          body: json.encode({"active": true, "type": "not-fix"}),
+          headers: {'Content-Type': 'application/json'});
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)['data']['currencies'];

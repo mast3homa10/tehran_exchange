@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,9 +11,9 @@ import '../../frontend/pages/exchange/exchange_page_controller.dart';
 class ExchangeBox extends GetView<ExchangePageController> {
   const ExchangeBox({
     Key? key,
-    this.title = '',
+    this.currencyEnglishName = '',
     this.search = 0,
-    this.cryptoTitle = '',
+    this.currencySymbol = '',
     this.isHaveIcon = false,
     this.imgUrl,
     this.isIconChange = 0,
@@ -20,10 +22,10 @@ class ExchangeBox extends GetView<ExchangePageController> {
     this.closeIconPressed,
   }) : super(key: key);
 
-  final String title;
+  final String currencyEnglishName;
   final int search;
   final String? imgUrl;
-  final String cryptoTitle;
+  final String currencySymbol;
   final bool isHaveIcon;
   final int isIconChange;
   final VoidCallback? openIconPressed;
@@ -48,60 +50,95 @@ class ExchangeBox extends GetView<ExchangePageController> {
       child: Center(
           child: Row(
         children: [
-          Padding(
-              padding: const EdgeInsets.all(8.0), child: buildImage(imgUrl)),
-          TextButton(
-            onPressed: onPressed,
-            style: ButtonStyle(
-                side: MaterialStateProperty.all<BorderSide>(BorderSide(
-                    width: 0,
-                    color: Theme.of(context).appBarTheme.backgroundColor ??
-                        Theme.of(context).scaffoldBackgroundColor))),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
+          SizedBox(
+            width: Get.width * 0.35,
+            child: Row(
               children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                Row(
-                  textBaseline: TextBaseline.ideographic,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  children: [
-                    Text(
-                      cryptoTitle,
-                      style: Theme.of(context).textTheme.headline4,
+                // image part
+                Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: buildImage(imgUrl)),
+                // start search page by click the following text button
+                Expanded(
+                  child: TextButton(
+                    onPressed: onPressed,
+                    style: ButtonStyle(
+                        side: MaterialStateProperty.all<BorderSide>(BorderSide(
+                            width: 0,
+                            color: Theme.of(context)
+                                    .appBarTheme
+                                    .backgroundColor ??
+                                Theme.of(context).scaffoldBackgroundColor))),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        // currency English Name
+                        Text(
+                          currencyEnglishName,
+                          style: Theme.of(context).textTheme.headline5,
+                          maxLines: 1,
+                          textWidthBasis: TextWidthBasis.longestLine,
+                        ),
+                        Row(
+                          textBaseline: TextBaseline.ideographic,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // currency Symbol
+                            Text(
+                              currencySymbol,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            const SizedBox(
+                              width: 2,
+                            ),
+                            Icon(
+                              FontAwesomeIcons.angleDown,
+                              color: Theme.of(context).dividerTheme.color,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 2,
-                    ),
-                    Icon(
-                      FontAwesomeIcons.angleDown,
-                      color: Theme.of(context).dividerTheme.color,
-                      size: 18,
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
           ),
           const VerticalDivider(
-            color: Color(0xFFFFFFFF),
+            width: 10.0,
+            thickness: 1.0,
             indent: 9,
             endIndent: 9,
           ),
           // following part is for provide for fixer.
           buildFixer(context),
-          //end of fixer
 
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
+                // input amount from user
+                keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontFamily: 'Yekanbakh', fontSize: 20),
+                style: Theme.of(context).textTheme.headline3,
                 decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Theme.of(context).appBarTheme.backgroundColor ??
+                                  Colors.greenAccent,
+                          width: 0.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Theme.of(context).appBarTheme.backgroundColor ??
+                                  Colors.red,
+                          width: 5.0),
+                    ),
                     hintText: 'مقدار را وارد کنید',
                     hintStyle: Theme.of(context)
                         .textTheme
@@ -116,16 +153,20 @@ class ExchangeBox extends GetView<ExchangePageController> {
     );
   }
 
+//
   Widget? buildImage(String? imageUrl) {
     try {
-      return SvgPicture.network(
-        imageUrl!,
-        semanticsLabel: 'A shark?!',
-        placeholderBuilder: (BuildContext context) => Container(
-            padding: const EdgeInsets.all(30.0),
-            child: const CircularProgressIndicator()),
+      return AspectRatio(
+        aspectRatio: 0.35,
+        child: SvgPicture.network(
+          imageUrl!,
+          semanticsLabel: 'A shark?!',
+          placeholderBuilder: (BuildContext context) => Container(),
+        ),
       );
-    } catch (e) {}
+    } catch (e) {
+      log('$e');
+    }
   }
 
   Widget buildFixer(BuildContext context) {

@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tehran_exchange/constants.dart';
 
 import '../../components/toggel_bar.dart';
 import '../../pages/menu/menu_page_controller.dart';
@@ -154,7 +156,39 @@ class CustomMenuItem extends StatelessWidget {
                           width: 0,
                           color: Theme.of(context).scaffoldBackgroundColor))),
                   onPressed: () {
-                    Get.snackbar('توجه!', 'در حال توسعه ...');
+                    // Get.snackbar('توجه!', 'در حال توسعه ...');
+                    showBottomSheet(
+                        context: context,
+                        builder: (context) => Scaffold(
+                              body: Column(
+                                children: [
+                                  TextButton(
+                                    style: ButtonStyle(
+                                      side: MaterialStateProperty
+                                          .all<BorderSide>(BorderSide(
+                                              width: 0.0,
+                                              color: Theme.of(context)
+                                                  .scaffoldBackgroundColor)),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Text(label,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3),
+                                        Icon(FontAwesomeIcons.angleLeft,
+                                            color: Theme.of(context)
+                                                .iconTheme
+                                                .color),
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

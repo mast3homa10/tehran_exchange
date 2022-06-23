@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
-import 'package:tehran_exchange/backend/models/currency_model.dart';
+import '../../../backend/models/currency_model.dart';
 
 class ExchangePageController extends GetxController {
   var isChangeScreen = 0.obs;

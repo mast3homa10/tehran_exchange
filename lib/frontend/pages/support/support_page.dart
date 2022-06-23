@@ -9,10 +9,17 @@ class SupportPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
           Center(
             child: Text(
-              'test2',
+              'در حال توسعه ...',
+              style: Theme.of(context).textTheme.headline3,
             ),
           )
         ],
