@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
+import 'package:tehran_exchange/frontend/pages/final_steps/final_steps.dart';
 
 import '../../../components/custom_big_button.dart';
 import '../exchange_page_controller.dart';
@@ -61,8 +62,8 @@ class ExchangePart extends GetView<ExchangePageController> {
             label: 'شروع تبادل',
             onPressed: () {
               // kmessage;
-              controller.changeScreen();
-              // Network().postUser();
+              // controller.changeScreen();
+              Get.to(FinalStepsPage());
             },
           ),
         ),
@@ -71,7 +72,7 @@ class ExchangePart extends GetView<ExchangePageController> {
   }
 }
 
-class PasteAddressContainer extends StatelessWidget {
+class PasteAddressContainer extends StatefulWidget {
   const PasteAddressContainer({
     Key? key,
     this.hintText = '',
@@ -79,6 +80,13 @@ class PasteAddressContainer extends StatelessWidget {
   }) : super(key: key);
   final String hintText;
   final VoidCallback onPressed;
+
+  @override
+  State<PasteAddressContainer> createState() => _PasteAddressContainerState();
+}
+
+class _PasteAddressContainerState extends State<PasteAddressContainer> {
+  final exchangeController = Get.find<ExchangePageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +110,7 @@ class PasteAddressContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // paset button
             Padding(
               padding: const EdgeInsets.only(right: 8.0, left: 8.0),
               child: ElevatedButton(
@@ -115,7 +124,7 @@ class PasteAddressContainer extends StatelessWidget {
                       fontFamily: "Yekabakh",
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
-                onPressed: onPressed,
+                onPressed: widget.onPressed,
               ),
             ),
             const VerticalDivider(
@@ -123,6 +132,7 @@ class PasteAddressContainer extends StatelessWidget {
               indent: 9,
               endIndent: 9,
             ),
+            // input for address
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -132,7 +142,8 @@ class PasteAddressContainer extends StatelessWidget {
                       fontFamily: 'Yekanbakh',
                       fontSize: 20),
                   decoration: InputDecoration(
-                    hintText: hintText,
+                    hintMaxLines: 3,
+                    hintText: widget.hintText,
                     hintStyle: Theme.of(context)
                         .textTheme
                         .headline3!
@@ -142,6 +153,7 @@ class PasteAddressContainer extends StatelessWidget {
                 ),
               ),
             ),
+            // scan qrcode icon
             IconButton(
               icon: const Icon(FontAwesomeIcons.qrcode),
               onPressed: () {

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../../../backend/api/currency_list_api.dart';
-import '../../../../backend/models/currency_model.dart';
+import '../../../../frontend/components/try_again_button.dart';
 import '../../../../frontend/components/custom_search_delegate.dart';
 import '../../../../constants.dart';
 import '../../../components/exchange_box.dart';
@@ -13,145 +12,131 @@ import '../../../components/custom_big_button.dart';
 import '../exchange_page_controller.dart';
 
 class CalculatePage extends StatelessWidget {
-  const CalculatePage({
+  CalculatePage({
     Key? key,
   }) : super(key: key);
-
+  final timerController = Get.put(TimerController());
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CurrencyModel>?>(
-      future: CurrencyListApi().getList(),
-      builder: (context, snapShot) {
-        switch (snapShot.connectionState) {
-          case ConnectionState.waiting:
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          default:
-            return GetBuilder<ExchangePageController>(
-              builder: (controller) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // the padding widget below contains ''' cryptocurrency calculator '''.
-                    Expanded(
-                      child: SizedBox(
-                        height: Get.height * 0.4,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              /// first box
-                              ExchangeBox(
-                                onPressed: () {
-                                  // launch searchbox by tap here
-                                  showSearch(
-                                      context: context,
-                                      delegate: CustomSearchDelegate(item: 0));
-                                },
-                                currencyEnglishName: controller
-                                    .firstCurrencyChoiceEnglishName
-                                    .toString(),
-                                currencySymbol: controller
-                                    .firstCurrencyChoiceSymbol
-                                    .toString()
-                                    .toUpperCase(),
-                                imgUrl: controller.firstCurrencyChoiceImageUrl
-                                    .toString(),
+    return GetBuilder<ExchangePageController>(
+      builder: (controller) {
+        return !controller.connectToNetwork.isTrue
+            ? TryAgainButton()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // the Expanded widget below contains ''' cryptocurrency calculator '''.
+                  Expanded(
+                    child: SizedBox(
+                      height: Get.height * 0.4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            /// first box
+                            ExchangeBox(
+                              onPressed: () {
+                                // launch searchbox by tap here
+                                showSearch(
+                                    context: context,
+                                    delegate: CustomSearchDelegate(item: 0));
+                              },
+                              currencyEnglishName: controller
+                                  .firstCurrencyChoiceEnglishName
+                                  .toString(),
+                              currencySymbol: controller
+                                  .firstCurrencyChoiceSymbol
+                                  .toString()
+                                  .toUpperCase(),
+                              imgUrl: controller.firstCurrencyChoiceImageUrl
+                                  .toString(),
+                            ),
+                            // calculate result
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'BTC ~ ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700),
+                                      ),
+                                      buildFixer(context, controller),
+                                    ],
+                                  ),
+                                  //  convert button
+                                  const ConvertButton(),
+                                ],
                               ),
-                              // calculate result
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'BTC ~ ',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w700),
-                                        ),
-                                        buildFixer(context, controller),
-                                      ],
-                                    ),
-                                    //  convert button
-                                    const ConvertButton(),
-                                  ],
-                                ),
-                              ),
-                              // second box
-                              ExchangeBox(
-                                onPressed: () {
-                                  // launch searchbox by tap here
-                                  showSearch(
-                                      context: context,
-                                      delegate: CustomSearchDelegate(
-                                          item: 1,
-                                          inputStyle: InputDecorationTheme(
-                                              labelStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4,
-                                              focusColor: Colors.white,
-                                              hintStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4)));
-                                },
-                                search: controller.searchController.toInt(),
-                                currencyEnglishName: controller
-                                    .secondCurrencyChoiceEnglishName
-                                    .toString(),
-                                currencySymbol: controller
-                                    .secondCurrencyChoiceSymbol
-                                    .toString()
-                                    .toUpperCase(),
-                                isHaveIcon: true,
-                                imgUrl: controller.secondCurrencyChoiceImageUrl
-                                    .toString(),
-                                isIconChange: controller.isIconChange.toInt(),
-                                openIconPressed: () {
-                                  buildSnakBar(context);
+                            ),
+                            // second box
+                            ExchangeBox(
+                              onPressed: () {
+                                // launch searchbox by tap here
+                                showSearch(
+                                    context: context,
+                                    delegate: CustomSearchDelegate(
+                                        item: 1,
+                                        inputStyle: InputDecorationTheme(
+                                            labelStyle: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                            focusColor: Colors.white,
+                                            hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .headline4)));
+                              },
+                              search: controller.searchController.toInt(),
+                              currencyEnglishName: controller
+                                  .secondCurrencyChoiceEnglishName
+                                  .toString(),
+                              currencySymbol: controller
+                                  .secondCurrencyChoiceSymbol
+                                  .toString()
+                                  .toUpperCase(),
+                              isHaveIcon: true,
+                              imgUrl: controller.secondCurrencyChoiceImageUrl
+                                  .toString(),
+                              isIconChange: controller.isIconChange.toInt(),
+                              openIconPressed: () {
+                                buildSnakBar(context);
 
-                                  controller.changeIcon();
-                                },
-                                closeIconPressed: () {
-                                  controller.changeIcon();
-                                },
-                              ),
-                            ],
-                          ),
+                                controller.changeIcon();
+                                timerController.startTimer();
+                              },
+                              closeIconPressed: () {
+                                controller.changeIcon();
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
+                  ),
 
-                    // SizedBox(
-                    //   height: Get.height < 700
-                    //       ? Get.height * 0.195
-                    //       : Get.height * 0.165,
-                    // ),
-                    // the padding widget below contains '''add address button'''.
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: CustomBigButton(
-                        label: 'وارد کردن آدرس',
-                        onPressed: () {
-                          // Get.snackbar('توجه!', "در حال توسعه ...");
-                          controller.changeScreen();
-                        },
-                      ),
+                  // the padding widget below contains '''add address button'''.
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: CustomBigButton(
+                      label: 'وارد کردن آدرس',
+                      onPressed: () {
+                        // Get.snackbar('توجه!', "در حال توسعه ...");
+                        controller.changeScreen();
+                      },
                     ),
-                  ],
-                );
-              },
-            );
-        }
+                  ),
+                ],
+              );
       },
     );
   }
@@ -246,13 +231,15 @@ class CalculatePage extends StatelessWidget {
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 3.0, left: 3.0, right: 3.0),
-                    child: Text(
-                      '14:00',
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                          ),
+                    child: Obx(
+                      () => Text(
+                        timerController.seconds.toString(),
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                            ),
+                      ),
                     ),
                   )
                 ],

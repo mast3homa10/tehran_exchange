@@ -18,6 +18,8 @@ const Color kDarkChangerColor = Color(0xFFEFF4FF);
 const Color kDarkIconColor = Colors.white;
 const Color kDarkDividerColor = Color(0xFFFFFFFF);
 
+const kMaxSeconds = 15;
+
 // const TextStyle kTitleTextStyle = TextStyle(
 //   fontSize: 45,
 //   fontWeight: FontWeight.bold,

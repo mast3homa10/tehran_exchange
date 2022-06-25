@@ -20,9 +20,9 @@ class ExchangePage extends GetView<ExchangePageController> {
     return GetBuilder(builder: (ExchangePageController controller) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: controller.isChangeScreen.toInt() == 1
+        body: controller.isScreenChange.toInt() == 1
             ? ExchangePageBody()
-            : const CalculatePage(),
+            : CalculatePage(),
       );
     });
   }
