@@ -1,18 +1,24 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:get/get.dart';
-import 'package:tehran_exchange/frontend/pages/final_steps/final_steps.dart';
 
+import '../../../../frontend/pages/final_steps/final_steps.dart';
 import '../../../components/custom_big_button.dart';
 import '../exchange_page_controller.dart';
 import 'qr_code_screen.dart';
 
-class ExchangePart extends GetView<ExchangePageController> {
+class ExchangePart extends StatefulWidget {
   const ExchangePart({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ExchangePart> createState() => _ExchangePartState();
+}
+
+class _ExchangePartState extends State<ExchangePart> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,11 +27,8 @@ class ExchangePart extends GetView<ExchangePageController> {
           height: Get.height * 0.37,
           child: Column(
             children: [
-              PasteAddressContainer(
+              const PasteAddressContainer(
                 hintText: 'وارد کردن آدرس',
-                onPressed: () {
-                  Get.snackbar('توجه!', 'در حال توسعه ...');
-                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -44,11 +47,8 @@ class ExchangePart extends GetView<ExchangePageController> {
                   ),
                 ],
               ),
-              PasteAddressContainer(
+              const PasteAddressContainer(
                 hintText: ' وارد کردن آدرس پشتیبان',
-                onPressed: () {
-                  Get.snackbar('توجه!', 'در حال توسعه ...');
-                },
               ),
             ],
           ),
@@ -63,7 +63,7 @@ class ExchangePart extends GetView<ExchangePageController> {
             onPressed: () {
               // kmessage;
               // controller.changeScreen();
-              Get.to(FinalStepsPage());
+              Get.to(const FinalStepsPage());
             },
           ),
         ),
@@ -76,10 +76,8 @@ class PasteAddressContainer extends StatefulWidget {
   const PasteAddressContainer({
     Key? key,
     this.hintText = '',
-    required this.onPressed,
   }) : super(key: key);
   final String hintText;
-  final VoidCallback onPressed;
 
   @override
   State<PasteAddressContainer> createState() => _PasteAddressContainerState();
@@ -87,6 +85,8 @@ class PasteAddressContainer extends StatefulWidget {
 
 class _PasteAddressContainerState extends State<PasteAddressContainer> {
   final exchangeController = Get.find<ExchangePageController>();
+  TextEditingController textEditingController = TextEditingController();
+  String pasteValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,15 @@ class _PasteAddressContainerState extends State<PasteAddressContainer> {
                       fontFamily: "Yekabakh",
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
-                onPressed: widget.onPressed,
+                onPressed: () {
+                  FlutterClipboard.paste().then((value) {
+                    // Do what ever you want with the value.
+                    setState(() {
+                      textEditingController.text = value;
+                      pasteValue = value;
+                    });
+                  });
+                },
               ),
             ),
             const VerticalDivider(
