@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../frontend/pages/exchange/exchange_page_controller.dart';
+import '../pages/exchange/controllers/exchange_page_controller.dart';
 
 class ExchangeBox extends GetView<ExchangePageController> {
   const ExchangeBox({

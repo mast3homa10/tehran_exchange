@@ -4,32 +4,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:tehran_exchange/constants.dart';
-import '../../../backend/models/currency_model.dart';
-
-class TimerController extends GetxController {
-  var seconds = kMaxSeconds.obs;
-  var conuter = 0.obs;
-
-  Timer? timer;
-
-  startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      decrement();
-    });
-  }
-
-  stopTimer() {
-    timer!.cancel();
-  }
-
-  decrement() {
-    if (seconds > 0) {
-      seconds--;
-      log('$seconds');
-      update();
-    } else {}
-  }
-}
+import '../../../../backend/models/currency_model.dart';
 
 class ExchangePageController extends GetxController {
   var isScreenChange = 0.obs;

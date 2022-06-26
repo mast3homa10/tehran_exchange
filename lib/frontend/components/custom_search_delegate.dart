@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../backend/api/currency_list_api.dart';
-import '../../frontend/pages/exchange/exchange_page_controller.dart';
+import '../pages/exchange/controllers/exchange_page_controller.dart';
 import '../../backend/models/currency_model.dart';
 
 class CustomSearchDelegate extends SearchDelegate {

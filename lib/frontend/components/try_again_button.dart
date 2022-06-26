@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../frontend/pages/exchange/exchange_page_controller.dart';
+import '../pages/exchange/controllers/exchange_page_controller.dart';
 
 class TryAgainButton extends StatelessWidget {
   TryAgainButton({

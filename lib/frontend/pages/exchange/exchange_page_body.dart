@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../frontend/components/nav_bar/second_nav_bar.dart';
 import '../../../constants.dart';
-import '../../pages/exchange/exchange_page_controller.dart';
+import 'controllers/exchange_page_controller.dart';
 import 'sub_screen/address_book_screen.dart';
 import 'sub_screen/calculate_screen.dart';
 import 'sub_screen/exchange_part.dart';

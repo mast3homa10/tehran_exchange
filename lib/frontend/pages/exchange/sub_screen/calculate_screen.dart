@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../frontend/pages/exchange/controllers/timer_controller.dart';
 import '../../../../frontend/components/try_again_button.dart';
 import '../../../../frontend/components/custom_search_delegate.dart';
 import '../../../../constants.dart';
 import '../../../components/exchange_box.dart';
 import '../../../components/convert_button.dart';
 import '../../../components/custom_big_button.dart';
-import '../exchange_page_controller.dart';
+import '../controllers/exchange_page_controller.dart';
 
 class CalculatePage extends StatelessWidget {
   CalculatePage({
@@ -112,10 +113,12 @@ class CalculatePage extends StatelessWidget {
                                 buildSnakBar(context);
 
                                 controller.changeIcon();
-                                timerController.startTimer();
                               },
                               closeIconPressed: () {
                                 controller.changeIcon();
+                                timerController.timer!.cancel();
+                                timerController.seconds = kMaxSeconds.obs;
+                                timerController.update();
                               },
                             ),
                           ],
@@ -131,6 +134,12 @@ class CalculatePage extends StatelessWidget {
                       label: 'وارد کردن آدرس',
                       onPressed: () {
                         // Get.snackbar('توجه!', "در حال توسعه ...");
+                        if (timerController.timer != null) {
+                          timerController.timer!.cancel();
+                          timerController.seconds = kMaxSeconds.obs;
+                          timerController.update();
+                        }
+
                         controller.changeScreen();
                       },
                     ),
@@ -192,59 +201,73 @@ class CalculatePage extends StatelessWidget {
   }
 
   Widget buildFixer(BuildContext context, ExchangePageController controller) {
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              color: Colors.green, borderRadius: BorderRadius.circular(10)),
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              children: [
-                Text(
-                  '231364561',
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.0,
-                      ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Icon(FontAwesomeIcons.circleArrowDown,
-                      color: Colors.white),
-                ),
-              ],
-            ),
+    return Row(children: [
+      Container(
+        decoration: BoxDecoration(
+            color: Colors.green, borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            children: [
+              Text(
+                '231364561',
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.0,
+                    ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(2.0),
+                child:
+                    Icon(FontAwesomeIcons.circleArrowDown, color: Colors.white),
+              ),
+            ],
           ),
         ),
-        if (controller.isIconChange.toInt() == 1)
-          Container(
-              margin: const EdgeInsets.all(3.0),
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
+      ),
+      if (controller.isIconChange.toInt() == 1)
+        Container(
+            margin: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.all(4.0),
+            decoration: BoxDecoration(
                 color: kLightButtonColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                children: [
-                  const Icon(FontAwesomeIcons.clock),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 3.0, left: 3.0, right: 3.0),
-                    child: Obx(
-                      () => Text(
-                        timerController.seconds.toString(),
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              letterSpacing: 1.0,
-                            ),
-                      ),
-                    ),
-                  )
-                ],
-              )),
-      ],
+                borderRadius: BorderRadius.circular(20)),
+            child: Row(children: [
+              const Icon(FontAwesomeIcons.clock),
+              MyTimer(maxSecond: 120),
+            ])),
+    ]);
+  }
+}
+
+class MyTimer extends StatelessWidget {
+  MyTimer({
+    Key? key,
+    this.maxSecond = kMaxSeconds,
+  }) : super(key: key);
+  final int maxSecond;
+
+  final TimerController timerController = Get.put(TimerController());
+
+  @override
+  Widget build(BuildContext context) {
+    timerController.setTimer(maxSecond);
+    timerController.startTimer();
+    return Padding(
+      padding: const EdgeInsets.only(top: 3.0, left: 3.0, right: 3.0),
+      child: Obx(
+        () => SizedBox(
+          width: 50,
+          child: Text(
+            '${((timerController.seconds.toInt() / 60).truncate() % 60).toString().padLeft(2, '0')}:${(timerController.seconds.toInt() % 60).toString().padLeft(2, '0')}',
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  letterSpacing: 1.0,
+                ),
+          ),
+        ),
+      ),
     );
   }
 }

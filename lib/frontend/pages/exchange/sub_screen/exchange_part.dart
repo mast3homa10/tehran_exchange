@@ -1,12 +1,11 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../../../frontend/pages/final_steps/final_steps.dart';
+import '../../final_steps/final_steps_page.dart';
 import '../../../components/custom_big_button.dart';
-import '../exchange_page_controller.dart';
+import '../controllers/exchange_page_controller.dart';
 import 'qr_code_screen.dart';
 
 class ExchangePart extends StatefulWidget {
@@ -63,7 +62,7 @@ class _ExchangePartState extends State<ExchangePart> {
             onPressed: () {
               // kmessage;
               // controller.changeScreen();
-              Get.to(const FinalStepsPage());
+              Get.to(FinalStepsPage());
             },
           ),
         ),
@@ -124,15 +123,7 @@ class _PasteAddressContainerState extends State<PasteAddressContainer> {
                       fontFamily: "Yekabakh",
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
-                onPressed: () {
-                  FlutterClipboard.paste().then((value) {
-                    // Do what ever you want with the value.
-                    setState(() {
-                      textEditingController.text = value;
-                      pasteValue = value;
-                    });
-                  });
-                },
+                onPressed: () {},
               ),
             ),
             const VerticalDivider(
