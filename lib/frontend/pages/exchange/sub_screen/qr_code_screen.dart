@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -150,7 +149,7 @@ class _QRViewExampleState extends State<QRCodeScreen> {
       this.qrController = qrController;
     });
     qrController.scannedDataStream.listen((scanData) async {
-      await Future.delayed(const Duration(seconds: 5));
+      // await Future.delayed(const Duration(seconds: 5));
       try {
         if (scanData.code != null) {
           setState(() {

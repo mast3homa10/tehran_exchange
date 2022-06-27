@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:tehran_exchange/constants.dart';
 import '../../../../backend/models/currency_model.dart';
 
 class ExchangePageController extends GetxController {

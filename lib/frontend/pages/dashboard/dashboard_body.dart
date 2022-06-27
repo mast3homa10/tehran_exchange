@@ -23,12 +23,14 @@ class DashboardBody extends StatelessWidget {
   ];
 
   /// The onBackPressed is for Restrict Android backButton
-  Future<bool?> onBackPressed() async {
+  Future<bool?> onBackPressed(BuildContext context) async {
     Get.defaultDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: "توجه!",
-      content: const Text(
+      titleStyle: Theme.of(context).textTheme.headline4,
+      content: Text(
         'آیا میخواید از برنامه خارج شوید؟',
-        style: TextStyle(fontFamily: "Yekanbakh"),
+        style: Theme.of(context).textTheme.headline4,
       ),
       actions: <Widget>[
         Row(
@@ -68,7 +70,7 @@ class DashboardBody extends StatelessWidget {
     return GetBuilder<DashboardBodyController>(builder: (controller) {
       return WillPopScope(
         onWillPop: () async {
-          bool? result = await onBackPressed();
+          bool? result = await onBackPressed(context);
           result ??= false;
           return result;
         },

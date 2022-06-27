@@ -62,7 +62,7 @@ class _ExchangePartState extends State<ExchangePart> {
             onPressed: () {
               // kmessage;
               // controller.changeScreen();
-              Get.to(FinalStepsPage());
+              Get.to(() => FinalStepsPage());
             },
           ),
         ),

@@ -9,8 +9,13 @@ class TimerController extends GetxController {
   var seconds = kMaxSeconds.obs;
   var conuter = 0.obs;
   var time = ''.obs;
-
   Timer? timer;
+  @override
+  void onClose() {
+    stopTimer();
+    super.onClose();
+  }
+
   setTimer(int maxSeconds) {
     seconds = maxSeconds.obs;
     update();
@@ -23,10 +28,10 @@ class TimerController extends GetxController {
   }
 
   stopTimer() {
-    seconds = kMaxSeconds.obs;
+    setTimer(kMaxSeconds);
+    timer?.cancel();
     update();
-
-    timer!.cancel();
+    log('finish');
   }
 
   decrement() {

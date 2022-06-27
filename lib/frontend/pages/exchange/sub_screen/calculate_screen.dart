@@ -116,9 +116,11 @@ class CalculatePage extends StatelessWidget {
                               },
                               closeIconPressed: () {
                                 controller.changeIcon();
-                                timerController.timer!.cancel();
-                                timerController.seconds = kMaxSeconds.obs;
-                                timerController.update();
+
+                                timerController.stopTimer();
+                                // timerController.timer!.cancel();
+                                // timerController.seconds = kMaxSeconds.obs;
+                                // timerController.update();
                               },
                             ),
                           ],
@@ -234,37 +236,40 @@ class CalculatePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20)),
             child: Row(children: [
               const Icon(FontAwesomeIcons.clock),
-              MyTimer(maxSecond: 120),
+              MyTimer(
+                maxSecond: 120,
+                controller: timerController,
+              ),
             ])),
     ]);
   }
 }
 
 class MyTimer extends StatelessWidget {
-  MyTimer({
-    Key? key,
-    this.maxSecond = kMaxSeconds,
-  }) : super(key: key);
+  const MyTimer(
+      {Key? key, this.maxSecond = kMaxSeconds, required this.controller})
+      : super(key: key);
   final int maxSecond;
-
-  final TimerController timerController = Get.put(TimerController());
+  final TimerController controller;
 
   @override
   Widget build(BuildContext context) {
-    timerController.setTimer(maxSecond);
-    timerController.startTimer();
+    controller.setTimer(maxSecond);
+    controller.startTimer();
     return Padding(
       padding: const EdgeInsets.only(top: 3.0, left: 3.0, right: 3.0),
       child: Obx(
         () => SizedBox(
           width: 50,
-          child: Text(
-            '${((timerController.seconds.toInt() / 60).truncate() % 60).toString().padLeft(2, '0')}:${(timerController.seconds.toInt() % 60).toString().padLeft(2, '0')}',
-            style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  letterSpacing: 1.0,
-                ),
+          child: Center(
+            child: Text(
+              '${((controller.seconds.toInt() / 60).truncate() % 60).toString().padLeft(2, '0')}:${(controller.seconds.toInt() % 60).toString().padLeft(2, '0')}',
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    letterSpacing: 1.0,
+                  ),
+            ),
           ),
         ),
       ),

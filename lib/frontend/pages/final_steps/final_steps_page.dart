@@ -4,14 +4,11 @@ import 'package:get/get.dart';
 import 'package:tehran_exchange/frontend/pages/final_steps/final_steps_page_controller.dart';
 
 import '../../../constants.dart';
-import '../../../frontend/pages/exchange/controllers/timer_controller.dart';
 import '../../../frontend/pages/exchange/sub_screen/calculate_screen.dart';
 
-class FinalStepsPage extends GetView<FinalStepsController> {
+class FinalStepsPage extends StatelessWidget {
   FinalStepsPage({Key? key}) : super(key: key);
-
-  final TimerController timerController = TimerController();
-
+  final controller = Get.put(FinalStepsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +23,7 @@ class FinalStepsPage extends GetView<FinalStepsController> {
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).appBarTheme.backgroundColor),
                   child: Column(
                     children: [
@@ -34,50 +31,57 @@ class FinalStepsPage extends GetView<FinalStepsController> {
                         padding: EdgeInsets.only(
                             left: Get.width * 0.1, right: Get.width * 0.1),
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxHeight: 40, maxWidth: Get.width),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.stepslable.length,
-                            itemBuilder: (context, index) => SizedBox(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.grey,
-                                        shape: BoxShape.circle),
-                                    child: Center(
-                                      child: Text(
-                                        controller.stepslable[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2,
+                            constraints: BoxConstraints(
+                                maxHeight: 40, maxWidth: Get.width),
+                            child: Obx(
+                              () => ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: controller.stepslable.length,
+                                itemBuilder: (context, index) => SizedBox(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: controller.isActive.value
+                                                ? Colors.green
+                                                : Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                            shape: BoxShape.circle),
+                                        child: Center(
+                                          child: Text(
+                                            controller.stepslable[index],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      if (index < controller.steps.length - 1)
+                                        SizedBox(
+                                          width: Get.width * 0.2,
+                                          child: Divider(
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            thickness: 10,
+                                          ),
+                                        ),
+                                    ],
                                   ),
-                                  if (index < controller.steps.length - 1)
-                                    SizedBox(
-                                      width: Get.width * 0.2,
-                                      child: const Divider(
-                                        color: Colors.green,
-                                        thickness: 10,
-                                      ),
-                                    ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            )),
                       ),
                       Text(
                         'زمان باقی مانده برای ارسال ',
                         style: Theme.of(context).textTheme.headline5,
                       ),
-                      MyTimer(maxSecond: 600),
+                      MyTimer(
+                          maxSecond: 600,
+                          controller: controller.timerController.value),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -101,7 +105,7 @@ class FinalStepsPage extends GetView<FinalStepsController> {
                               children: const [
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: Icon(Icons.paste),
+                                  child: Icon(Icons.copy),
                                 ),
                                 VerticalDivider(
                                   width: 10.0,
@@ -139,7 +143,7 @@ class FinalStepsPage extends GetView<FinalStepsController> {
                               children: const [
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: Icon(Icons.paste),
+                                  child: Icon(Icons.copy),
                                 ),
                                 VerticalDivider(
                                   width: 10.0,

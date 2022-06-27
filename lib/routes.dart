@@ -19,31 +19,36 @@ List<GetPage<dynamic>> routes = [
     name: '/guide_page',
     page: () => GuidePage(),
     transition: Transition.downToUp,
+    binding: DashboardBodyBinding(),
   ),
   GetPage(
     name: '/dashboard_body',
     page: () => DashboardBody(),
-    binding: DashboardBodyBinding(),
     transition: Transition.downToUp,
+    binding: DashboardBodyBinding(),
   ),
   GetPage(
     name: '/exchange_page',
     page: () => ExchangePage(),
     transition: Transition.downToUp,
+    binding: DashboardBodyBinding(),
   ),
   GetPage(
     name: '/menu_page',
     page: () => const MenuPage(),
     transition: Transition.downToUp,
+    binding: DashboardBodyBinding(),
   ),
   GetPage(
     name: '/scanner_page',
     page: () => const QRCodeScreen(),
     transition: Transition.downToUp,
+    binding: DashboardBodyBinding(),
   ),
   GetPage(
     name: '/final_step_page',
     page: () => FinalStepsPage(),
     transition: Transition.downToUp,
+    binding: DashboardBodyBinding(),
   ),
 ];
