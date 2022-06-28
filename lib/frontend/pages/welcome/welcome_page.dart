@@ -130,7 +130,7 @@ class WelcomePage extends GetView<WelcomePageController> {
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
                 press: () {
-                  // Get.off(DashboardBody());
+                  Get.off(DashboardBody());
                   // todo: test Api
                   // CheckPairBeVaildApi().getPairBeVaild();
                   // CreateTransactionApi().create();

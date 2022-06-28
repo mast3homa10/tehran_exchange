@@ -6,33 +6,48 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tehran_exchange/backend/models/currency_model.dart';
+import 'package:tehran_exchange/backend/network_constants.dart';
 
 import '../pages/exchange/controllers/exchange_page_controller.dart';
 
-class ExchangeBox extends GetView<ExchangePageController> {
-  const ExchangeBox({
+class CalculateBox extends GetView<ExchangePageController> {
+  const CalculateBox({
     Key? key,
-    this.currencyEnglishName = '',
     this.search = 0,
-    this.defaultItem,
-    this.currencySymbol = '',
+    this.currency,
     this.isHaveIcon = false,
-    this.imgUrl,
     this.isIconChange = false,
     this.onPressed,
     this.openIconPressed,
     this.closeIconPressed,
   }) : super(key: key);
-  final CurrencyModel? defaultItem;
-  final String currencyEnglishName;
+  final CurrencyModel? currency;
   final int search;
-  final String? imgUrl;
-  final String currencySymbol;
   final bool isHaveIcon;
   final bool isIconChange;
   final VoidCallback? openIconPressed;
   final VoidCallback? closeIconPressed;
   final VoidCallback? onPressed;
+  const CalculateBox.forSell({
+    Key? key,
+    this.search = 1,
+    this.currency,
+    this.isHaveIcon = false,
+    this.isIconChange = false,
+    this.onPressed,
+    this.openIconPressed,
+    this.closeIconPressed,
+  });
+  const CalculateBox.forBuy({
+    Key? key,
+    this.search = 0,
+    this.currency,
+    this.isHaveIcon = false,
+    this.isIconChange = false,
+    this.onPressed,
+    this.openIconPressed,
+    this.closeIconPressed,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +74,7 @@ class ExchangeBox extends GetView<ExchangePageController> {
                 // image part
                 Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: buildImage(imgUrl)),
+                    child: buildImage(currency!.legacyTicker)),
                 // start search page by click the following text button
                 Expanded(
                   child: TextButton(
@@ -77,7 +92,7 @@ class ExchangeBox extends GetView<ExchangePageController> {
                       children: [
                         // currency English Name
                         Text(
-                          currencyEnglishName,
+                          currency!.engName ?? '',
                           style: Theme.of(context).textTheme.headline5,
                           maxLines: 1,
                           textWidthBasis: TextWidthBasis.longestLine,
@@ -89,7 +104,7 @@ class ExchangeBox extends GetView<ExchangePageController> {
                           children: [
                             // currency Symbol
                             Text(
-                              currencySymbol,
+                              currency!.symbol ?? '',
                               style: Theme.of(context).textTheme.headline4,
                             ),
                             const SizedBox(
@@ -141,7 +156,9 @@ class ExchangeBox extends GetView<ExchangePageController> {
                                   Colors.red,
                           width: 5.0),
                     ),
-                    hintText: 'مقدار را وارد کنید',
+                    hintText: search == 0
+                        ? controller.estimate!.destinationAmount.toString()
+                        : controller.estimate!.sourceAmount!.toString(),
                     hintStyle: Theme.of(context)
                         .textTheme
                         .headline3!
@@ -156,12 +173,12 @@ class ExchangeBox extends GetView<ExchangePageController> {
   }
 
 //
-  Widget? buildImage(String? imageUrl) {
+  Widget? buildImage(String? legacyTicker) {
     try {
       return AspectRatio(
         aspectRatio: 0.35,
         child: SvgPicture.network(
-          imageUrl!,
+          imgUrl + '$legacyTicker.svg',
           semanticsLabel: 'A shark?!',
           placeholderBuilder: (BuildContext context) => Container(),
         ),

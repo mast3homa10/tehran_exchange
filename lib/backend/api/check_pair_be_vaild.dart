@@ -4,20 +4,23 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 import '../../backend/models/check_pair_be_vaild_model.dart';
-import '../../backend/models/currency_model.dart';
 import '../network_constants.dart';
 
 class CheckPairBeVaildApi {
-  Future<List<CurrencyModel>> getPairBeVaild() async {
-    List<CurrencyModel> list = [];
+  Future<CheckPairBeVaildModel?> getPairBeVaild(
+      {String? sourceCurrency,
+      String? destinationCurrency,
+      String? type,
+      String? sourceNetwork,
+      String? destinationNetwork}) async {
     http.Response response = await http.post(
         Uri.parse(baseUrl + pairBeValidEndpoint),
         body: json.encode({
-          "sourceCurrency": "btc",
-          "destinationCurrency": "usdt",
-          "type": "fix",
-          "sourceNetwork": "btc",
-          "destinationNetwork": "eth"
+          "sourceCurrency": sourceCurrency,
+          "destinationCurrency": destinationCurrency,
+          "type": type,
+          "sourceNetwork": "sourceNetwork",
+          "destinationNetwork": "destinationNetwork"
         }),
         headers: {
           'x-changenow-api-key': '{{free-api-key}}',
@@ -31,10 +34,9 @@ class CheckPairBeVaildApi {
 
       var decodedData = CheckPairBeVaildModel.fromJson(data);
       log('$decodedData');
-      return list;
+      return decodedData;
     } else {
       log("${response.statusCode}");
-      return list;
     }
   }
 }

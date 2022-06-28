@@ -23,7 +23,8 @@ class CalculatePage extends StatelessWidget {
     return GetBuilder<ExchangePageController>(
       builder: (controller) {
         return !controller.connectToNetwork.value
-            ? TryAgainButton()
+            ? const Center(child: CircularProgressIndicator())
+            // TryAgainButton()
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -38,22 +39,14 @@ class CalculatePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             /// first box
-                            ExchangeBox(
+                            CalculateBox.forSell(
+                              currency: controller.forSellChoice,
                               onPressed: () {
                                 // launch searchbox by tap here
                                 showSearch(
                                     context: context,
                                     delegate: CustomSearchDelegate(item: 0));
                               },
-                              currencyEnglishName: controller
-                                  .firstCurrencyChoiceEnglishName
-                                  .toString(),
-                              currencySymbol: controller
-                                  .firstCurrencyChoiceSymbol
-                                  .toString()
-                                  .toUpperCase(),
-                              imgUrl: controller.firstCurrencyChoiceImageUrl
-                                  .toString(),
                             ),
                             // calculate result
                             Padding(
@@ -66,7 +59,7 @@ class CalculatePage extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        'BTC ~ ',
+                                        '${controller.forSellChoice!.symbol!.toUpperCase()} ~ ',
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline5!
@@ -82,7 +75,8 @@ class CalculatePage extends StatelessWidget {
                               ),
                             ),
                             // second box
-                            ExchangeBox(
+                            CalculateBox.forBuy(
+                              currency: controller.forBuyChoice,
                               onPressed: () {
                                 // launch searchbox by tap here
                                 showSearch(
@@ -98,17 +92,7 @@ class CalculatePage extends StatelessWidget {
                                                 .textTheme
                                                 .headline4)));
                               },
-                              search: controller.searchController.toInt(),
-                              currencyEnglishName: controller
-                                  .secondCurrencyChoiceEnglishName
-                                  .toString(),
-                              currencySymbol: controller
-                                  .secondCurrencyChoiceSymbol
-                                  .toString()
-                                  .toUpperCase(),
                               isHaveIcon: true,
-                              imgUrl: controller.secondCurrencyChoiceImageUrl
-                                  .toString(),
                               isIconChange: controller.isIconChange.value,
                               openIconPressed: () {
                                 buildSnakBar(context);
@@ -199,6 +183,8 @@ class CalculatePage extends StatelessWidget {
   }
 
   Widget buildFixer(BuildContext context, ExchangePageController controller) {
+    var source = controller.forSellAmount ?? 0;
+    var destination = controller.forBuyAmount ?? 0;
     return Row(children: [
       Container(
         decoration: BoxDecoration(
@@ -208,7 +194,7 @@ class CalculatePage extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                '231364561',
+                '${destination / source}',
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.0,

@@ -8,7 +8,34 @@ import '../../backend/models/currency_model.dart';
 import '../network_constants.dart';
 
 class InitTableApi {
-  Future<InitTabelModel?> initTable() async {
+  Future<Map<String, dynamic>?> initTable() async {
+    http.Response response =
+        await http.get(Uri.parse(baseUrl + initTabelEndpoint));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> estimateData =
+          json.decode(response.body)['data']['estimateBTCETH'];
+      InitTabelModel decodedestimateData =
+          InitTabelModel.fromJson(estimateData);
+      log('$decodedestimateData');
+      List<dynamic> listData =
+          json.decode(response.body)['data']["list"]['currencies'];
+      listData.removeWhere((element) => element == null);
+      List<CurrencyModel> decodedListData =
+          listData.map((item) => CurrencyModel.fromJson(item)).toList();
+      log('////////////////////////////////////////');
+      Map<String, dynamic> result = {
+        'estimate': decodedestimateData,
+        'list': decodedListData
+      };
+
+      return result;
+    } else {
+      log("${response.statusCode}");
+    }
+  }
+
+  Future<InitTabelModel?> estimate() async {
     http.Response response =
         await http.get(Uri.parse(baseUrl + initTabelEndpoint));
 

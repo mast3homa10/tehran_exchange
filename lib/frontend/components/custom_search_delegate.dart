@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/backend/network_constants.dart';
 
 import '../../backend/api/currency_list_api.dart';
 import '../pages/exchange/controllers/exchange_page_controller.dart';
@@ -90,15 +91,14 @@ class CustomSearchDelegate extends SearchDelegate {
     return FutureBuilder<List<CurrencyModel>?>(
         future: CurrencyListApi().getList(),
         builder: (context, snapShot) {
-          log('${snapShot.data}');
-          List<CurrencyModel> suggestions = snapShot.data ??
-              searchResultsList.where((searchResult) {
-                final String userInput = query.toLowerCase();
-                final String result =
-                    (searchResult.engName ?? '').toLowerCase();
+          List<CurrencyModel> suggestions =
+              (snapShot.data ?? searchResultsList).where((searchResult) {
+            final String userInput = query.toLowerCase();
+            final String result = (searchResult.engName ?? '').toLowerCase() +
+                (searchResult.faName ?? '').toLowerCase();
 
-                return result.contains(userInput);
-              }).toList();
+            return result.contains(userInput);
+          }).toList();
           switch (snapShot.connectionState) {
             case ConnectionState.waiting:
               return const Center(
@@ -182,7 +182,8 @@ class CustomSearchDelegate extends SearchDelegate {
                                               width: 50,
                                               height: 50,
                                               child: SvgPicture.network(
-                                                suggestion.imageUrl ?? '',
+                                                (imgUrl +
+                                                    '${suggestion.legacyTicker}.svg'),
                                                 semanticsLabel: 'img',
                                                 placeholderBuilder: (BuildContext
                                                         context) =>
@@ -213,7 +214,7 @@ class CustomSearchDelegate extends SearchDelegate {
                                       Get.put(ExchangePageController());
                                   query = suggestion.engName ?? "test";
                                   controller.updateCurrencyChoice(
-                                      model: suggestion, item: item);
+                                      currency: suggestion, item: item);
                                   log('test');
                                   close(context, null);
                                 } else {
@@ -221,7 +222,7 @@ class CustomSearchDelegate extends SearchDelegate {
                                       Get.put(ExchangePageController());
                                   query = suggestion.engName ?? "test";
                                   controller.updateCurrencyChoice(
-                                      model: suggestion, item: item);
+                                      currency: suggestion, item: item);
                                   close(context, null);
                                 }
 

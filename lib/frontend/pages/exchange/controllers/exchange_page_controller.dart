@@ -2,8 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:tehran_exchange/backend/api/currency_list_api.dart';
+import 'package:tehran_exchange/backend/api/check_pair_be_vaild.dart';
+import 'package:tehran_exchange/backend/models/init_tabel_model.dart';
 
+import '../../../../backend/api/init-table.dart';
 import '../../../../backend/models/currency_model.dart';
 
 class ExchangePageController extends GetxController {
@@ -12,22 +14,41 @@ class ExchangePageController extends GetxController {
   var isIconChange = false.obs;
   var searchController = 0.obs;
   var qrcodeResult = ''.obs;
-  var firstCurrencyChoiceEnglishName = 'Tether'.obs;
-  var firstCurrencyChoiceSymbol = 'USDT'.obs;
-  var firstCurrencyChoiceImageUrl = ''.obs;
-  var secondCurrencyChoiceEnglishName = 'Bitcoin'.obs;
-  var secondCurrencyChoiceSymbol = 'BTC'.obs;
-  var secondCurrencyChoiceImageUrl = ''.obs;
   var connectToNetwork = false.obs;
-  var btcDefault;
-  var ethDefault;
-  var forSellList;
-  var forBuyList;
+  CurrencyModel? forSellChoice;
+  double? forSellAmount;
+  CurrencyModel? forBuyChoice;
+  double? forBuyAmount;
+  List<CurrencyModel>? forSellList;
+  List<CurrencyModel>? forBuyList;
   List<CurrencyModel>? currencyList = [];
+  InitTabelModel? estimate;
+  var pairValid;
   @override
   void onInit() {
     checkConnection();
     super.onInit();
+  }
+
+  updateEstimateAmount(double sellAmount, double buyAmount) {
+    forSellAmount = sellAmount;
+    forBuyAmount = buyAmount;
+    update();
+  }
+
+  bb(
+      {String? sourceCurrency,
+      String? destinationCurrency,
+      String? type,
+      String? sourceNetwork,
+      String? destinationNetwork}) async {
+    pairValid = await CheckPairBeVaildApi().getPairBeVaild(
+        destinationCurrency: destinationCurrency,
+        destinationNetwork: destinationNetwork,
+        sourceCurrency: sourceCurrency,
+        sourceNetwork: sourceNetwork,
+        type: type);
+    update();
   }
 
   checkConnection() async {
@@ -37,13 +58,24 @@ class ExchangePageController extends GetxController {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         log('connected');
         connectToNetwork = true.obs;
-        currencyList = await CurrencyListApi().getList();
-        btcDefault = currencyList!
-            .where((item) => item.engName!.toLowerCase() == 'bitcoin');
-        log("$btcDefault");
-        ethDefault = currencyList!
-            .where((item) => item.engName!.toLowerCase() == 'ethereum');
-        log("$ethDefault");
+        // get currency list
+        //get init table
+        var initTable = await InitTableApi().initTable();
+        estimate = initTable!['estimate'] ?? [];
+        forSellAmount = estimate!.sourceAmount;
+        forBuyAmount = estimate!.destinationAmount;
+        log('${estimate!.destinationAmount}.');
+
+        currencyList = initTable['list'] ?? {};
+
+        forSellChoice = currencyList!
+            .where((item) => item.engName!.toLowerCase() == 'bitcoin')
+            .first;
+        log("$forSellChoice");
+        forBuyChoice = currencyList!
+            .where((item) => item.engName!.toLowerCase() == 'ethereum')
+            .first;
+        log("$forBuyChoice");
         forSellList = currencyList!
             .where((item) => item.availableForSell == true)
             .toList();
@@ -67,15 +99,11 @@ class ExchangePageController extends GetxController {
     update();
   }
 
-  updateCurrencyChoice({required CurrencyModel model, required int item}) {
+  updateCurrencyChoice({required CurrencyModel currency, required int item}) {
     if (item == 1) {
-      secondCurrencyChoiceEnglishName = model.engName!.obs;
-      secondCurrencyChoiceSymbol = model.symbol!.obs;
-      secondCurrencyChoiceImageUrl = model.imageUrl!.obs;
+      forBuyChoice = currency;
     } else {
-      firstCurrencyChoiceEnglishName = model.engName!.obs;
-      firstCurrencyChoiceSymbol = model.symbol!.obs;
-      firstCurrencyChoiceImageUrl = model.imageUrl!.obs;
+      forSellChoice = currency;
     }
 
     update();

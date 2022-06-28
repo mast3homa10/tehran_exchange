@@ -8,3 +8,6 @@ const String currencyListEndpoint = 'currencies-list';
 
 const String createTransactionEndpoint = 'create-transaction';
 const String pairBeValidEndpoint = 'check-pair-be-valid';
+
+const String imgUrl =
+    'https://static.tehran.exchange/assets/currencies/images/';
