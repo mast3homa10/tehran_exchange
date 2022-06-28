@@ -2,17 +2,16 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import '../../backend/models/currency_model.dart';
 
-const String _baseUrl = 'http://65.108.225.114:3001/api/v1/Decentralized/';
-const String currencyListEndpoint = 'currencies-list';
+import '../../backend/models/currency_model.dart';
+import '../network_constants.dart';
 
 class CurrencyListApi {
   Future<List<CurrencyModel>?> getList() async {
     List<CurrencyModel> list = [];
     try {
       http.Response response = await http.post(
-          Uri.parse(_baseUrl + currencyListEndpoint),
+          Uri.parse(baseUrl + currencyListEndpoint),
           body: json.encode({"active": true, "type": "not-fix"}),
           headers: {'Content-Type': 'application/json'});
 

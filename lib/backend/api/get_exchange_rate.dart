@@ -2,16 +2,16 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import '../../backend/models/currency_model.dart';
 
-const String _baseUrl = 'http://65.108.225.114:3001/api/v1/Decentralized/';
-const String getExchangeRateEndpoint = 'get-exchange-rate';
+import '../../backend/models/get_exchange_rate_model.dart';
+import '../../backend/models/currency_model.dart';
+import '../network_constants.dart';
 
 class GetExchangeRateApi {
   Future<List<CurrencyModel>> getExchangeRate() async {
     List<CurrencyModel> list = [];
     http.Response response = await http.post(
-        Uri.parse(_baseUrl + getExchangeRateEndpoint),
+        Uri.parse(baseUrl + getExchangeRateEndpoint),
         body: json.encode({
           "sourceCurrency": "btc",
           "destinationCurrency": "eth",
@@ -36,38 +36,4 @@ class GetExchangeRateApi {
       return list;
     }
   }
-}
-
-class GetExchangeRateModel {
-  String? sourceCurrency;
-  String? sourceNetwork;
-  String? destinationCurrency;
-  String? destinationNetwork;
-  String? type;
-  String? maximumExchangeAmount;
-  double? minimumExchangeAmount;
-
-  GetExchangeRateModel({
-    this.maximumExchangeAmount = '',
-    this.minimumExchangeAmount = 0.0002839,
-    this.destinationCurrency = 'test',
-    this.destinationNetwork = 'test',
-    this.sourceCurrency = 'test',
-    this.sourceNetwork = 'test',
-    this.type = 'test',
-  });
-
-  GetExchangeRateModel.fromJson(json) {
-    destinationCurrency = json['destinationCurrency'];
-    destinationNetwork = json['destinationNetwork'];
-    sourceCurrency = json['sourceCurrency'];
-    sourceNetwork = json['sourceNetwork'];
-    type = json['type'];
-    maximumExchangeAmount = json['maximumExchangeAmount'];
-    minimumExchangeAmount = json['minimumExchangeAmount'];
-  }
-
-  @override
-  toString() =>
-      "{minimumExchangeAmount: $minimumExchangeAmount}, {type: $type ...},";
 }

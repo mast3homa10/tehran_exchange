@@ -54,7 +54,7 @@ class CustomSearchDelegate extends SearchDelegate {
         IconButton(
           // ignore: deprecated_member_use
           icon: Icon(
-            FontAwesomeIcons.multiply,
+            CupertinoIcons.multiply,
             color: Theme.of(context).iconTheme.color,
           ),
           onPressed: () {
@@ -94,7 +94,8 @@ class CustomSearchDelegate extends SearchDelegate {
           List<CurrencyModel> suggestions = snapShot.data ??
               searchResultsList.where((searchResult) {
                 final String userInput = query.toLowerCase();
-                final String result = searchResult.engName!.toLowerCase();
+                final String result =
+                    (searchResult.engName ?? '').toLowerCase();
 
                 return result.contains(userInput);
               }).toList();
@@ -123,8 +124,9 @@ class CustomSearchDelegate extends SearchDelegate {
                                   Row(
                                     children: [
                                       Container(
-                                        width:
-                                            suggestion.inNetwork!.length + 50,
+                                        width: (suggestion.inNetwork ?? '')
+                                                .length +
+                                            50,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
@@ -161,7 +163,7 @@ class CustomSearchDelegate extends SearchDelegate {
                                                           const EdgeInsets.all(
                                                               1.0),
                                                       child: Text(
-                                                        " ${suggestion.faName} ( ${suggestion.symbol!.toUpperCase()} ) ",
+                                                        " ${suggestion.faName} ( ${(suggestion.symbol ?? '').toUpperCase()} ) ",
                                                         maxLines: 1,
                                                         textWidthBasis:
                                                             TextWidthBasis
@@ -180,14 +182,14 @@ class CustomSearchDelegate extends SearchDelegate {
                                               width: 50,
                                               height: 50,
                                               child: SvgPicture.network(
-                                                suggestion.imageUrl!,
-                                                semanticsLabel: 'A shark?!',
+                                                suggestion.imageUrl ?? '',
+                                                semanticsLabel: 'img',
                                                 placeholderBuilder: (BuildContext
                                                         context) =>
                                                     Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                .all(30.0),
+                                                                .all(10.0),
                                                         child:
                                                             const CircularProgressIndicator()),
                                               ),

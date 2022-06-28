@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/backend/models/currency_model.dart';
 
 import '../pages/exchange/controllers/exchange_page_controller.dart';
 
@@ -13,21 +14,22 @@ class ExchangeBox extends GetView<ExchangePageController> {
     Key? key,
     this.currencyEnglishName = '',
     this.search = 0,
+    this.defaultItem,
     this.currencySymbol = '',
     this.isHaveIcon = false,
     this.imgUrl,
-    this.isIconChange = 0,
+    this.isIconChange = false,
     this.onPressed,
     this.openIconPressed,
     this.closeIconPressed,
   }) : super(key: key);
-
+  final CurrencyModel? defaultItem;
   final String currencyEnglishName;
   final int search;
   final String? imgUrl;
   final String currencySymbol;
   final bool isHaveIcon;
-  final int isIconChange;
+  final bool isIconChange;
   final VoidCallback? openIconPressed;
   final VoidCallback? closeIconPressed;
   final VoidCallback? onPressed;
@@ -173,7 +175,7 @@ class ExchangeBox extends GetView<ExchangePageController> {
     if (isHaveIcon) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: isIconChange == 1
+        child: isIconChange
             ? IconButton(
                 onPressed: closeIconPressed,
                 icon: Icon(

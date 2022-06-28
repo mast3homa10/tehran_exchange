@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tehran_exchange/backend/api/init-table.dart';
 
 import '../../../backend/api/check_pair_be_vaild.dart';
 import '../../../backend/api/create_transaction.dart';
@@ -129,11 +130,13 @@ class WelcomePage extends GetView<WelcomePageController> {
                       color: Theme.of(context).scaffoldBackgroundColor),
                 ),
                 press: () {
-                  Get.off(DashboardBody());
-                  // TODO: Api
+                  // Get.off(DashboardBody());
+                  // todo: test Api
                   // CheckPairBeVaildApi().getPairBeVaild();
                   // CreateTransactionApi().create();
                   // CurrencyListApi().getList();
+                  // InitTableApi().initTable();
+                  // InitTableApi().getList();
                   // EstimateExchangeAmountApi().getAmount();
                   // GetExchangeRateApi().getExchangeRate();
                   // GetTransactionStatusApi().getExchangeRate();

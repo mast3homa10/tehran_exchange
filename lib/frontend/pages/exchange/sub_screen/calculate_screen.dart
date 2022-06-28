@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../frontend/components/custom_timer.dart';
 import '../../../../frontend/pages/exchange/controllers/timer_controller.dart';
 import '../../../../frontend/components/try_again_button.dart';
 import '../../../../frontend/components/custom_search_delegate.dart';
@@ -21,7 +22,7 @@ class CalculatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ExchangePageController>(
       builder: (controller) {
-        return !controller.connectToNetwork.isTrue
+        return !controller.connectToNetwork.value
             ? TryAgainButton()
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -108,7 +109,7 @@ class CalculatePage extends StatelessWidget {
                               isHaveIcon: true,
                               imgUrl: controller.secondCurrencyChoiceImageUrl
                                   .toString(),
-                              isIconChange: controller.isIconChange.toInt(),
+                              isIconChange: controller.isIconChange.value,
                               openIconPressed: () {
                                 buildSnakBar(context);
 
@@ -118,9 +119,6 @@ class CalculatePage extends StatelessWidget {
                                 controller.changeIcon();
 
                                 timerController.stopTimer();
-                                // timerController.timer!.cancel();
-                                // timerController.seconds = kMaxSeconds.obs;
-                                // timerController.update();
                               },
                             ),
                           ],
@@ -137,9 +135,7 @@ class CalculatePage extends StatelessWidget {
                       onPressed: () {
                         // Get.snackbar('توجه!', "در حال توسعه ...");
                         if (timerController.timer != null) {
-                          timerController.timer!.cancel();
-                          timerController.seconds = kMaxSeconds.obs;
-                          timerController.update();
+                          timerController.stopTimer();
                         }
 
                         controller.changeScreen();
@@ -227,7 +223,7 @@ class CalculatePage extends StatelessWidget {
           ),
         ),
       ),
-      if (controller.isIconChange.toInt() == 1)
+      if (controller.isIconChange.value)
         Container(
             margin: const EdgeInsets.all(3.0),
             padding: const EdgeInsets.all(4.0),
@@ -236,43 +232,11 @@ class CalculatePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20)),
             child: Row(children: [
               const Icon(FontAwesomeIcons.clock),
-              MyTimer(
+              CustomTimer(
                 maxSecond: 120,
                 controller: timerController,
               ),
             ])),
     ]);
-  }
-}
-
-class MyTimer extends StatelessWidget {
-  const MyTimer(
-      {Key? key, this.maxSecond = kMaxSeconds, required this.controller})
-      : super(key: key);
-  final int maxSecond;
-  final TimerController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    controller.setTimer(maxSecond);
-    controller.startTimer();
-    return Padding(
-      padding: const EdgeInsets.only(top: 3.0, left: 3.0, right: 3.0),
-      child: Obx(
-        () => SizedBox(
-          width: 50,
-          child: Center(
-            child: Text(
-              '${((controller.seconds.toInt() / 60).truncate() % 60).toString().padLeft(2, '0')}:${(controller.seconds.toInt() % 60).toString().padLeft(2, '0')}',
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    letterSpacing: 1.0,
-                  ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

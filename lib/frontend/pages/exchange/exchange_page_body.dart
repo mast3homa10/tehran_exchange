@@ -8,7 +8,7 @@ import '../../../constants.dart';
 import 'controllers/exchange_page_controller.dart';
 import 'sub_screen/address_book_screen.dart';
 import 'sub_screen/calculate_screen.dart';
-import 'sub_screen/exchange_part.dart';
+import 'sub_screen/add_address_screen.dart';
 
 class ExchangePage extends GetView<ExchangePageController> {
   ExchangePage({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class ExchangePage extends GetView<ExchangePageController> {
     return GetBuilder(builder: (ExchangePageController controller) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: controller.isScreenChange.toInt() == 1
+        body: controller.isScreenChange.value
             ? ExchangePageBody()
             : CalculatePage(),
       );
@@ -34,7 +34,7 @@ class ExchangePageBody extends GetView<ExchangePageController> {
   }) : super(key: key);
 
   final subScreen = [
-    const ExchangePart(),
+    const AddAddressScreen(),
     const AddressBookScreen(),
   ];
 
@@ -54,7 +54,7 @@ class ExchangePageBody extends GetView<ExchangePageController> {
                 onItemSelected: (index) => controller.getCurrentTopItem(index),
                 items: topItems),
           ),
-          subScreen[controller.currentTopItem.toInt()],
+          subScreen[controller.currentTopItem.value],
         ],
       );
     });

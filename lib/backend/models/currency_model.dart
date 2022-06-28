@@ -47,7 +47,7 @@ class CurrencyModel {
         isActive = json['isActive'];
 
   @override
-  toString() => "{symbol: $symbol}, {engName: $engName}, {faName: $faName}";
+  toString() => "\n {symbol: $symbol}, {engName: $engName}, {faName: $faName}";
 }
 
 List<CurrencyModel> dataList = [
@@ -58,33 +58,5 @@ List<CurrencyModel> dataList = [
   CurrencyModel(
     engName: 'Tether',
     symbol: "USDT",
-  ),
-  CurrencyModel(
-    engName: 'Uni corn',
-    symbol: "UNI",
-  ),
-  CurrencyModel(
-    engName: 'Bitcoin',
-    symbol: "BTC",
-  ),
-  CurrencyModel(
-    engName: 'Tether',
-    symbol: "USDT",
-  ),
-  CurrencyModel(
-    engName: 'Uni corn',
-    symbol: "UNI",
-  ),
-  CurrencyModel(
-    engName: 'Bitcoin',
-    symbol: "BTC",
-  ),
-  CurrencyModel(
-    engName: 'Tether',
-    symbol: "USDT",
-  ),
-  CurrencyModel(
-    engName: 'Uni corn',
-    symbol: "UNI",
   ),
 ];

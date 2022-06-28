@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:tehran_exchange/constants.dart';
 
 import '../../components/toggel_bar.dart';
 import '../../pages/menu/menu_page_controller.dart';

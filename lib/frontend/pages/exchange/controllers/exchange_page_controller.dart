@@ -2,12 +2,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:tehran_exchange/backend/api/currency_list_api.dart';
+
 import '../../../../backend/models/currency_model.dart';
 
 class ExchangePageController extends GetxController {
-  var isScreenChange = 0.obs;
+  var isScreenChange = false.obs;
   var currentTopItem = 0.obs;
-  var isIconChange = 0.obs;
+  var isIconChange = false.obs;
   var searchController = 0.obs;
   var qrcodeResult = ''.obs;
   var firstCurrencyChoiceEnglishName = 'Tether'.obs;
@@ -17,7 +19,11 @@ class ExchangePageController extends GetxController {
   var secondCurrencyChoiceSymbol = 'BTC'.obs;
   var secondCurrencyChoiceImageUrl = ''.obs;
   var connectToNetwork = false.obs;
-
+  var btcDefault;
+  var ethDefault;
+  var forSellList;
+  var forBuyList;
+  List<CurrencyModel>? currencyList = [];
   @override
   void onInit() {
     checkConnection();
@@ -31,6 +37,22 @@ class ExchangePageController extends GetxController {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         log('connected');
         connectToNetwork = true.obs;
+        currencyList = await CurrencyListApi().getList();
+        btcDefault = currencyList!
+            .where((item) => item.engName!.toLowerCase() == 'bitcoin');
+        log("$btcDefault");
+        ethDefault = currencyList!
+            .where((item) => item.engName!.toLowerCase() == 'ethereum');
+        log("$ethDefault");
+        forSellList = currencyList!
+            .where((item) => item.availableForSell == true)
+            .toList();
+        log("$forSellList");
+        forBuyList = currencyList!
+            .where((item) => item.availableForBuy == true)
+            .toList();
+        log("$forBuyList");
+
         update();
       }
     } on SocketException catch (_) {
@@ -70,12 +92,12 @@ class ExchangePageController extends GetxController {
   }
 
   changeScreen() {
-    isScreenChange == 0.obs ? isScreenChange + 1 : isScreenChange - 1;
+    isScreenChange = isScreenChange.value ? false.obs : true.obs;
     update();
   }
 
   changeIcon() {
-    isIconChange = isIconChange == 0.obs ? 1.obs : 0.obs;
+    isIconChange = isIconChange.value ? false.obs : true.obs;
     update();
   }
 }

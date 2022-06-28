@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:tehran_exchange/frontend/pages/final_steps/final_steps_page_controller.dart';
 
+import '../../../frontend/components/custom_timer.dart';
+import '../../../frontend/pages/final_steps/final_steps_page_controller.dart';
 import '../../../constants.dart';
-import '../../../frontend/pages/exchange/sub_screen/calculate_screen.dart';
 
 class FinalStepsPage extends StatelessWidget {
   FinalStepsPage({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class FinalStepsPage extends StatelessWidget {
                         'زمان باقی مانده برای ارسال ',
                         style: Theme.of(context).textTheme.headline5,
                       ),
-                      MyTimer(
+                      CustomTimer(
                           maxSecond: 600,
                           controller: controller.timerController.value),
                       Row(

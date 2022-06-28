@@ -81,7 +81,7 @@ class DashboardBody extends StatelessWidget {
             // the indexed stack widget change screen by help of nav bar
             child: IndexedStack(
               children: screens,
-              index: controller.currentPage.toInt(),
+              index: controller.currentPage.value,
             ),
           ),
           bottomNavigationBar: SizedBox(
@@ -94,7 +94,7 @@ class DashboardBody extends StatelessWidget {
                 ),
                 Expanded(
                   child: BottomNavBar(
-                      selectedIndex: controller.currentPage.toInt(),
+                      selectedIndex: controller.currentPage.value,
                       showElevation: true,
                       itemCornerRadius: 24,
                       curve: Curves.easeIn,

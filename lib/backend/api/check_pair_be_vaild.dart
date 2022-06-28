@@ -3,16 +3,15 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
+import '../../backend/models/check_pair_be_vaild_model.dart';
 import '../../backend/models/currency_model.dart';
-
-const String _baseUrl = 'http://65.108.225.114:3001/api/v1/Decentralized/';
-const String pairBeValidEndpoint = 'check-pair-be-valid';
+import '../network_constants.dart';
 
 class CheckPairBeVaildApi {
   Future<List<CurrencyModel>> getPairBeVaild() async {
     List<CurrencyModel> list = [];
     http.Response response = await http.post(
-        Uri.parse(_baseUrl + pairBeValidEndpoint),
+        Uri.parse(baseUrl + pairBeValidEndpoint),
         body: json.encode({
           "sourceCurrency": "btc",
           "destinationCurrency": "usdt",
@@ -38,42 +37,4 @@ class CheckPairBeVaildApi {
       return list;
     }
   }
-}
-
-class CheckPairBeVaildModel {
-  String? sourceCurrency;
-  String? sourceNetwork;
-  String? destinationCurrency;
-  String? destinationNetwork;
-  List<TypeModel>? type;
-  CheckPairBeVaildModel(
-      {this.sourceCurrency = 'test',
-      this.sourceNetwork = 'test',
-      this.destinationCurrency = 'test',
-      this.destinationNetwork = 'test',
-      this.type});
-
-  CheckPairBeVaildModel.fromJson(Map<String, dynamic> json) {
-    sourceCurrency = json["sourceCurrency"];
-    sourceNetwork = json["sourceNetwork"];
-    destinationCurrency = json["destinationCurrency"];
-    destinationNetwork = json["destinationNetwork"];
-    if (json["type"] != null) {
-      type = (json["type"] as List)
-          .map((item) => TypeModel().fromJson(item))
-          .toList();
-    }
-  }
-  @override
-  toString() =>
-      "{sourceCurrency: $sourceCurrency}, {destinationCurrency: $destinationCurrency}, {type: $type}";
-}
-
-class TypeModel {
-  bool? fix;
-  bool? notFix;
-  TypeModel({this.fix, this.notFix});
-
-  TypeModel fromJson(json) =>
-      TypeModel(fix: json["fix"], notFix: json["not-fix"]);
 }

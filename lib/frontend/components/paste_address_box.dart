@@ -1,88 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/route_manager.dart';
 
-import '../../final_steps/final_steps_page.dart';
-import '../../../components/custom_big_button.dart';
-import '../controllers/exchange_page_controller.dart';
-import 'qr_code_screen.dart';
+import '../../frontend/pages/exchange/controllers/exchange_page_controller.dart';
+import '../../frontend/pages/exchange/sub_screen/qr_code_screen.dart';
 
-class ExchangePart extends StatefulWidget {
-  const ExchangePart({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<ExchangePart> createState() => _ExchangePartState();
-}
-
-class _ExchangePartState extends State<ExchangePart> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: Get.height * 0.37,
-          child: Column(
-            children: [
-              const PasteAddressContainer(
-                hintText: 'وارد کردن آدرس',
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 18.0, left: 18.0),
-                    child: GestureDetector(
-                      child: Text(
-                        'کیف پول ندارید؟',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      onTap: () {
-                        Get.snackbar('توجه!', 'در حال توسعه ...');
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              const PasteAddressContainer(
-                hintText: ' وارد کردن آدرس پشتیبان',
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: Get.height < 700 ? Get.height * 0.1 : Get.height * 0.15,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: CustomBigButton(
-            label: 'شروع تبادل',
-            onPressed: () {
-              // kmessage;
-              // controller.changeScreen();
-              Get.to(() => FinalStepsPage());
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class PasteAddressContainer extends StatefulWidget {
-  const PasteAddressContainer({
+class PasteAddressBox extends StatefulWidget {
+  const PasteAddressBox({
     Key? key,
     this.hintText = '',
   }) : super(key: key);
   final String hintText;
 
   @override
-  State<PasteAddressContainer> createState() => _PasteAddressContainerState();
+  State<PasteAddressBox> createState() => _PasteAddressBoxState();
 }
 
-class _PasteAddressContainerState extends State<PasteAddressContainer> {
+class _PasteAddressBoxState extends State<PasteAddressBox> {
   final exchangeController = Get.find<ExchangePageController>();
   TextEditingController textEditingController = TextEditingController();
   String pasteValue = '';
