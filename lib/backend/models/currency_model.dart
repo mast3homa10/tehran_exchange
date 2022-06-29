@@ -36,9 +36,9 @@ class CurrencyModel {
         legacyTicker = json['legacyTicker'],
         isActive = json['isActive'];
 
-  // @override
-  // toString() =>
-  //     "\n {symbol: $symbol}, {engName: $engName}, {faName: $faName} ...";
+  @override
+  toString() =>
+      "\n {symbol: $symbol}, {engName: $engName}, {faName: $faName} ...";
 }
 
 List<CurrencyModel> dataList = [

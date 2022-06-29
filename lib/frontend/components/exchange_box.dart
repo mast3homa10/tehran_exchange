@@ -136,7 +136,10 @@ class CalculateBox extends GetView<ExchangePageController> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextField(
+              child: TextFormField(
+                initialValue: search == 0
+                    ? controller.estimate!.destinationAmount.toString()
+                    : controller.estimate!.sourceAmount!.toString(),
                 // input amount from user
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
@@ -156,9 +159,7 @@ class CalculateBox extends GetView<ExchangePageController> {
                                   Colors.red,
                           width: 5.0),
                     ),
-                    hintText: search == 0
-                        ? controller.estimate!.destinationAmount.toString()
-                        : controller.estimate!.sourceAmount!.toString(),
+                    hintText: 'مقدار را وارد کنید',
                     hintStyle: Theme.of(context)
                         .textTheme
                         .headline3!

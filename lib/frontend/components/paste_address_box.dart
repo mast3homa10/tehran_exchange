@@ -71,17 +71,28 @@ class _PasteAddressBoxState extends State<PasteAddressBox> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Yekanbakh',
-                      fontSize: 20),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline4,
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Theme.of(context).appBarTheme.backgroundColor ??
+                                  Colors.greenAccent,
+                          width: 0.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Theme.of(context).appBarTheme.backgroundColor ??
+                                  Colors.red,
+                          width: 5.0),
+                    ),
                     hintMaxLines: 3,
                     hintText: widget.hintText,
                     hintStyle: Theme.of(context)
                         .textTheme
-                        .headline3!
+                        .headline4!
                         .copyWith(color: Theme.of(context).dividerTheme.color),
                   ),
                   onChanged: (value) {},

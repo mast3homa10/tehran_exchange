@@ -45,7 +45,8 @@ class CalculatePage extends StatelessWidget {
                                 // launch searchbox by tap here
                                 showSearch(
                                     context: context,
-                                    delegate: CustomSearchDelegate(item: 0));
+                                    delegate:
+                                        CustomSearchDelegate(currentBox: 0));
                               },
                             ),
                             // calculate result
@@ -59,6 +60,7 @@ class CalculatePage extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
+                                        ' هر یک  '
                                         '${controller.forSellChoice!.symbol!.toUpperCase()} ~ ',
                                         style: Theme.of(context)
                                             .textTheme
@@ -66,7 +68,7 @@ class CalculatePage extends StatelessWidget {
                                             .copyWith(
                                                 fontWeight: FontWeight.w700),
                                       ),
-                                      buildFixer(context, controller),
+                                      buildResult(context, controller),
                                     ],
                                   ),
                                   //  convert button
@@ -82,7 +84,7 @@ class CalculatePage extends StatelessWidget {
                                 showSearch(
                                     context: context,
                                     delegate: CustomSearchDelegate(
-                                        item: 1,
+                                        currentBox: 1,
                                         inputStyle: InputDecorationTheme(
                                             labelStyle: Theme.of(context)
                                                 .textTheme
@@ -182,7 +184,7 @@ class CalculatePage extends StatelessWidget {
         });
   }
 
-  Widget buildFixer(BuildContext context, ExchangePageController controller) {
+  Widget buildResult(BuildContext context, ExchangePageController controller) {
     var source = controller.forSellAmount ?? 0;
     var destination = controller.forBuyAmount ?? 0;
     return Row(children: [
@@ -194,7 +196,14 @@ class CalculatePage extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                '${destination / source}',
+                controller.forBuyChoice!.symbol!.toUpperCase() + " ",
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.0,
+                    ),
+              ),
+              Text(
+                (destination / source).toStringAsFixed(3),
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.0,

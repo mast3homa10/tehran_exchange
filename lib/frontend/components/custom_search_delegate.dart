@@ -14,7 +14,7 @@ import '../../backend/models/currency_model.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   CustomSearchDelegate({
-    this.item = 0,
+    this.currentBox = 0,
     this.hintText = 'جست و جو',
     this.inputStyle,
   }) : super(
@@ -24,7 +24,7 @@ class CustomSearchDelegate extends SearchDelegate {
           textInputAction: TextInputAction.search,
         );
   String hintText;
-  int item;
+  int currentBox;
   InputDecorationTheme? inputStyle;
   List<CurrencyModel> searchResultsList = dataList;
 
@@ -88,11 +88,15 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    final exchangePageController = Get.put(ExchangePageController());
     return FutureBuilder<List<CurrencyModel>?>(
         future: CurrencyListApi().getList(),
         builder: (context, snapShot) {
-          List<CurrencyModel> suggestions =
-              (snapShot.data ?? searchResultsList).where((searchResult) {
+          List<CurrencyModel> suggestions = ((currentBox == 0
+                      ? exchangePageController.forSellList
+                      : exchangePageController.forBuyList) ??
+                  searchResultsList)
+              .where((searchResult) {
             final String userInput = query.toLowerCase();
             final String result = (searchResult.engName ?? '').toLowerCase() +
                 (searchResult.faName ?? '').toLowerCase();
@@ -209,20 +213,20 @@ class CustomSearchDelegate extends SearchDelegate {
                                 ],
                               ),
                               onTap: () {
-                                if (item == 1) {
+                                if (currentBox == 1) {
                                   final controller =
                                       Get.put(ExchangePageController());
-                                  query = suggestion.engName ?? "test";
+                                  query = suggestion.engName ?? "";
                                   controller.updateCurrencyChoice(
-                                      currency: suggestion, item: item);
-                                  log('test');
+                                      currency: suggestion, item: currentBox);
+
                                   close(context, null);
                                 } else {
                                   final controller =
                                       Get.put(ExchangePageController());
-                                  query = suggestion.engName ?? "test";
+                                  query = suggestion.engName ?? "";
                                   controller.updateCurrencyChoice(
-                                      currency: suggestion, item: item);
+                                      currency: suggestion, item: currentBox);
                                   close(context, null);
                                 }
 
