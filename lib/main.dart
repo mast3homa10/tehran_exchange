@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../theme_provider.dart';
+import 'frontend/theme/my_theme.dart';
+import 'frontend/theme/theme_provider.dart';
 import 'routes.dart';
 
 void main() async {

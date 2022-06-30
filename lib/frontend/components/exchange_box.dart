@@ -8,9 +8,10 @@ import 'package:get/get.dart';
 import 'package:tehran_exchange/backend/models/currency_model.dart';
 import 'package:tehran_exchange/backend/network_constants.dart';
 
+import '../../constants.dart';
 import '../pages/exchange/controllers/exchange_page_controller.dart';
 
-class CalculateBox extends GetView<ExchangePageController> {
+class CalculateBox extends StatelessWidget {
   const CalculateBox({
     Key? key,
     this.search = 0,
@@ -28,26 +29,7 @@ class CalculateBox extends GetView<ExchangePageController> {
   final VoidCallback? openIconPressed;
   final VoidCallback? closeIconPressed;
   final VoidCallback? onPressed;
-  const CalculateBox.forSell({
-    Key? key,
-    this.search = 1,
-    this.currency,
-    this.isHaveIcon = false,
-    this.isIconChange = false,
-    this.onPressed,
-    this.openIconPressed,
-    this.closeIconPressed,
-  });
-  const CalculateBox.forBuy({
-    Key? key,
-    this.search = 0,
-    this.currency,
-    this.isHaveIcon = false,
-    this.isIconChange = false,
-    this.onPressed,
-    this.openIconPressed,
-    this.closeIconPressed,
-  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,55 +51,84 @@ class CalculateBox extends GetView<ExchangePageController> {
         children: [
           SizedBox(
             width: Get.width * 0.35,
-            child: Row(
+            child: Column(
               children: [
-                // image part
-                Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: buildImage(currency!.legacyTicker)),
                 // start search page by click the following text button
                 Expanded(
-                  child: TextButton(
-                    onPressed: onPressed,
-                    style: ButtonStyle(
-                        side: MaterialStateProperty.all<BorderSide>(BorderSide(
-                            width: 0,
-                            color: Theme.of(context)
-                                    .appBarTheme
-                                    .backgroundColor ??
-                                Theme.of(context).scaffoldBackgroundColor))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // currency English Name
-                        Text(
-                          currency!.engName ?? '',
-                          style: Theme.of(context).textTheme.headline5,
-                          maxLines: 1,
-                          textWidthBasis: TextWidthBasis.longestLine,
+                  flex: 2,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(17),
+                      ),
+                    ),
+                    child: TextButton(
+                      onPressed: onPressed,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.grey.withOpacity(0.2)),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                              const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(17)))),
+                          side: MaterialStateProperty.all<BorderSide>(
+                              BorderSide(
+                                  width: 0,
+                                  color: Theme.of(context)
+                                          .appBarTheme
+                                          .backgroundColor ??
+                                      Theme.of(context)
+                                          .scaffoldBackgroundColor))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // image part
+
+                          Row(
+                            children: [
+                              if (currency!.symbol!.length < 8)
+                                AspectRatio(
+                                  aspectRatio: 11 / 9,
+                                  child: SvgPicture.network(
+                                    imgUrl + '${currency!.legacyTicker}.svg',
+                                    semanticsLabel: 'A shark?!',
+                                    placeholderBuilder:
+                                        (BuildContext context) => Container(),
+                                  ),
+                                ),
+                              Text(
+                                currency!.symbol!.toUpperCase(),
+                                style: Theme.of(context).textTheme.headline5,
+                                maxLines: 1,
+                                textWidthBasis: TextWidthBasis.longestLine,
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            FontAwesomeIcons.angleDown,
+                            color: Theme.of(context).dividerTheme.color,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(1.0),
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(17),
                         ),
-                        Row(
-                          textBaseline: TextBaseline.ideographic,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // currency Symbol
-                            Text(
-                              currency!.symbol ?? '',
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            Icon(
-                              FontAwesomeIcons.angleDown,
-                              color: Theme.of(context).dividerTheme.color,
-                              size: 18,
-                            ),
-                          ],
-                        ),
-                      ],
+                        color: kNetworkColorList[
+                                currency!.inNetwork!.toLowerCase()] ??
+                            Colors.grey),
+                    child: Center(
+                      child: Text(
+                        currency!.inNetwork!.toUpperCase(),
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
                     ),
                   ),
                 ),
@@ -125,47 +136,50 @@ class CalculateBox extends GetView<ExchangePageController> {
             ),
           ),
           const VerticalDivider(
-            width: 10.0,
+            width: 2.0,
             thickness: 1.0,
-            indent: 9,
-            endIndent: 9,
+            indent: 3,
+            endIndent: 3,
           ),
           // following part is for provide for fixer.
-          buildFixer(context),
+          buildFixIcon(context),
 
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                initialValue: search == 0
-                    ? controller.estimate!.destinationAmount.toString()
-                    : controller.estimate!.sourceAmount!.toString(),
-                // input amount from user
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline3,
-                decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color:
-                              Theme.of(context).appBarTheme.backgroundColor ??
-                                  Colors.greenAccent,
-                          width: 0.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color:
-                              Theme.of(context).appBarTheme.backgroundColor ??
-                                  Colors.red,
-                          width: 5.0),
-                    ),
-                    hintText: 'مقدار را وارد کنید',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Theme.of(context).dividerTheme.color)),
-                onChanged: (value) {},
-              ),
+              child: GetBuilder<ExchangePageController>(builder: (controller) {
+                return TextFormField(
+                  initialValue: search == 1
+                      ? controller.estimate!.destinationAmount.toString()
+                      : controller.estimate!.sourceAmount!.toString(),
+                  // input amount from user
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline3,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).appBarTheme.backgroundColor ??
+                                    Colors.greenAccent,
+                            width: 0.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).appBarTheme.backgroundColor ??
+                                    Colors.red,
+                            width: 5.0),
+                      ),
+                      hintText: 'مقدار را وارد کنید',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(
+                              color: Theme.of(context).dividerTheme.color)),
+                  onChanged: (value) {},
+                );
+              }),
             ),
           )
         ],
@@ -189,7 +203,7 @@ class CalculateBox extends GetView<ExchangePageController> {
     }
   }
 
-  Widget buildFixer(BuildContext context) {
+  Widget buildFixIcon(BuildContext context) {
     if (isHaveIcon) {
       return Padding(
         padding: const EdgeInsets.all(8.0),

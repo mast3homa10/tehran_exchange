@@ -39,7 +39,8 @@ class CalculatePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             /// first box
-                            CalculateBox.forSell(
+                            CalculateBox(
+                              search: 0,
                               currency: controller.forSellChoice,
                               onPressed: () {
                                 // launch searchbox by tap here
@@ -72,12 +73,13 @@ class CalculatePage extends StatelessWidget {
                                     ],
                                   ),
                                   //  convert button
-                                  const ConvertButton(),
+                                  ReversedButton(),
                                 ],
                               ),
                             ),
                             // second box
-                            CalculateBox.forBuy(
+                            CalculateBox(
+                              search: 1,
                               currency: controller.forBuyChoice,
                               onPressed: () {
                                 // launch searchbox by tap here

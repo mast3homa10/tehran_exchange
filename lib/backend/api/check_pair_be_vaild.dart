@@ -10,7 +10,7 @@ class CheckPairBeVaildApi {
   Future<CheckPairBeVaildModel?> getPairBeVaild(
       {String? sourceCurrency,
       String? destinationCurrency,
-      String? type,
+      Map<String, bool>? type,
       String? sourceNetwork,
       String? destinationNetwork}) async {
     http.Response response = await http.post(

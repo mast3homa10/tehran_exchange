@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/frontend/pages/exchange/controllers/exchange_page_controller.dart';
 
 import '../../../frontend/pages/exchange/exchange_page_body.dart';
 import '../../../frontend/pages/history/history_page.dart';

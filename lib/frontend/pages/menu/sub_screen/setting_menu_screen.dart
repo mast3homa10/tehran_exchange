@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:tehran_exchange/frontend/components/custom_menu_item.dart';
 import 'package:tehran_exchange/frontend/components/toggle_switch_button.dart';
 
-class SettingMenuPage extends StatelessWidget {
-  SettingMenuPage({
+class SettingMenuScreen extends StatelessWidget {
+  SettingMenuScreen({
     Key? key,
   }) : super(key: key);
   final isSelected = false;

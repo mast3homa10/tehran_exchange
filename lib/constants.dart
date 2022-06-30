@@ -18,14 +18,34 @@ const Color kDarkChangerColor = Color(0xFFEFF4FF);
 const Color kDarkIconColor = Colors.white;
 const Color kDarkDividerColor = Color(0xFFFFFFFF);
 
-const kMaxSeconds = 125;
+Map<String, Color> kNetworkColorList = {
+  'btc': const Color(0xFFFF9800),
+  'eth': const Color(0xFF457C9B),
+  'bsc': const Color(0xFFB59154),
+  'trx': const Color(0xFFF55246),
+  'cchain': const Color(0xFFF55246),
+  'polygon': const Color(0xFFDA0050),
+  'luna': const Color(0xFFB4BFCE),
+  'bep2': const Color(0xFFB4BFCE),
+  'xchain': const Color(0xFF5E17FE),
+};
+// network == 'trx' || network == 'cchain'
+//         ? 'red'
+//         : network == 'eth'
+//         ? '#457C9B'
+//         : network == 'bsc'
+//         ? '#AF8845'
+//         : network == 'btc'
+//         ? 'orange'
+//         : network == 'polygon'
+//         ? '#DA0050'
+//         : network == '' || network == 'bep2'
+//         ? '#B4BFCE'
+//         : network == 'xchain'
+//         ? '#5E17FE'
+//         : 'grey'
 
-// const TextStyle kTitleTextStyle = TextStyle(
-//   fontSize: 45,
-//   fontWeight: FontWeight.bold,
-//   color: Colors.black,
-//   fontFamily: 'Yekanbakh',
-// );
+const kMaxSeconds = 125;
 
 AppBar kAppbar = AppBar(
   automaticallyImplyLeading: false,

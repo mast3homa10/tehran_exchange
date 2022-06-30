@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/frontend/pages/exchange/controllers/exchange_page_controller.dart';
 
 import '../../constants.dart';
 
-class ConvertButton extends StatelessWidget {
-  const ConvertButton({
+class ReversedButton extends StatelessWidget {
+  ReversedButton({
     Key? key,
   }) : super(key: key);
-
+  final exchangePageController = ExchangePageController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -44,6 +45,7 @@ class ConvertButton extends StatelessWidget {
       ),
       onTap: () {
         Get.snackbar("توجه !", "در حال توسعه ...");
+        exchangePageController.changeReversed();
       },
     );
   }

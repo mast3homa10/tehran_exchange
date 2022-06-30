@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:tehran_exchange/frontend/components/custom_menu_item.dart';
 
 import '../../components/toggel_bar.dart';
 import '../../pages/menu/menu_page_controller.dart';
-import 'sub_page/service_menu_page.dart';
-import 'sub_page/setting_menu_page.dart';
-import 'sub_page/support_menu_page.dart';
+import 'sub_screen/service_menu_screen.dart';
+import 'sub_screen/setting_menu_screen.dart';
+import 'sub_screen/support_menu_screen.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -71,9 +69,9 @@ class MenuPage extends StatelessWidget {
               child: IndexedStack(
                 index: controller.menuItemIndex.toInt(),
                 children: [
-                  SupportMenuPage(),
-                  ServiceMenuPage(),
-                  SettingMenuPage(),
+                  SupportMenuScreen(),
+                  ServiceMenuScreen(),
+                  SettingMenuScreen(),
                 ],
               ),
             ),

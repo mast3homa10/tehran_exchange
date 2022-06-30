@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:tehran_exchange/backend/network_constants.dart';
 
 import '../../backend/api/currency_list_api.dart';
+import '../../constants.dart';
 import '../pages/exchange/controllers/exchange_page_controller.dart';
 import '../../backend/models/currency_model.dart';
 
@@ -127,23 +126,28 @@ class CustomSearchDelegate extends SearchDelegate {
                                 children: [
                                   Row(
                                     children: [
-                                      Container(
-                                        width: (suggestion.inNetwork ?? '')
-                                                .length +
-                                            50,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            color: Colors.orange),
-                                        child: Center(
-                                          child: Text(
-                                            suggestion.inNetwork ?? "test",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline4,
+                                      if (suggestion.inNetwork!.toLowerCase() !=
+                                          suggestion.symbol!.toLowerCase())
+                                        Container(
+                                          width: (suggestion.inNetwork ?? '')
+                                                  .length +
+                                              50,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              color: kNetworkColorList[
+                                                      suggestion.inNetwork!
+                                                          .toLowerCase()] ??
+                                                  Colors.grey),
+                                          child: Center(
+                                            child: Text(
+                                              suggestion.inNetwork ?? "test",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4,
+                                            ),
                                           ),
                                         ),
-                                      ),
                                       Expanded(
                                         child: Row(
                                           mainAxisAlignment:

@@ -9,12 +9,13 @@ import '../../../../backend/api/init-table.dart';
 import '../../../../backend/models/currency_model.dart';
 
 class ExchangePageController extends GetxController {
-  var isScreenChange = false.obs;
+  RxBool isScreenChange = false.obs;
+  RxBool connectToNetwork = false.obs;
+  RxBool isIconChange = false.obs;
+  RxBool isReversed = false.obs;
   var currentTopItem = 0.obs;
-  var isIconChange = false.obs;
   var searchController = 0.obs;
   var qrcodeResult = ''.obs;
-  var connectToNetwork = false.obs;
   CurrencyModel? forSellChoice;
   double? forSellAmount;
   CurrencyModel? forBuyChoice;
@@ -36,23 +37,16 @@ class ExchangePageController extends GetxController {
     update();
   }
 
-  bb(
-      {String? sourceCurrency,
-      String? destinationCurrency,
-      String? type,
-      String? sourceNetwork,
-      String? destinationNetwork}) async {
-    pairValid = await CheckPairBeVaildApi().getPairBeVaild(
-        destinationCurrency: destinationCurrency,
-        destinationNetwork: destinationNetwork,
-        sourceCurrency: sourceCurrency,
-        sourceNetwork: sourceNetwork,
-        type: type);
+  validation({
+    var pairbeValid,
+  }) async {
+    pairValid = await pairbeValid;
+    message(title: 'pair be vaild ', content: pairValid);
     update();
   }
 
+  //check connection to network
   checkConnection() async {
-    //check connection to network
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -100,12 +94,31 @@ class ExchangePageController extends GetxController {
   }
 
   updateCurrencyChoice({required CurrencyModel currency, required int item}) {
+    forBuyChoice = currency;
+    Map<String, bool> type = {
+      "fix": isIconChange.value ? true : false,
+      "not-fix": isIconChange.value ? false : true
+    };
     if (item == 1) {
-      forBuyChoice = currency;
+      validation(
+          pairbeValid: CheckPairBeVaildApi().getPairBeVaild(
+        type: type,
+        sourceNetwork: forSellChoice!.inNetwork,
+        sourceCurrency: forSellChoice!.symbol,
+        destinationNetwork: forBuyChoice!.inNetwork,
+        destinationCurrency: forBuyChoice!.symbol,
+      ));
     } else {
       forSellChoice = currency;
+      validation(
+          pairbeValid: CheckPairBeVaildApi().getPairBeVaild(
+        type: type,
+        sourceNetwork: forSellChoice!.inNetwork,
+        sourceCurrency: forSellChoice!.symbol,
+        destinationNetwork: forBuyChoice!.inNetwork,
+        destinationCurrency: forBuyChoice!.symbol,
+      ));
     }
-
     update();
   }
 
@@ -122,10 +135,23 @@ class ExchangePageController extends GetxController {
   changeScreen() {
     isScreenChange = isScreenChange.value ? false.obs : true.obs;
     update();
+    message(title: 'is screen Change', content: isScreenChange.value);
   }
 
+  changeReversed() {
+    isReversed = isReversed.value ? false.obs : true.obs;
+    update();
+    message(title: 'is reversed', content: isReversed.value);
+  }
+
+// for dispaly lock icon (fix) or not
   changeIcon() {
     isIconChange = isIconChange.value ? false.obs : true.obs;
     update();
+    message(title: 'is Icon Change', content: isIconChange.value);
+  }
+
+  message({String title = '', var content}) {
+    log('$title : $content');
   }
 }

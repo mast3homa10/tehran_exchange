@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tehran_exchange/frontend/components/custom_menu_item.dart';
 
-class SupportMenuPage extends StatelessWidget {
-  SupportMenuPage({
+class SupportMenuScreen extends StatelessWidget {
+  SupportMenuScreen({
     Key? key,
   }) : super(key: key);
   final menu = [
