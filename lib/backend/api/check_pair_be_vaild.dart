@@ -10,7 +10,7 @@ class CheckPairBeVaildApi {
   Future<CheckPairBeVaildModel?> getPairBeVaild(
       {String? sourceCurrency,
       String? destinationCurrency,
-      Map<String, bool>? type,
+      String? type,
       String? sourceNetwork,
       String? destinationNetwork}) async {
     http.Response response = await http.post(
@@ -19,8 +19,8 @@ class CheckPairBeVaildApi {
           "sourceCurrency": sourceCurrency,
           "destinationCurrency": destinationCurrency,
           "type": type,
-          "sourceNetwork": "sourceNetwork",
-          "destinationNetwork": "destinationNetwork"
+          "sourceNetwork": sourceNetwork,
+          "destinationNetwork": destinationNetwork
         }),
         headers: {
           'x-changenow-api-key': '{{free-api-key}}',
@@ -28,12 +28,10 @@ class CheckPairBeVaildApi {
         });
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      log('${data["data"]["checkPair"]}');
-      data["data"]["checkPair"].removeWhere((element) => element == null);
+      Map<String, dynamic> data = json.decode(response.body)['data'];
 
-      var decodedData = CheckPairBeVaildModel.fromJson(data);
-      log('$decodedData');
+      CheckPairBeVaildModel decodedData = CheckPairBeVaildModel.fromJson(data);
+
       return decodedData;
     } else {
       log("${response.statusCode}");

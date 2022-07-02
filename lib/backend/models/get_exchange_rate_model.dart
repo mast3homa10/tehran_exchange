@@ -9,7 +9,7 @@ class GetExchangeRateModel {
 
   GetExchangeRateModel({
     this.maximumExchangeAmount = '',
-    this.minimumExchangeAmount = 0.0002839,
+    this.minimumExchangeAmount = 0,
     this.destinationCurrency = 'test',
     this.destinationNetwork = 'test',
     this.sourceCurrency = 'test',
@@ -23,7 +23,7 @@ class GetExchangeRateModel {
     sourceCurrency = json['sourceCurrency'];
     sourceNetwork = json['sourceNetwork'];
     type = json['type'];
-    maximumExchangeAmount = json['maximumExchangeAmount'];
+    maximumExchangeAmount = json['maximumExchangeAmount'].toString();
     minimumExchangeAmount = json['minimumExchangeAmount'];
   }
 

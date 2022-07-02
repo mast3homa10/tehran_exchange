@@ -3,6 +3,10 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:tehran_exchange/backend/api/check_pair_be_vaild.dart';
+import 'package:tehran_exchange/backend/api/estimate_exchange_amount.dart';
+import 'package:tehran_exchange/backend/api/get_exchange_rate.dart';
+import 'package:tehran_exchange/backend/models/check_pair_be_vaild_model.dart';
+import 'package:tehran_exchange/backend/models/estimate_exchange_amount_model.dart';
 import 'package:tehran_exchange/backend/models/init_tabel_model.dart';
 
 import '../../../../backend/api/init-table.dart';
@@ -16,15 +20,17 @@ class ExchangePageController extends GetxController {
   var currentTopItem = 0.obs;
   var searchController = 0.obs;
   var qrcodeResult = ''.obs;
+  var maximumExchangeAmount = 0.0.obs;
+  var minimumExchangeAmount = 0.0.obs;
   CurrencyModel? forSellChoice;
-  double? forSellAmount;
+  var forSellAmount = 0.0.obs;
   CurrencyModel? forBuyChoice;
-  double? forBuyAmount;
+  var forBuyAmount = 0.0.obs;
   List<CurrencyModel>? forSellList;
   List<CurrencyModel>? forBuyList;
   List<CurrencyModel>? currencyList = [];
   InitTabelModel? estimate;
-  var pairValid;
+  CheckPairBeVaildModel? pairBeValid;
   @override
   void onInit() {
     checkConnection();
@@ -32,16 +38,63 @@ class ExchangePageController extends GetxController {
   }
 
   updateEstimateAmount(double sellAmount, double buyAmount) {
-    forSellAmount = sellAmount;
-    forBuyAmount = buyAmount;
+    forSellAmount = 0.0.obs;
+    forBuyAmount = 0.0.obs;
+    forSellAmount = sellAmount.obs;
+    forBuyAmount = buyAmount.obs;
+    log('////////////////////////////////////$forSellAmount');
+    log('////////////////////////////////////$forSellAmount');
     update();
   }
 
   validation({
-    var pairbeValid,
+    CurrencyModel? currencyForBuy,
+    CurrencyModel? currencyForSell,
   }) async {
-    pairValid = await pairbeValid;
-    message(title: 'pair be vaild ', content: pairValid);
+    String tempType = isIconChange.value ? "fix" : "not-fix";
+
+    pairBeValid = await CheckPairBeVaildApi().getPairBeVaild(
+      type: tempType,
+      sourceNetwork: currencyForSell!.inNetwork,
+      sourceCurrency: currencyForSell.symbol,
+      destinationNetwork: currencyForBuy!.inNetwork,
+      destinationCurrency: currencyForBuy.symbol,
+    );
+    message(title: 'pair be vaild ', content: pairBeValid!);
+    if (pairBeValid!.type!['fix'] && pairBeValid!.type!['not-fix']) {
+      var exchangeRate = await GetExchangeRateApi().getExchangeRate(
+        type: tempType,
+        sourceNetwork: currencyForSell.inNetwork,
+        sourceCurrency: currencyForSell.symbol,
+        destinationNetwork: currencyForBuy.inNetwork,
+        destinationCurrency: currencyForBuy.symbol,
+      );
+      minimumExchangeAmount = exchangeRate!.minimumExchangeAmount!.obs;
+      maximumExchangeAmount = double.parse(
+              exchangeRate.maximumExchangeAmount! == ''
+                  ? '0'
+                  : exchangeRate.maximumExchangeAmount!)
+          .obs;
+      EstimateExchangeAmountModel? est =
+          await EstimateExchangeAmountApi().getAmount(
+        type: tempType,
+        sourceNetwork: currencyForSell.inNetwork,
+        sourceCurrency: currencyForSell.symbol,
+        destinationNetwork: currencyForBuy.inNetwork,
+        destinationCurrency: currencyForBuy.symbol,
+        directionOfExchangeFlow: 'direct',
+        sourceAmount: minimumExchangeAmount.value,
+      );
+      updateEstimateAmount(
+          minimumExchangeAmount.value, est!.destinationAmount ?? 0);
+      log("forSellAmount :$forSellAmount");
+      log("estimate amount :${est.destinationAmount}");
+      message(title: 'get exchange rate ', content: exchangeRate);
+    } else if (!pairBeValid!.type!['fix'] && pairBeValid!.type!['not-fix']) {
+    } else {
+      Get.snackbar('توجه!', "این جفت ارز با هم قابل مبادله نیستند");
+    }
+
     update();
   }
 
@@ -56,8 +109,9 @@ class ExchangePageController extends GetxController {
         //get init table
         var initTable = await InitTableApi().initTable();
         estimate = initTable!['estimate'] ?? [];
-        forSellAmount = estimate!.sourceAmount;
-        forBuyAmount = estimate!.destinationAmount;
+
+        updateEstimateAmount(
+            estimate!.sourceAmount!, estimate!.destinationAmount!);
         log('${estimate!.destinationAmount}.');
 
         currencyList = initTable['list'] ?? {};
@@ -94,30 +148,12 @@ class ExchangePageController extends GetxController {
   }
 
   updateCurrencyChoice({required CurrencyModel currency, required int item}) {
-    forBuyChoice = currency;
-    Map<String, bool> type = {
-      "fix": isIconChange.value ? true : false,
-      "not-fix": isIconChange.value ? false : true
-    };
     if (item == 1) {
-      validation(
-          pairbeValid: CheckPairBeVaildApi().getPairBeVaild(
-        type: type,
-        sourceNetwork: forSellChoice!.inNetwork,
-        sourceCurrency: forSellChoice!.symbol,
-        destinationNetwork: forBuyChoice!.inNetwork,
-        destinationCurrency: forBuyChoice!.symbol,
-      ));
+      forBuyChoice = currency;
+      validation(currencyForBuy: forBuyChoice, currencyForSell: forSellChoice);
     } else {
       forSellChoice = currency;
-      validation(
-          pairbeValid: CheckPairBeVaildApi().getPairBeVaild(
-        type: type,
-        sourceNetwork: forSellChoice!.inNetwork,
-        sourceCurrency: forSellChoice!.symbol,
-        destinationNetwork: forBuyChoice!.inNetwork,
-        destinationCurrency: forBuyChoice!.symbol,
-      ));
+      validation(currencyForBuy: forBuyChoice, currencyForSell: forSellChoice);
     }
     update();
   }

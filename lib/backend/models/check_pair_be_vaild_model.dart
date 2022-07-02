@@ -1,11 +1,9 @@
-import 'type_model.dart';
-
 class CheckPairBeVaildModel {
   String? sourceCurrency;
   String? sourceNetwork;
   String? destinationCurrency;
   String? destinationNetwork;
-  List<TypeModel>? type;
+  Map<String, dynamic>? type;
   CheckPairBeVaildModel(
       {this.sourceCurrency = 'test',
       this.sourceNetwork = 'test',
@@ -13,15 +11,13 @@ class CheckPairBeVaildModel {
       this.destinationNetwork = 'test',
       this.type});
 
-  CheckPairBeVaildModel.fromJson(Map<String, dynamic> json) {
-    sourceCurrency = json["sourceCurrency"];
-    sourceNetwork = json["sourceNetwork"];
-    destinationCurrency = json["destinationCurrency"];
-    destinationNetwork = json["destinationNetwork"];
-    if (json["type"] != null) {
-      type = (json["type"] as List)
-          .map((item) => TypeModel().fromJson(item))
-          .toList();
+  CheckPairBeVaildModel.fromJson(json) {
+    sourceCurrency = json["checkPair"][0]["sourceCurrency"];
+    sourceNetwork = json["checkPair"][0]["sourceNetwork"];
+    destinationCurrency = json["checkPair"][0]["destinationCurrency"];
+    destinationNetwork = json["checkPair"][0]["destinationNetwork"];
+    if (json["checkPair"][0]["type"] != null) {
+      type = json["checkPair"][0]["type"];
     }
   }
   @override

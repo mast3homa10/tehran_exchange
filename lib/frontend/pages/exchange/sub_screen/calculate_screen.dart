@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,7 +10,7 @@ import '../../../../frontend/pages/exchange/controllers/timer_controller.dart';
 import '../../../../frontend/components/try_again_button.dart';
 import '../../../../frontend/components/custom_search_delegate.dart';
 import '../../../../constants.dart';
-import '../../../components/exchange_box.dart';
+import '../../../components/calculate_box.dart';
 import '../../../components/convert_button.dart';
 import '../../../components/custom_big_button.dart';
 import '../controllers/exchange_page_controller.dart';
@@ -18,120 +20,99 @@ class CalculatePage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final timerController = Get.put(TimerController());
+  final controller = Get.put(ExchangePageController());
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ExchangePageController>(
-      builder: (controller) {
-        return !controller.connectToNetwork.value
-            ? const Center(child: CircularProgressIndicator())
-            // TryAgainButton()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // the Expanded widget below contains ''' cryptocurrency calculator '''.
-                  Expanded(
-                    child: SizedBox(
-                      height: Get.height * 0.4,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            /// first box
-                            CalculateBox(
-                              search: 0,
-                              currency: controller.forSellChoice,
-                              onPressed: () {
-                                // launch searchbox by tap here
-                                showSearch(
-                                    context: context,
-                                    delegate:
-                                        CustomSearchDelegate(currentBox: 0));
-                              },
-                            ),
-                            // calculate result
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0, right: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        ' هر یک  '
-                                        '${controller.forSellChoice!.symbol!.toUpperCase()} ~ ',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline5!
-                                            .copyWith(
-                                                fontWeight: FontWeight.w700),
-                                      ),
-                                      buildResult(context, controller),
-                                    ],
-                                  ),
-                                  //  convert button
-                                  ReversedButton(),
-                                ],
-                              ),
-                            ),
-                            // second box
-                            CalculateBox(
-                              search: 1,
-                              currency: controller.forBuyChoice,
-                              onPressed: () {
-                                // launch searchbox by tap here
-                                showSearch(
-                                    context: context,
-                                    delegate: CustomSearchDelegate(
-                                        currentBox: 1,
-                                        inputStyle: InputDecorationTheme(
-                                            labelStyle: Theme.of(context)
-                                                .textTheme
-                                                .headline4,
-                                            focusColor: Colors.white,
-                                            hintStyle: Theme.of(context)
-                                                .textTheme
-                                                .headline4)));
-                              },
-                              isHaveIcon: true,
-                              isIconChange: controller.isIconChange.value,
-                              openIconPressed: () {
-                                buildSnakBar(context);
-
-                                controller.changeIcon();
-                              },
-                              closeIconPressed: () {
-                                controller.changeIcon();
-
-                                timerController.stopTimer();
-                              },
-                            ),
-                          ],
+    return Obx(
+      () {
+        if (!controller.connectToNetwork.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          log(controller.forBuyAmount.toString());
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // the Expanded widget below contains ''' cryptocurrency calculator '''.
+              Expanded(
+                child: SizedBox(
+                  height: Get.height * 0.4,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        /// first box
+                        CalculateBox(
+                          currency: controller.forSellChoice,
+                          initialValue: controller.forSellAmount.toString(),
+                          onPressed: () {
+                            // launch searchbox by tap here
+                            showSearch(
+                                context: context,
+                                delegate: CustomSearchDelegate(currentBox: 0));
+                          },
                         ),
-                      ),
+                        // calculate result
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildResult(context, controller),
+
+                              // Reversed button
+                              ReversedButton(),
+                            ],
+                          ),
+                        ),
+                        // second box
+                        CalculateBox.second(
+                          initialValue: controller.forBuyAmount.toString(),
+                          currency: controller.forBuyChoice,
+                          onPressed: () {
+                            // launch searchbox by tap here
+                            showSearch(
+                                context: context,
+                                delegate: CustomSearchDelegate(
+                                  currentBox: 1,
+                                ));
+                          },
+                          isIconChange: controller.isIconChange.value,
+                          openIconPressed: () {
+                            buildSnakBar(context);
+                            controller.changeIcon();
+                          },
+                          closeIconPressed: () {
+                            timerController.stopTimer();
+                            controller.changeIcon();
+                          },
+                        ),
+                      ],
                     ),
                   ),
+                ),
+              ),
 
-                  // the padding widget below contains '''add address button'''.
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: CustomBigButton(
-                      label: 'وارد کردن آدرس',
-                      onPressed: () {
-                        // Get.snackbar('توجه!', "در حال توسعه ...");
-                        if (timerController.timer != null) {
-                          timerController.stopTimer();
-                        }
+              // the padding widget below contains '''add address button'''.
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: CustomBigButton(
+                  label: 'وارد کردن آدرس',
+                  onPressed: () {
+                    // Get.snackbar('توجه!', "در حال توسعه ...");
+                    if (timerController.timer != null) {
+                      timerController.stopTimer();
+                    }
 
-                        controller.changeScreen();
-                      },
-                    ),
-                  ),
-                ],
-              );
+                    controller.changeScreen();
+                  },
+                ),
+              ),
+            ],
+          );
+        }
       },
     );
   }
@@ -187,38 +168,50 @@ class CalculatePage extends StatelessWidget {
   }
 
   Widget buildResult(BuildContext context, ExchangePageController controller) {
-    var source = controller.forSellAmount ?? 0;
-    var destination = controller.forBuyAmount ?? 0;
-    return Row(children: [
-      Container(
-        decoration: BoxDecoration(
-            color: Colors.green, borderRadius: BorderRadius.circular(10)),
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Row(
-            children: [
-              Text(
-                controller.forBuyChoice!.symbol!.toUpperCase() + " ",
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.0,
-                    ),
-              ),
-              Text(
-                (destination / source).toStringAsFixed(3),
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.0,
-                    ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(2.0),
-                child:
-                    Icon(FontAwesomeIcons.circleArrowDown, color: Colors.white),
-              ),
-            ],
+    var source = controller.forSellAmount.value;
+    var destination = controller.forBuyAmount.value;
+    return Column(children: [
+      Row(
+        children: [
+          Text(
+            ' هر یک  '
+            '${controller.forSellChoice!.symbol!.toUpperCase()} ~ ',
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(fontWeight: FontWeight.w700),
           ),
-        ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.green, borderRadius: BorderRadius.circular(10)),
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: [
+                  Text(
+                    controller.forBuyChoice!.symbol!.toUpperCase() + " ",
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                        ),
+                  ),
+                  Text(
+                    (destination / source).toStringAsFixed(8),
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                        ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Icon(FontAwesomeIcons.circleArrowDown,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       if (controller.isIconChange.value)
         Container(

@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tehran_exchange/backend/models/currency_model.dart';
-import 'package:tehran_exchange/backend/network_constants.dart';
 
+import '../../backend/models/currency_model.dart';
+import '../../backend/network_constants.dart';
 import '../../constants.dart';
-import '../pages/exchange/controllers/exchange_page_controller.dart';
 
 class CalculateBox extends StatelessWidget {
   const CalculateBox({
     Key? key,
-    this.search = 0,
+    this.initialValue,
     this.currency,
     this.isHaveIcon = false,
     this.isIconChange = false,
@@ -23,13 +22,23 @@ class CalculateBox extends StatelessWidget {
     this.closeIconPressed,
   }) : super(key: key);
   final CurrencyModel? currency;
-  final int search;
+  final String? initialValue;
   final bool isHaveIcon;
   final bool isIconChange;
   final VoidCallback? openIconPressed;
   final VoidCallback? closeIconPressed;
   final VoidCallback? onPressed;
 
+  const CalculateBox.second({
+    Key? key,
+    this.initialValue,
+    this.currency,
+    this.isHaveIcon = true,
+    this.isIconChange = false,
+    this.onPressed,
+    this.openIconPressed,
+    this.closeIconPressed,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,7 +107,7 @@ class CalculateBox extends StatelessWidget {
                                 ),
                               Text(
                                 currency!.symbol!.toUpperCase(),
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headline4,
                                 maxLines: 1,
                                 textWidthBasis: TextWidthBasis.longestLine,
                               ),
@@ -116,7 +125,7 @@ class CalculateBox extends StatelessWidget {
                 ),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.all(1.0),
+                    margin: const EdgeInsets.all(2.0),
                     decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(
                           bottomRight: Radius.circular(17),
@@ -124,10 +133,13 @@ class CalculateBox extends StatelessWidget {
                         color: kNetworkColorList[
                                 currency!.inNetwork!.toLowerCase()] ??
                             Colors.grey),
-                    child: Center(
-                      child: Text(
-                        currency!.inNetwork!.toUpperCase(),
-                        style: Theme.of(context).textTheme.headline4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Center(
+                        child: Text(
+                          currency!.inNetwork!.toUpperCase(),
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
                       ),
                     ),
                   ),
@@ -146,12 +158,9 @@ class CalculateBox extends StatelessWidget {
 
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: GetBuilder<ExchangePageController>(builder: (controller) {
-                return TextFormField(
-                  initialValue: search == 1
-                      ? controller.estimate!.destinationAmount.toString()
-                      : controller.estimate!.sourceAmount!.toString(),
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  initialValue: initialValue,
                   // input amount from user
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
@@ -178,9 +187,7 @@ class CalculateBox extends StatelessWidget {
                           .copyWith(
                               color: Theme.of(context).dividerTheme.color)),
                   onChanged: (value) {},
-                );
-              }),
-            ),
+                )),
           )
         ],
       )),
