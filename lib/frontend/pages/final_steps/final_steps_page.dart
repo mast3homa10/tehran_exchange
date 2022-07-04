@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tehran_exchange/frontend/pages/exchange/controllers/exchange_page_controller.dart';
 
 import '../../../frontend/components/custom_timer.dart';
 import '../../../frontend/pages/final_steps/final_steps_page_controller.dart';
 import '../../../constants.dart';
 
-class FinalStepsPage extends StatelessWidget {
-  FinalStepsPage({Key? key}) : super(key: key);
-  final controller = Get.put(FinalStepsController());
+class FinalStepsPage extends StatefulWidget {
+  const FinalStepsPage({Key? key}) : super(key: key);
+
+  @override
+  State<FinalStepsPage> createState() => _FinalStepsPageState();
+}
+
+class _FinalStepsPageState extends State<FinalStepsPage> {
+  final finalController = Get.put(FinalStepsController());
+  final exchangeController = Get.put(ExchangePageController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +45,7 @@ class FinalStepsPage extends StatelessWidget {
                             child: Obx(
                               () => ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: controller.stepslable.length,
+                                itemCount: finalController.stepslable.length,
                                 itemBuilder: (context, index) => SizedBox(
                                   child: Row(
                                     mainAxisAlignment:
@@ -46,21 +55,23 @@ class FinalStepsPage extends StatelessWidget {
                                         height: 40,
                                         width: 40,
                                         decoration: BoxDecoration(
-                                            color: controller.isActive.value
+                                            color: finalController
+                                                    .isActive.value
                                                 ? Colors.green
                                                 : Theme.of(context)
                                                     .scaffoldBackgroundColor,
                                             shape: BoxShape.circle),
                                         child: Center(
                                           child: Text(
-                                            controller.stepslable[index],
+                                            finalController.stepslable[index],
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2,
                                           ),
                                         ),
                                       ),
-                                      if (index < controller.steps.length - 1)
+                                      if (index <
+                                          finalController.steps.length - 1)
                                         SizedBox(
                                           width: Get.width * 0.2,
                                           child: Divider(
@@ -81,7 +92,7 @@ class FinalStepsPage extends StatelessWidget {
                       ),
                       CustomTimer(
                           maxSecond: 600,
-                          controller: controller.timerController.value),
+                          controller: finalController.timerController.value),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -99,22 +110,22 @@ class FinalStepsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20)),
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Row(
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(Icons.copy),
-                                ),
-                                VerticalDivider(
-                                  width: 10.0,
-                                  thickness: 2.0,
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   children: const [
+                            //     Padding(
+                            //       padding: EdgeInsets.all(8.0),
+                            //       child: Icon(Icons.copy),
+                            //     ),
+                            //     VerticalDivider(
+                            //       width: 10.0,
+                            //       thickness: 2.0,
+                            //     ),
+                            //   ],
+                            // ),
                             Text(
-                              'daf948hewprhtwg6546werrt45',
+                              '${exchangeController.forSellAmount}',
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ],
@@ -124,7 +135,7 @@ class FinalStepsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'لطفا BNB(BCB) مشخض شده را به آدرس زیر واریز نمایید: ',
+                            'لطفا مقدار  ${exchangeController.forSellChoice!.symbol!.toUpperCase()}(${exchangeController.forSellChoice!.inNetwork!.toLowerCase()}) مشخص شده را به آدرس زیر واریز نمایید: ',
                             style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
@@ -151,12 +162,20 @@ class FinalStepsPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Text(
-                              'daf948hewprhtwg6546werrt45',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(color: Colors.green),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, right: 10.0),
+                                child: Text(
+                                  '${finalController.transaction.value.payinAddress}',
+                                  overflow: TextOverflow.visible,
+                                  textAlign: TextAlign.end,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4!
+                                      .copyWith(color: Colors.green),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -229,10 +248,11 @@ class FinalStepsPage extends StatelessWidget {
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('مقدار USTD(TRX) دریافتی شما :',
+                        Text(
+                            'مقدار ${exchangeController.forBuyChoice!.symbol!.toUpperCase()}(${exchangeController.forBuyChoice!.inNetwork!.toUpperCase()}) دریافتی شما :',
                             style: Theme.of(context).textTheme.headline4),
                         Text(
-                          '(TRX)  0.000231545   ~',
+                          '(${exchangeController.forBuyChoice!.inNetwork!.toUpperCase()})  ${exchangeController.forBuyAmount}   ~',
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
@@ -245,7 +265,10 @@ class FinalStepsPage extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Text(' آدرس کیف پول USDT(TRX) شما: ',
+                          child: Text(
+                              ' آدرس کیف پول ${exchangeController.forBuyChoice!.symbol!.toUpperCase()}(${exchangeController.forBuyChoice!.inNetwork!.toUpperCase()}) شما: ',
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.end,
                               style: Theme.of(context).textTheme.headline4),
                         ),
                       ),
@@ -255,7 +278,7 @@ class FinalStepsPage extends StatelessWidget {
                           padding:
                               const EdgeInsets.only(left: 15.0, right: 15.0),
                           child: Text(
-                            'daf948hewprhtwg6546werrt45',
+                            exchangeController.textAddressController.text,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline4!
@@ -279,7 +302,7 @@ class FinalStepsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                'آی دی معامله شما: ',
+                'آی دی تراکنش: ',
                 style: Theme.of(context).textTheme.headline4,
               ),
               Expanded(
@@ -295,9 +318,13 @@ class FinalStepsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Icon(Icons.copy),
-                        Text(
-                          'datdsafaffgafsdfefaea',
-                          style: Theme.of(context).textTheme.headline4,
+                        Expanded(
+                          child: Text(
+                            '${finalController.transaction.value.id}',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
                         ),
                       ],
                     ),

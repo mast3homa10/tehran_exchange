@@ -8,16 +8,30 @@ class SupportMenuScreen extends StatelessWidget {
   }) : super(key: key);
   final menu = [
     const CustomMenuItem(
-        label: 'آموزش استفاده', icon: FontAwesomeIcons.bookOpenReader),
+      label: 'آموزش استفاده',
+      icon: FontAwesomeIcons.bookOpenReader,
+      buildSubScreen: Text(''),
+    ),
     const CustomMenuItem(
-        label: 'سوالات متداول', icon: FontAwesomeIcons.circleQuestion),
-    const CustomMenuItem(label: 'گذاشتن نظر', icon: FontAwesomeIcons.comment),
+        label: 'سوالات متداول',
+        icon: FontAwesomeIcons.circleQuestion,
+        buildSubScreen: Text('')),
     const CustomMenuItem(
-        label: 'شرایط و قوانین', icon: FontAwesomeIcons.circleExclamation),
+        label: 'گذاشتن نظر',
+        icon: FontAwesomeIcons.comment,
+        buildSubScreen: Text('')),
     const CustomMenuItem(
-        label: 'حریم خصوصی', icon: FontAwesomeIcons.circleExclamation),
+        label: 'شرایط و قوانین',
+        icon: FontAwesomeIcons.circleExclamation,
+        buildSubScreen: Text('')),
     const CustomMenuItem(
-        label: 'ریسک افشای اطلاعات', icon: FontAwesomeIcons.circleExclamation),
+        label: 'حریم خصوصی',
+        icon: FontAwesomeIcons.circleExclamation,
+        buildSubScreen: Text('')),
+    const CustomMenuItem(
+        label: 'ریسک افشای اطلاعات',
+        icon: FontAwesomeIcons.circleExclamation,
+        buildSubScreen: Text('')),
   ];
 
   @override

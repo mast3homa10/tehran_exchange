@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tehran_exchange/backend/api/check_pair_be_vaild.dart';
 import 'package:tehran_exchange/backend/api/estimate_exchange_amount.dart';
@@ -12,14 +13,28 @@ import 'package:tehran_exchange/backend/models/init_tabel_model.dart';
 import '../../../../backend/api/init-table.dart';
 import '../../../../backend/models/currency_model.dart';
 
+enum Button { first, second, last }
+
 class ExchangePageController extends GetxController {
-  RxBool isScreenChange = false.obs;
+  TextEditingController textAddressController = TextEditingController();
+  TextEditingController textSupportAddressController = TextEditingController();
+
+  var isSupportAddressMustBeEmpty = false.obs;
+  setSupportAddress() => isSupportAddressMustBeEmpty = true.obs;
+
+  var isSecondBoxShow = false.obs;
+  showSecondBox() => isSecondBoxShow = true.obs;
+
+  var whichButton = Button.first.obs;
+  goToNext(Button button) => whichButton = button.obs;
+
   RxBool connectToNetwork = false.obs;
   RxBool isIconChange = false.obs;
   RxBool isReversed = false.obs;
   var currentTopItem = 0.obs;
   var searchController = 0.obs;
-  var qrcodeResult = ''.obs;
+  var userAddress = ''.obs;
+  var supportAddress = ''.obs;
   var maximumExchangeAmount = 0.0.obs;
   var minimumExchangeAmount = 0.0.obs;
   CurrencyModel? forSellChoice;
@@ -142,8 +157,8 @@ class ExchangePageController extends GetxController {
     }
   }
 
-  setQrcodeAddress(String address) {
-    qrcodeResult = address.obs;
+  setAddress(String address) {
+    userAddress = address.obs;
     update();
   }
 
@@ -168,6 +183,7 @@ class ExchangePageController extends GetxController {
     update();
   }
 
+  RxBool isScreenChange = false.obs;
   changeScreen() {
     isScreenChange = isScreenChange.value ? false.obs : true.obs;
     update();

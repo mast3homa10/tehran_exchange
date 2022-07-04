@@ -3,12 +3,10 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import '../../backend/models/create_transaction_model.dart';
-import '../../backend/models/currency_model.dart';
 import '../network_constants.dart';
 
 class CreateTransactionApi {
-  Future<List<CurrencyModel>> create() async {
-    List<CurrencyModel> list = [];
+  Future<CreateTransactionModel?> create() async {
     http.Response response =
         await http.post(Uri.parse(baseUrl + createTransactionEndpoint),
             body: json.encode({
@@ -28,11 +26,11 @@ class CreateTransactionApi {
           json.decode(response.body)['data']['createExchangeResult'];
 
       var decodedData = CreateTransactionModel().fromJson(data);
+
       log('$decodedData');
-      return list;
+      return decodedData;
     } else {
       log("${response.statusCode}");
-      return list;
     }
   }
 }

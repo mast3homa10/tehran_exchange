@@ -13,11 +13,11 @@ import '../../pages/dashboard/dashboard_body_controller.dart';
 class DashboardBody extends StatelessWidget {
   DashboardBody({Key? key}) : super(key: key);
   final exchangePageController = ExchangePageController();
+  final dashboardBodyController = DashboardBodyController();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardBodyController>(
-        builder: (dashboardBodyController) {
+    return Obx(() {
       return WillPopScope(
         onWillPop: () async {
           log('${exchangePageController.isScreenChange.value}');

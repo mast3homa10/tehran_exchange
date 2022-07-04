@@ -8,8 +8,8 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../controllers/exchange_page_controller.dart';
 
 class QRCodeScreen extends StatefulWidget {
-  const QRCodeScreen({Key? key}) : super(key: key);
-
+  const QRCodeScreen({Key? key, this.boxId = 0}) : super(key: key);
+  final int boxId;
   @override
   State<StatefulWidget> createState() => _QRViewExampleState();
 }
@@ -153,9 +153,15 @@ class _QRViewExampleState extends State<QRCodeScreen> {
       try {
         if (scanData.code != null) {
           setState(() {
-            result = scanData;
-            exchangeConroller.setQrcodeAddress(scanData.code!);
-            log('qrcode Result = ${exchangeConroller.qrcodeResult}');
+            if (widget.boxId == 0) {
+              exchangeConroller.textAddressController.text = scanData.code!;
+              log('qrcode Result for address = ${exchangeConroller.textAddressController.text}');
+            } else if (widget.boxId == 1) {
+              exchangeConroller.textSupportAddressController.text =
+                  scanData.code!;
+              log('qrcode Result for support address = ${exchangeConroller.textSupportAddressController.text}');
+            }
+
             Get.back();
           });
         } else {
@@ -164,7 +170,6 @@ class _QRViewExampleState extends State<QRCodeScreen> {
         }
       } catch (e) {
         Get.snackbar('توجه!', "دریافت آدرس با اسکنر با مشکل مواجه شده");
-
         Get.back();
       }
     });

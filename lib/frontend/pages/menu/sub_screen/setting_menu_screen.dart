@@ -32,6 +32,7 @@ class SettingMenuScreen extends StatelessWidget {
     const CustomMenuItem(
       label: 'رمز عبور',
       icon: FontAwesomeIcons.lock,
+      buildSubScreen: Text(''),
     ),
   ];
 

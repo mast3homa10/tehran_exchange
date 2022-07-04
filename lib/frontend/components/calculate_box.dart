@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tehran_exchange/frontend/pages/exchange/controllers/exchange_page_controller.dart';
+import 'package:tehran_exchange/frontend/pages/exchange/controllers/timer_controller.dart';
 
 import '../../backend/models/currency_model.dart';
 import '../../backend/network_constants.dart';
 import '../../constants.dart';
 
 class CalculateBox extends StatelessWidget {
-  const CalculateBox({
+  CalculateBox({
     Key? key,
     this.initialValue,
     this.currency,
@@ -29,7 +31,7 @@ class CalculateBox extends StatelessWidget {
   final VoidCallback? closeIconPressed;
   final VoidCallback? onPressed;
 
-  const CalculateBox.second({
+  CalculateBox.second({
     Key? key,
     this.initialValue,
     this.currency,
@@ -39,6 +41,9 @@ class CalculateBox extends StatelessWidget {
     this.openIconPressed,
     this.closeIconPressed,
   });
+  final timerController = Get.put(TimerController());
+  final controller = Get.put(ExchangePageController());
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -153,14 +158,16 @@ class CalculateBox extends StatelessWidget {
             indent: 3,
             endIndent: 3,
           ),
-          // following part is for provide for fixer.
-          buildFixIcon(context),
 
           Expanded(
+            flex: 4,
             child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
+                  key: Key(initialValue!),
                   initialValue: initialValue,
+                  toolbarOptions: const ToolbarOptions(
+                      copy: false, paste: false, cut: false, selectAll: false),
                   // input amount from user
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
@@ -187,8 +194,17 @@ class CalculateBox extends StatelessWidget {
                           .copyWith(
                               color: Theme.of(context).dividerTheme.color)),
                   onChanged: (value) {},
+                  validator: (value) {
+                    if (double.parse(value!) <
+                        controller.minimumExchangeAmount.value) {
+                      Get.snackbar('توجه! ',
+                          " حداقل مقدار ${controller.forSellChoice!.symbol} نباید کمتر از ${controller.maximumExchangeAmount.value} باشد.");
+                    }
+                  },
                 )),
-          )
+          ),
+          // following part is for provide for fixer.
+          Expanded(child: buildFixIcon(context)),
         ],
       )),
     );
@@ -212,24 +228,21 @@ class CalculateBox extends StatelessWidget {
 
   Widget buildFixIcon(BuildContext context) {
     if (isHaveIcon) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: isIconChange
-            ? IconButton(
-                onPressed: closeIconPressed,
-                icon: Icon(
-                  CupertinoIcons.lock,
-                  color: Theme.of(context).backgroundColor,
-                ),
-              )
-            : IconButton(
-                onPressed: openIconPressed,
-                icon: Icon(
-                  CupertinoIcons.lock_open,
-                  color: Theme.of(context).dividerTheme.color,
-                ),
+      return isIconChange
+          ? IconButton(
+              onPressed: closeIconPressed,
+              icon: Icon(
+                CupertinoIcons.lock,
+                color: Theme.of(context).backgroundColor,
               ),
-      );
+            )
+          : IconButton(
+              onPressed: openIconPressed,
+              icon: Icon(
+                CupertinoIcons.lock_open,
+                color: Theme.of(context).dividerTheme.color,
+              ),
+            );
     } else {
       return Container();
     }

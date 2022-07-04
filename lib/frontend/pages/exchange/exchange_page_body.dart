@@ -34,7 +34,7 @@ class ExchangePageBody extends GetView<ExchangePageController> {
   }) : super(key: key);
 
   final subScreen = [
-    const AddAddressScreen(),
+    AddAddressScreen(),
     const AddressBookScreen(),
   ];
 

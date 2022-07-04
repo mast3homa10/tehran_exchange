@@ -29,88 +29,91 @@ class CalculatePage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else {
           log(controller.forBuyAmount.toString());
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // the Expanded widget below contains ''' cryptocurrency calculator '''.
-              Expanded(
-                child: SizedBox(
-                  height: Get.height * 0.4,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        /// first box
-                        CalculateBox(
-                          currency: controller.forSellChoice,
-                          initialValue: controller.forSellAmount.toString(),
-                          onPressed: () {
-                            // launch searchbox by tap here
-                            showSearch(
-                                context: context,
-                                delegate: CustomSearchDelegate(currentBox: 0));
-                          },
-                        ),
-                        // calculate result
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              buildResult(context, controller),
-
-                              // Reversed button
-                              ReversedButton(),
-                            ],
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // the Expanded widget below contains ''' cryptocurrency calculator '''.
+                Expanded(
+                  child: SizedBox(
+                    height: Get.height * 0.4,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          /// for sell box
+                          CalculateBox(
+                            currency: controller.forSellChoice,
+                            initialValue: controller.forSellAmount.toString(),
+                            onPressed: () {
+                              // launch searchbox by tap here
+                              showSearch(
+                                  context: context,
+                                  delegate:
+                                      CustomSearchDelegate(currentBox: 0));
+                            },
                           ),
-                        ),
-                        // second box
-                        CalculateBox.second(
-                          initialValue: controller.forBuyAmount.toString(),
-                          currency: controller.forBuyChoice,
-                          onPressed: () {
-                            // launch searchbox by tap here
-                            showSearch(
-                                context: context,
-                                delegate: CustomSearchDelegate(
-                                  currentBox: 1,
-                                ));
-                          },
-                          isIconChange: controller.isIconChange.value,
-                          openIconPressed: () {
-                            buildSnakBar(context);
-                            controller.changeIcon();
-                          },
-                          closeIconPressed: () {
-                            timerController.stopTimer();
-                            controller.changeIcon();
-                          },
-                        ),
-                      ],
+                          // calculate result
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                buildResult(context, controller),
+
+                                // Reversed button
+                                ReversedButton(),
+                              ],
+                            ),
+                          ),
+                          // for buy box
+                          CalculateBox.second(
+                            initialValue: controller.forBuyAmount.toString(),
+                            currency: controller.forBuyChoice,
+                            onPressed: () {
+                              // launch searchbox by tap here
+                              showSearch(
+                                  context: context,
+                                  delegate: CustomSearchDelegate(
+                                    currentBox: 1,
+                                  ));
+                            },
+                            isIconChange: controller.isIconChange.value,
+                            openIconPressed: () {
+                              buildSnakBar(context);
+                              controller.changeIcon();
+                            },
+                            closeIconPressed: () {
+                              timerController.stopTimer();
+                              controller.changeIcon();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // the padding widget below contains '''add address button'''.
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: CustomBigButton(
-                  label: 'وارد کردن آدرس',
-                  onPressed: () {
-                    // Get.snackbar('توجه!', "در حال توسعه ...");
-                    if (timerController.timer != null) {
-                      timerController.stopTimer();
-                    }
+                // the padding widget below contains '''add address button'''.
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomBigButton(
+                    label: 'وارد کردن آدرس',
+                    onPressed: () {
+                      // Get.snackbar('توجه!', "در حال توسعه ...");
+                      if (timerController.timer != null) {
+                        timerController.stopTimer();
+                      }
 
-                    controller.changeScreen();
-                  },
+                      controller.changeScreen();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }
       },

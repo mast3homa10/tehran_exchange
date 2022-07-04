@@ -7,7 +7,11 @@ class ServiceMenuScreen extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final menu = [
-    const CustomMenuItem(label: 'دفترچه آدرس', icon: FontAwesomeIcons.bookOpen),
+    const CustomMenuItem(
+      label: 'دفترچه آدرس',
+      icon: FontAwesomeIcons.bookOpen,
+      buildSubScreen: Text(''),
+    ),
   ];
 
   @override

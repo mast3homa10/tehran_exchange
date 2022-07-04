@@ -25,6 +25,7 @@ dependencies:
   flutter_svg: ^1.0.3
   url_launcher: ^6.1.4
   share_plus: ^4.0.9
+  clipboard: ^0.1.3
   
   
 

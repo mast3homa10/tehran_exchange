@@ -30,6 +30,10 @@ class MyThemes {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
+          textStyle:
+              const TextStyle(fontFamily: 'Yekanbakh', fontSize: 16).apply(
+            color: Colors.white,
+          ),
           primary: kDarkButtonColor, // This is a custom color variable
           side: const BorderSide(
             width: 2,
@@ -74,6 +78,8 @@ class MyThemes {
           const BottomSheetThemeData(backgroundColor: Color(0xFFFFFFFF)),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
+          textStyle: const TextStyle(
+              fontFamily: 'Yekanbakh', fontSize: 16, color: Colors.black),
           primary: kLightButtonColor, // This is a custom color variable
           side: const BorderSide(
             width: 2,
